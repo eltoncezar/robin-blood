@@ -1,4 +1,4 @@
-package data;
+package models;
 
 public class Address {
 	private int id;

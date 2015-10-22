@@ -1,6 +1,6 @@
-package data;
+package models;
 
-public class PhoneType {
+public class UserType {
 	private int id;
 	private String name;
 

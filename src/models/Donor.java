@@ -1,6 +1,6 @@
-package data;
+package models;
 
-import java.util.HashSet;
+import java.util.List;
 
 public class Donor {
 	private int id;
@@ -9,8 +9,25 @@ public class Donor {
 	private String gender;
 	private String email;
 	private String bloodType;
-	private HashSet<Address> addresses;
-	private HashSet<Phone> phones;
+	private Address address;
+	private List<Phone> phones;
+
+	public Donor() {
+
+	}
+
+	public Donor(int id, String name, String cpf, String gender, String email,
+			String bloodType, Address address, List<Phone> phones) {
+		// super();
+		this.id = id;
+		this.name = name;
+		this.cpf = cpf;
+		this.gender = gender;
+		this.email = email;
+		this.bloodType = bloodType;
+		this.address = address;
+		this.phones = phones;
+	}
 
 	public int getId() {
 		return id;
@@ -60,19 +77,24 @@ public class Donor {
 		this.bloodType = bloodType;
 	}
 
-	public HashSet<Address> getAddresses() {
-		return addresses;
+	public Address getAddresses() {
+		return address;
 	}
 
-	public void setAddresses(HashSet<Address> addresses) {
-		this.addresses = addresses;
+	public void setAddresses(Address address) {
+		this.address = address;
 	}
 
-	public HashSet<Phone> getPhones() {
+	public List<Phone> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(HashSet<Phone> phones) {
+	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.name; 
 	}
 }

@@ -1,6 +1,6 @@
-package data;
+package models;
 
-public class PrimaryTest {
+public class Status {
 	private int id;
 	private String name;
 
