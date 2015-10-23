@@ -7,6 +7,20 @@ public class User {
 	private String email;
 	private UserType userType;
 
+	public User() {
+		super();
+	}
+
+	public User(int id, String name, String password, String email,
+			UserType userType) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.userType = userType;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -45,5 +59,10 @@ public class User {
 
 	public void setUserTypeId(UserType userType) {
 		this.userType = userType;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.name;
 	}
 }

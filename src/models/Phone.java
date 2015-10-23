@@ -5,6 +5,17 @@ public class Phone {
 	private PhoneType type;
 	private String number;
 
+	public Phone() {
+		super();
+	}
+
+	public Phone(int id, PhoneType type, String number) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.number = number;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -27,5 +38,10 @@ public class Phone {
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.number;
 	}
 }

@@ -1,13 +1,25 @@
 package models;
 
-import java.util.HashSet;
-
 public class Screening {
 	private int id;
-	private HashSet<Donation> donations;
+	private Donation donation;
 	private PrimaryTest test;
-	private PrimaryTest resultTest;
+	private String resultTest;
 	private User user;
+
+	public Screening() {
+		super();
+	}
+
+	public Screening(int id, Donation donation, PrimaryTest test,
+			String resultTest, User user) {
+		super();
+		this.id = id;
+		this.donation = donation;
+		this.test = test;
+		this.resultTest = resultTest;
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
@@ -25,11 +37,11 @@ public class Screening {
 		this.test = test;
 	}
 
-	public PrimaryTest getResultTest() {
+	public String getResultTest() {
 		return resultTest;
 	}
 
-	public void setResultTest(PrimaryTest resultTest) {
+	public void setResultTest(String resultTest) {
 		this.resultTest = resultTest;
 	}
 
@@ -41,11 +53,16 @@ public class Screening {
 		this.user = user;
 	}
 
-	public HashSet<Donation> getDonation() {
-		return donations;
+	public Donation getDonation() {
+		return donation;
 	}
 
-	public void setDonation(HashSet<Donation> donation) {
-		this.donations = donation;
+	public void setDonation(Donation donation) {
+		this.donation = donation;
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.donation.getUser().getName();
 	}
 }

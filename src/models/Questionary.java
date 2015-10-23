@@ -1,12 +1,23 @@
 package models;
 
-import java.util.HashSet;
+import java.util.List;
 
 public class Questionary {
 	private int id;
-	private Donation donation;
-	private Status status;
-	private HashSet<Question> questions;
+	private Screening screening;
+	private List<QuestionaryQuestion> questions;
+
+	public Questionary() {
+		super();
+	}
+
+	public Questionary(int id, Screening screening,
+			List<QuestionaryQuestion> questions) {
+		super();
+		this.id = id;
+		this.screening = screening;
+		this.questions = questions;
+	}
 
 	public int getId() {
 		return id;
@@ -16,27 +27,24 @@ public class Questionary {
 		this.id = id;
 	}
 
-	public Donation getDonation() {
-		return donation;
+	public Screening getScreening() {
+		return screening;
 	}
 
-	public void setDonation(Donation donation) {
-		this.donation = donation;
+	public void setScreening(Screening donation) {
+		this.screening = donation;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public HashSet<Question> getQuestions() {
+	public List<QuestionaryQuestion> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(HashSet<Question> questions) {
+	public void setQuestions(List<QuestionaryQuestion> questions) {
 		this.questions = questions;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.screening.getDonation().getDonor().getName();
 	}
 }

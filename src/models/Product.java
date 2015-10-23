@@ -1,17 +1,19 @@
 package models;
 
-public class Question {
+public class Product {
 	private int id;
 	private String description;
+	private String bloodType;
 
-	public Question() {
+	public Product() {
 		super();
 	}
 
-	public Question(int id, String description) {
+	public Product(int id, String description, String bloodType) {
 		super();
 		this.id = id;
 		this.description = description;
+		this.bloodType = bloodType;
 	}
 
 	public int getId() {
@@ -28,6 +30,14 @@ public class Question {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getBloodType() {
+		return bloodType;
+	}
+
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
 	}
 
 	@Override

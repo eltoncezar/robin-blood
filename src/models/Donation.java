@@ -7,6 +7,21 @@ public class Donation {
 	private Donor donor;
 	private Status status;
 	private Date donationDate;
+	private User user;
+
+	public Donation() {
+		super();
+	}
+
+	public Donation(int id, Donor donor, Status status, Date donationDate,
+			User user) {
+		super();
+		this.id = id;
+		this.donor = donor;
+		this.status = status;
+		this.donationDate = donationDate;
+		this.user = user;
+	}
 
 	public int getId() {
 		return id;
@@ -38,5 +53,17 @@ public class Donation {
 
 	public void setDonationDate(Date donationDate) {
 		this.donationDate = donationDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.donor.getName();
 	}
 }

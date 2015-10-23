@@ -4,6 +4,16 @@ public class UserType {
 	private int id;
 	private String name;
 
+	public UserType() {
+		super();
+	}
+
+	public UserType(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -18,5 +28,10 @@ public class UserType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.name;
 	}
 }

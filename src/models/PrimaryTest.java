@@ -4,6 +4,16 @@ public class PrimaryTest {
 	private int id;
 	private String name;
 
+	public PrimaryTest() {
+		super();
+	}
+
+	public PrimaryTest(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -18,5 +28,10 @@ public class PrimaryTest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + this.id + "] " + this.name;
 	}
 }

@@ -13,12 +13,12 @@ public class Donor {
 	private List<Phone> phones;
 
 	public Donor() {
-
+		super();
 	}
 
 	public Donor(int id, String name, String cpf, String gender, String email,
 			String bloodType, Address address, List<Phone> phones) {
-		// super();
+		super();
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
@@ -92,9 +92,9 @@ public class Donor {
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[" + this.id + "] " + this.name; 
+		return "[" + this.id + "] " + this.name;
 	}
 }
