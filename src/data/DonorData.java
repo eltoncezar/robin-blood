@@ -14,7 +14,7 @@ import models.Donor;
 public class DonorData implements CrudItf<Donor> {
 
 	@Override
-	public List<Donor> listAll() throws CrudException {
+	public List<Donor> listAll() throws ConnectException {
 
 		List<Donor> lista = new ArrayList<>();
 
@@ -34,14 +34,14 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			throw new CrudException(e.getMessage());
+			throw new ConnectException(e.getMessage());
 		}
 
 		return lista;
 	}
 
 	@Override
-	public Donor select(int id) throws CrudException {
+	public Donor select(int id) throws ConnectException {
 		Donor donor = new Donor();
 
 		try {
@@ -61,14 +61,14 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			throw new CrudException(e.getMessage());
+			throw new ConnectException(e.getMessage());
 		}
 
 		return donor;
 	}
 
 	@Override
-	public Donor save(Donor obj) throws CrudException {
+	public Donor save(Donor obj) throws ConnectException {
 		try {
 			String query = "INSERT INTO Donor VALUES(?,?)";
 
@@ -84,12 +84,12 @@ public class DonorData implements CrudItf<Donor> {
 
 			return this.select(obj.getId());
 		} catch (SQLException e) {
-			throw new CrudException(e.getMessage());
+			throw new ConnectException(e.getMessage());
 		}
 	}
 
 	@Override
-	public void delete(Donor obj) throws CrudException {
+	public void delete(Donor obj) throws ConnectException {
 		try {
 			String query = "DELETE FROM Donor WHERE donor_name=?";
 
@@ -102,12 +102,12 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			throw new CrudException(e.getMessage());
+			throw new ConnectException(e.getMessage());
 		}
 	}
 
 	@Override
-	public Donor update(Donor obj) throws CrudException {
+	public Donor update(Donor obj) throws ConnectException {
 		return null;
 	}
 
