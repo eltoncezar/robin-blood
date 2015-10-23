@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface CrudItf<T> {
 	
-	public final String connection = "jdbc:sqlserver:d:\\temp\\MeuPrimeiroBD";
+	public final String connection = "jdbc:sqlserver://localhost;databaseName=BIBLIOTECA;user=sa;password=123456";
 	
-	public List<T> listAll() throws CrudException;
-	public T select(int id) throws CrudException;
-	public T update(T obj) throws CrudException;
-	public T save(T obj) throws CrudException;
-	public void delete(T obj) throws CrudException;
+	public List<T> listAll() throws ConnectException;
+	public T select(int id) throws ConnectException;
+	public T update(T obj) throws ConnectException;
+	public T save(T obj) throws ConnectException;
+	public void delete(T obj) throws ConnectException;
 }
