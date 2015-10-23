@@ -62,8 +62,31 @@ public class Inventary {
 	public void setProductOut(Date productOut) {
 		this.productOut = productOut;
 	}
+
 	@Override
 	public String toString() {
 		return "[" + this.id + "] " + this.product + ": " + this.amount;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Inventary other = (Inventary) obj;
+		if (this.id != other.id)
+			return false;
+		return true;
 	}
 }
