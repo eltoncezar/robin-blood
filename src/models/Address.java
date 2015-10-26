@@ -2,6 +2,7 @@ package models;
 
 public class Address {
 	private int id;
+	private int id_donor;
 	private String street;
 	private int number;
 	private String city;
@@ -13,10 +14,11 @@ public class Address {
 		super();
 	}
 
-	public Address(int id, String street, int number, String city,
+	public Address(int id,int id_donor, String street, int number, String city,
 			String state, String zipCode, String country) {
 		super();
 		this.id = id;
+		this.id_donor =id_donor;
 		this.street = street;
 		this.number = number;
 		this.city = city;
@@ -32,7 +34,15 @@ public class Address {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public int getIdDonor() {
+		return id_donor;
+	}
 
+	public void setIdDonor(int id) {
+		this.id_donor = id_donor;
+	}
+	
 	public String getStreet() {
 		return street;
 	}
