@@ -3,6 +3,7 @@ package models;
 public class PrimaryTest {
 	private int id;
 	private String name;
+	private String result;
 
 	public PrimaryTest() {
 		super();
@@ -29,7 +30,15 @@ public class PrimaryTest {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getResult() {
+		return result;
+	}
 
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 	@Override
 	public String toString() {
 		return "[" + this.id + "] " + this.name;
