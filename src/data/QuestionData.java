@@ -11,22 +11,22 @@ import java.sql.Statement;
 
 import models.Donor;
 
-public class PhoneData implements CrudItf<Donor> {
+public class QuestionData implements CrudItf<Donor> {
 
 	@Override
-	public List<Phone> listAll() throws ConnectException {
+	public List<Question> listAll() throws ConnectException {
 
-		List<Phone> lista = new ArrayList<>();
+		List<Question> lista = new ArrayList<>();
 
 		try {
-			String query = "SELECT *  FROM phone";
+			String query = "SELECT *  FROM questions";
 
 			Connection con = DriverManager.getConnection(connection);
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Phone(	rs.getString("id"), 
-										rs.getString("number")));
+				lista.add(new Question(	rs.getString("id"), 
+										rs.getString("description")));
 			}
 			rs.close();
 			stmt.close();
@@ -39,19 +39,19 @@ public class PhoneData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public Phone select(int id) throws ConnectException {
-		Phone phone = new Phone();
+	public Question select(int id) throws ConnectException {
+		Question question = new Question();
 
 		try {
-			String query = "SELECT * FROM phone WHERE id_phone = ?";
+			String query = "SELECT * FROM questions WHERE id_question = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				phone = new Address(rs.getString("id"), 
-									rs.getString("number")));
+				question = new Question(rs.getString("id"), 
+									rs.getString("description")));
 			}
 			rs.close();
 			stmt.close();
@@ -60,18 +60,18 @@ public class PhoneData implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 
-		return phone;
+		return question;
 	}
 
 	@Override
-	public Phone save(Phone obj) throws ConnectException {
+	public Question save(Question obj) throws ConnectException {
 		try {
-			String query = "INSERT INTO phone VALUES(?)";
+			String query = "INSERT INTO questions VALUES(?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getNumber());
+			stmt.setString(1, obj.description());
 			
 			
 			stmt.executeUpdate();
@@ -85,9 +85,9 @@ public class PhoneData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public void delete(Phone obj) throws ConnectException {
+	public void delete(Question obj) throws ConnectException {
 		try {
-			String query = "DELETE phone WHERE id_phone=?";
+			String query = "DELETE questions WHERE id_question=?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -103,15 +103,15 @@ public class PhoneData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public Phone update(Phone obj) throws ConnectException {
+	public Question update(Question obj) throws ConnectException {
 		try{
-			String query = "UPDATE phone set phone_number=?,"
-											+ "WHERE id_phone=?";
+			String query = "UPDATE questions SET question_description=?,"
+											+ "WHERE id_question=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, obj.getNumber());
+			stmt.setString(1, obj.description());
 			stmt.setString(2, obj.getId());
 			
 			stmt.executeUpdate();

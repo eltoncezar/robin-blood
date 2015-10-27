@@ -11,22 +11,23 @@ import java.sql.Statement;
 
 import models.Donor;
 
-public class PhoneData implements CrudItf<Donor> {
+public class ProductData implements CrudItf<Donor> {
 
 	@Override
-	public List<Phone> listAll() throws ConnectException {
+	public List<Product> listAll() throws ConnectException {
 
-		List<Phone> lista = new ArrayList<>();
+		List<Product> lista = new ArrayList<>();
 
 		try {
-			String query = "SELECT *  FROM phone";
+			String query = "SELECT *  FROM product";
 
 			Connection con = DriverManager.getConnection(connection);
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Phone(	rs.getString("id"), 
-										rs.getString("number")));
+				lista.add(new Question(	rs.getString("id"), 
+										rs.getString("description"),
+										rs.getString("bloodType")));
 			}
 			rs.close();
 			stmt.close();
@@ -39,19 +40,20 @@ public class PhoneData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public Phone select(int id) throws ConnectException {
-		Phone phone = new Phone();
+	public Product select(int id) throws ConnectException {
+		Product product = new Product();
 
 		try {
-			String query = "SELECT * FROM phone WHERE id_phone = ?";
+			String query = "SELECT * FROM product WHERE id_product = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, id);
+			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				phone = new Address(rs.getString("id"), 
-									rs.getString("number")));
+				product = new Product(rs.getString("id"), 
+									rs.getString("description"),
+									rs.getString("bloodType")));
 			}
 			rs.close();
 			stmt.close();
@@ -60,18 +62,19 @@ public class PhoneData implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 
-		return phone;
+		return product;
 	}
 
 	@Override
-	public Phone save(Phone obj) throws ConnectException {
+	public Product save(Product obj) throws ConnectException {
 		try {
-			String query = "INSERT INTO phone VALUES(?)";
+			String query = "INSERT INTO product VALUES(?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getNumber());
+			stmt.setString(1, obj.description());
+			stmt.setString(2, obj.bloodType());
 			
 			
 			stmt.executeUpdate();
@@ -83,11 +86,12 @@ public class PhoneData implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 	}
-
+	
+	//Este método so vai funcionar se não houver registro do produto no inventário.
 	@Override
-	public void delete(Phone obj) throws ConnectException {
+	public void delete(Product obj) throws ConnectException {
 		try {
-			String query = "DELETE phone WHERE id_phone=?";
+			String query = "DELETE product WHERE id_product=?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -101,18 +105,20 @@ public class PhoneData implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 	}
-
+	//Não é interressante que os usuários possam editar os produtos.
 	@Override
-	public Phone update(Phone obj) throws ConnectException {
+	public Product update(Question obj) throws ConnectException {
 		try{
-			String query = "UPDATE phone set phone_number=?,"
-											+ "WHERE id_phone=?";
+			String query = "UPDATE product set product_description=?,"
+											+ "product_blood_type=?"
+											+ "WHERE id_product=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, obj.getNumber());
-			stmt.setString(2, obj.getId());
+			stmt.setString(1, obj.description());
+			stmt.setString(2, obj.bloodType());
+			stmt.setString(3, obj.id());
 			
 			stmt.executeUpdate();
 			stmt.close();

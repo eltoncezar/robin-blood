@@ -12,7 +12,7 @@ import java.sql.Statement;
 import models.Donor;
 
 public class PrimaryTest implements CrudItf<Donor> {
-//Este método nao é relevante neste contexto,  pois os testes dependem da doação e doador.
+//Este método nao é relevante neste contexto,  pois os testes dependem da doação.
 	@Override
 	public List<PrimaryTest> listAll() throws ConnectException {
 
@@ -22,7 +22,7 @@ public class PrimaryTest implements CrudItf<Donor> {
 	public  PrimaryTest select(int id) throws ConnectException {
 	
 	}
-//Verificar esse método, para inserir ou remover os usuário.
+//Verificar esse método.
 	@Override
 	public PrimaryTest save(PrimaryTest obj) throws ConnectException {
 		try {
@@ -45,14 +45,14 @@ public class PrimaryTest implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 	}
-
+//Não é possivel deletar um teste.
 	@Override
-	public void delete(Address obj) throws ConnectException {
+	public void delete(PrimaryTest obj) throws ConnectException {
 		
 	}
 
 	@Override
-	public Donor update(Donor obj) throws ConnectException {
+	public PrimaryTest update(PrimaryTest obj) throws ConnectException {
 		try{
 			String query = "UPDATE primary_test SET result_test=?,"
 											+ "WHERE id_test=?";

@@ -56,15 +56,15 @@ public class AddressData implements CrudItf<Donor> {
 								+ "address_zip, "
 								+ "address_state, "
 								+ "address_city  "
-					+ "FROM address"
-					+ "WHERE id = ?";
+							+ "FROM address"
+							+ "WHERE id = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				donor = new Address(rs.getInt("id"),
+				address = new Address(rs.getInt("id"),
 						rs.getString("street"), 
 						rs.setString("number"),
 						rs.getString("city"),
@@ -80,7 +80,7 @@ public class AddressData implements CrudItf<Donor> {
 			throw new ConnectException(e.getMessage());
 		}
 
-		return donor;
+		return address;
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class AddressData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public Donor update(Donor obj) throws ConnectException {
+	public Address update(Address obj) throws ConnectException {
 		try{
 			String query = "UPDATE address set address_street=?,"
 											+ "address_number=?,"
