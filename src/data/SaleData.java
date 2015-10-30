@@ -71,15 +71,14 @@ public class SaleData implements CrudItf<Sale> {
 	public Sale update(Sale obj) throws ConnectException {
 		Utils utils = new Utils();
 		try{
-			String query = "UPDATE Sale set id_sale=?,id_buyer=?,sale_date=? WHERE id_sale=?";
+			String query = "UPDATE Sale set id_buyer=?,sale_date=? WHERE id_sale=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, Integer.toString(obj.getId()));
-			stmt.setString(2, Integer.toString(obj.getBuyer()));
-			stmt.setString(3, utils.convertStringToDate(obj.getDate()));
-			stmt.setString(4, Integer.toString(obj.getId()));
+			stmt.setString(1, Integer.toString(obj.getBuyer()));
+			stmt.setString(2, utils.convertStringToDate(obj.getDate()));
+			stmt.setString(3, Integer.toString(obj.getId()));
 			stmt.executeUpdate();
 
 			stmt.close();

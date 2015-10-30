@@ -4,23 +4,22 @@ import java.util.Date;
 
 public class Donation {
 	private int id;
-	private Donor donor;
-	private Status status;
+	private int idDonor;
 	private Date donationDate;
-	private User user;
+	private int idStatus;	
+	private int idUser;
 
 	public Donation() {
 		super();
 	}
 
-	public Donation(int id, Donor donor, Status status, Date donationDate,
-			User user) {
+	public Donation(int id, int idDonor, Date donationDate, int idStatus, int idUser) {
 		super();
 		this.id = id;
-		this.donor = donor;
-		this.status = status;
+		this.idDonor = idDonor;
 		this.donationDate = donationDate;
-		this.user = user;
+		this.idStatus = idStatus;
+		this.idUser = idUser;
 	}
 
 	public int getId() {
@@ -31,20 +30,12 @@ public class Donation {
 		this.id = id;
 	}
 
-	public Donor getDonor() {
-		return donor;
+	public int getIdDonor() {
+		return idDonor;
 	}
 
-	public void setDonor(Donor donor) {
-		this.donor = donor;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setIdDonor(int idDonor) {
+		this.idDonor = idDonor;
 	}
 
 	public Date getDonationDate() {
@@ -55,24 +46,31 @@ public class Donation {
 		this.donationDate = donationDate;
 	}
 
-	public User getUser() {
-		return user;
+	public int getIdStatus() {
+		return idStatus;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setIdStatus(int idStatus) {
+		this.idStatus = idStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "[" + this.id + "] " + this.donor.getName();
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((donationDate == null) ? 0 : donationDate.hashCode());
 		result = prime * result + id;
+		result = prime * result + idDonor;
+		result = prime * result + idStatus;
+		result = prime * result + idUser;
 		return result;
 	}
 
@@ -85,8 +83,21 @@ public class Donation {
 		if (getClass() != obj.getClass())
 			return false;
 		Donation other = (Donation) obj;
-		if (this.id != other.id)
+		if (donationDate == null) {
+			if (other.donationDate != null)
+				return false;
+		} else if (!donationDate.equals(other.donationDate))
+			return false;
+		if (id != other.id)
+			return false;
+		if (idDonor != other.idDonor)
+			return false;
+		if (idStatus != other.idStatus)
+			return false;
+		if (idUser != other.idUser)
 			return false;
 		return true;
 	}
+
+	
 }

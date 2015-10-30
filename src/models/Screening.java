@@ -2,77 +2,50 @@ package models;
 
 public class Screening {
 	private int id;
-	private Donation donation;
-	private PrimaryTest test;
-	private String resultTest;
-	private User user;
+	private int idDonation;
+	
 
 	public Screening() {
 		super();
 	}
 
-	public Screening(int id, Donation donation, PrimaryTest test,
-			String resultTest, User user) {
+
+	public Screening(int id, int ifDonation) {
 		super();
 		this.id = id;
-		this.donation = donation;
-		this.test = test;
-		this.resultTest = resultTest;
-		this.user = user;
+		this.idDonation = ifDonation;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public PrimaryTest getTest() {
-		return test;
+
+	public int getIdDonation() {
+		return idDonation;
 	}
 
-	public void setTest(PrimaryTest test) {
-		this.test = test;
+
+	public void setIdDonation(int ifDonation) {
+		this.idDonation = ifDonation;
 	}
 
-	public String getResultTest() {
-		return resultTest;
-	}
-
-	public void setResultTest(String resultTest) {
-		this.resultTest = resultTest;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Donation getDonation() {
-		return donation;
-	}
-
-	public void setDonation(Donation donation) {
-		this.donation = donation;
-	}
-
-	@Override
-	public String toString() {
-		return "[" + this.id + "] " + this.donation.getUser().getName();
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
+		result = prime * result + idDonation;
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -83,8 +56,12 @@ public class Screening {
 		if (getClass() != obj.getClass())
 			return false;
 		Screening other = (Screening) obj;
-		if (this.id != other.id)
+		if (id != other.id)
+			return false;
+		if (idDonation != other.idDonation)
 			return false;
 		return true;
 	}
+
+	
 }

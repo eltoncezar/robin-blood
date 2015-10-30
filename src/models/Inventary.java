@@ -4,16 +4,19 @@ import java.util.Date;
 
 public class Inventary {
 	private int id;
-	private Product product;
-	private int amount;
-	private Date productIn;
 	private Date productOut;
+	private Date productIn;
+	private int amount;
+	private int product;
+
+
+
 
 	public Inventary() {
 		super();
 	}
 
-	public Inventary(int id, Product product, int amount, Date productIn,
+	public Inventary(int id, int product, int amount, Date productIn,
 			Date productOut) {
 		super();
 		this.id = id;
@@ -31,11 +34,12 @@ public class Inventary {
 		this.id = id;
 	}
 
-	public Product getProduct() {
+
+	public int getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(int product) {
 		this.product = product;
 	}
 
