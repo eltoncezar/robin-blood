@@ -5,20 +5,22 @@ public class User {
 	private String name;
 	private String password;
 	private String email;
-	private UserType userType;
+	private int idType;
+	private int idScreening;
 
 	public User() {
 		super();
 	}
 
-	public User(int id, String name, String password, String email,
-			UserType userType) {
+
+	public User(int id, String name, String password, String email, int idType, int idScreening) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
-		this.userType = userType;
+		this.idType = idType;
+		this.idScreening = idScreening;
 	}
 
 	public int getId() {
@@ -53,24 +55,44 @@ public class User {
 		this.email = email;
 	}
 
-	public UserType getUserType() {
-		return userType;
+
+
+	public int getIdType() {
+		return idType;
 	}
 
-	public void setUserTypeId(UserType userType) {
-		this.userType = userType;
+
+	public void setIdType(int idType) {
+		this.idType = idType;
 	}
+
+
+	public int getIdScreening() {
+		return idScreening;
+	}
+
+
+	public void setIdScreening(int idScreening) {
+		this.idScreening = idScreening;
+	}
+
 
 	@Override
 	public String toString() {
-		return "[" + this.id + "] " + this.name;
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", idType="
+				+ idType + ", idScreening=" + idScreening + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
+		result = prime * result + idScreening;
+		result = prime * result + idType;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
 
@@ -83,7 +105,26 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (this.id != other.id)
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id != other.id)
+			return false;
+		if (idScreening != other.idScreening)
+			return false;
+		if (idType != other.idType)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		return true;
 	}

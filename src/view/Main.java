@@ -1,9 +1,15 @@
 package view;
 
+
+
 public class Main {
 
+	private static MainWindow windows;
+	
 	public static void main(String[] args) {
-		System.out.println("asdasd");
+		
+		windows = new MainWindow();
+
 	}
 
 }

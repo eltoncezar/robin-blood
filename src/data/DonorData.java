@@ -79,7 +79,8 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.setString(2, obj.getCpf());
 			stmt.setString(3, obj.getGender());
 			stmt.setString(4, obj.getEmail());
-			stmt.setString(5, obj.getBloodType())
+			stmt.setString(5, obj.getBloodType());
+			
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -99,7 +100,7 @@ public class DonorData implements CrudItf<Donor> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getId());
+			stmt.setString(1, Integer.toString(obj.getId()));
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -122,7 +123,7 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.setString(3, obj.getGender());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getBloodType());
-			stmt.setString(6, obj.getId());
+			stmt.setString(6, Integer.toString(obj.getId()));
 			stmt.executeUpdate();
 
 			stmt.close();

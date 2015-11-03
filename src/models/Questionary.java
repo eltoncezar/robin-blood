@@ -43,10 +43,11 @@ public class Questionary {
 		this.questions = questions;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "[" + this.id + "] "
-				+ this.screening.getDonation().getDonor().getName();
+		return "Questionary [id=" + id + ", screening=" + screening + ", questions=" + questions + "]";
 	}
 
 	@Override

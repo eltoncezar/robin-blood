@@ -1,26 +1,18 @@
 package models;
 
-import java.util.Date;
 
 public class Collection {
 	private int id;
-	private Donation donation;
-	private Status status;
-	private User user;
-	private Date date;
+	private int idDonation;
 
 	public Collection() {
 		super();
 	}
 
-	public Collection(int id, Donation donation, Status status, User user,
-			Date date) {
+	public Collection(int id, int idDonation) {
 		super();
 		this.id = id;
-		this.donation = donation;
-		this.status = status;
-		this.user = user;
-		this.date = date;
+		this.idDonation = idDonation;
 	}
 
 	public int getId() {
@@ -31,41 +23,12 @@ public class Collection {
 		this.id = id;
 	}
 
-	public Donation getDonation() {
-		return donation;
+	public int getIdDonation() {
+		return idDonation;
 	}
 
-	public void setDonation(Donation donation) {
-		this.donation = donation;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	@Override
-	public String toString() {
-		return "[" + this.id + "] " + this.donation.getUser().getName();
+	public void setIdDonation(int idDonation) {
+		this.idDonation = idDonation;
 	}
 
 	@Override
@@ -73,6 +36,7 @@ public class Collection {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
+		result = prime * result + idDonation;
 		return result;
 	}
 
@@ -85,8 +49,13 @@ public class Collection {
 		if (getClass() != obj.getClass())
 			return false;
 		Collection other = (Collection) obj;
-		if (this.id != other.id)
+		if (id != other.id)
+			return false;
+		if (idDonation != other.idDonation)
 			return false;
 		return true;
 	}
+
+
+
 }
