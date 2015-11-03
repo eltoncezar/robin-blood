@@ -12,7 +12,7 @@ import java.util.List;
 import models.Collection;
 
 public class CollectionData implements CrudItf<Collection> {
-
+//teste do elton
 	@Override
 	public List<Collection> listAll() throws ConnectException {
 		List<Collection> lista = new ArrayList<>();
