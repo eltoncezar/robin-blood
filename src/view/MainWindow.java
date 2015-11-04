@@ -13,14 +13,16 @@ public class MainWindow extends JFrame{
  
     private JDesktopPane desktopPane;
     private UserRegistration userResFrame;
+    private DonorRegistration donorResFrame;
     private JMenuBar menuBar;
  
     public MainWindow(){
     	super("Robin Blood");
     	
-    	//MainWindow.setIconImage(new ImageIcon(getClass().getResource("view/Imagens/IconBlood.png")))
+    	
     	//Inicializa Jframe FullScrean
-    	this.setExtendedState(JFrame.MAXIMIZED_BOTH);	 
+    	this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    	setSize(800,600);
 	
         desktopPane = new JDesktopPane();
         menuBar = new JMenuBar();
@@ -56,8 +58,31 @@ public class MainWindow extends JFrame{
         		
         });
         
-        JMenuItem mntmTeste = new JMenuItem("Doador");
-        mnNewMenu.add(mntmTeste);
+        JMenuItem mDoador = new JMenuItem("Doador");
+        mnNewMenu.add(mDoador);
+        mDoador.addActionListener(new ActionListener() {        	
+           	@Override
+        	public void actionPerformed(ActionEvent e) {
+           		//Verifica inicialização do Frame
+           		if(donorResFrame == null){
+           			donorResFrame = new DonorRegistration();
+           			donorResFrame.setVisible(true);
+                    desktopPane.add(donorResFrame);
+                }
+                else if(!donorResFrame.isVisible()){
+                	donorResFrame.setVisible(true);
+                    desktopPane.add(donorResFrame);
+                }
+           		//Inicializa Frame Centralizado
+           		donorResFrame.setBounds(0, 0, donorResFrame.getWidth(), donorResFrame.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = donorResFrame.getWidth();
+                int aIFrame = donorResFrame.getHeight();
+                donorResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+            }
+        		
+        });
         
         JMenuItem mntmHospital = new JMenuItem("Hospital");
         mnNewMenu.add(mntmHospital);
