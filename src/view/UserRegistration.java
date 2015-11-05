@@ -20,12 +20,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
+import javax.swing.JComboBox;
 
 public class UserRegistration extends JInternalFrame {
 	private JTextField textField_id;
 	private JTextField textField_nome;
 	private JTextField textField_mail;
 	private JPasswordField passwordField;
+	private JTextField textField;
 
 	public UserRegistration() {
 		setMaximizable(true);
@@ -33,7 +35,7 @@ public class UserRegistration extends JInternalFrame {
 		setClosable(true);
 		setTitle("Cadastrar Usu\u00E1rio");
 		//setBounds(100, 100, 600, 500);
-		setSize(300,276);  
+		setSize(332,271);  
 		 
        
 		
@@ -58,7 +60,7 @@ public class UserRegistration extends JInternalFrame {
 		textField_mail = new JTextField();
 		textField_mail.setColumns(10);
 		
-		JButton btnOk = new JButton("OK");
+		JButton btnOk = new JButton("Salvar");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -76,6 +78,15 @@ public class UserRegistration extends JInternalFrame {
 		JSeparator separator = new JSeparator();
 		
 		JSeparator separator_1 = new JSeparator();
+		
+		JLabel lblNewLabel_1 = new JLabel("Função:");
+		
+		JComboBox comboBox = new JComboBox();
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		
+		JButton btnBuscar = new JButton("Buscar");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -90,22 +101,37 @@ public class UserRegistration extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textField_mail, 226, 226, Short.MAX_VALUE)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_nome))
-					.addGap(10))
-				.addComponent(separator, GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblNewLabel_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(textField_nome, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+				.addComponent(separator, GroupLayout.PREFERRED_SIZE, 484, Short.MAX_VALUE)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(45)
-					.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addGap(47)
+					.addGap(67)
 					.addComponent(btnCancelar)
-					.addContainerGap(50, Short.MAX_VALUE))
-				.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+					.addGap(34)
+					.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(232, Short.MAX_VALUE))
+				.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 484, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(41)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnBuscar)
+					.addContainerGap(194, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGap(39)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBuscar))
+					.addGap(8)
 					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -122,13 +148,15 @@ public class UserRegistration extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSenha)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(9)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnOk)
-						.addComponent(btnCancelar))
+						.addComponent(btnCancelar)
+						.addComponent(btnOk))
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
