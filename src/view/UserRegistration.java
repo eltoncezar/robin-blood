@@ -4,16 +4,23 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import data.ConnectException;
+import data.UserTypeData;
+import models.UserType;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,38 +28,34 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 
 public class UserRegistration extends JInternalFrame {
-	private JTextField textField_id;
 	private JTextField textField_nome;
 	private JTextField textField_mail;
 	private JPasswordField passwordField;
-	private JTextField textField;
+	private UserList userlist;
+	private JDesktopPane desktopPane;
+	
 
-	public UserRegistration() {
+	public UserRegistration() throws ConnectException {
 		setMaximizable(true);
 		setIconifiable(true);
 		setClosable(true);
 		setTitle("Cadastrar Usu\u00E1rio");
 		//setBounds(100, 100, 600, 500);
-		setSize(332,271);  
-		 
-       
+		setSize(305,300);
 		
-		JLabel lblNewLabel = new JLabel("ID:");
+		//Teste Segunda janela
+		desktopPane = new JDesktopPane();
+        setContentPane(desktopPane);
+        
 		
+		JLabel lblNome = new JLabel("Nome");
 		
-				
+		JLabel lblSenha = new JLabel("Senha");
 		
-		textField_id = new JTextField();
-		textField_id.setEditable(false);
-		textField_id.setColumns(10);
-		
-		JLabel lblNome = new JLabel("Nome:");
-		
-		JLabel lblSenha = new JLabel("Senha:");
-		
-		JLabel lblEmail = new JLabel("E-mail:");
+		JLabel lblEmail = new JLabel("E-mail");
 		
 		textField_nome = new JTextField();
 		textField_nome.setColumns(10);
@@ -77,86 +80,107 @@ public class UserRegistration extends JInternalFrame {
 		
 		JSeparator separator = new JSeparator();
 		
-		JSeparator separator_1 = new JSeparator();
+		JLabel lblNewLabel_1 = new JLabel("Tipo Usuário");
+		UserTypeData UTD = new UserTypeData();
 		
-		JLabel lblNewLabel_1 = new JLabel("Função:");
 		
-		JComboBox comboBox = new JComboBox();
+		//String[] tipo_user = {"Administrador","Atendente","Médico","Hospital","Exame","Coleta"};
+		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel<>(UTD.listAll().toArray()));
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		JButton btnAlterar = new JButton("Buscar");
 		
-		JButton btnBuscar = new JButton("Buscar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(userlist == null){
+                	userlist = new UserList();
+                	userlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(userlist);
+                }
+                else if(!userlist.isVisible()){
+                	userlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(userlist);
+                }
+           		//Inicializa Frame Centralizado
+           		userlist.setBounds(0, 0, userlist.getWidth(), userlist.getHeight());
+           		int lDesk = MainWindow.getDesktopPanel().getWidth();
+                int aDesk = MainWindow.getDesktopPanel().getHeight();
+                int lIFrame = userlist.getWidth();
+                int aIFrame = userlist.getHeight();
+                userlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+                userlist.moveToFront();
+			
+            }
+			
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+					.addGap(440))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(440))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblNewLabel)
-						.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblSenha, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_mail, 226, 226, Short.MAX_VALUE)
+						.addComponent(textField_nome)
+						.addComponent(textField_mail)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(textField_nome, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
-				.addComponent(separator, GroupLayout.PREFERRED_SIZE, 484, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(67)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblSenha)
+								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
+							.addGap(48)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1))))
+					.addContainerGap(195, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(26)
 					.addComponent(btnCancelar)
-					.addGap(34)
-					.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(232, Short.MAX_VALUE))
-				.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 484, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(41)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnBuscar)
-					.addContainerGap(194, Short.MAX_VALUE))
+					.addComponent(btnAlterar)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(224, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnBuscar))
-					.addGap(8)
-					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(22)
+					.addComponent(lblNome)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textField_nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(textField_id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addComponent(lblEmail)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(textField_nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEmail)
-						.addComponent(textField_mail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textField_mail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(14)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSenha)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(9)
+						.addComponent(lblNewLabel_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancelar)
-						.addComponent(btnOk))
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnOk)
+						.addComponent(btnAlterar)
+						.addComponent(btnCancelar))
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);

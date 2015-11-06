@@ -6,15 +6,32 @@ import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import data.ConnectException;
 import javafx.scene.image.Image;
  
 public class MainWindow extends JFrame{
 
  
-    private JDesktopPane desktopPane;
+    private static JDesktopPane desktopPane;
     private UserRegistration userResFrame;
     private DonorRegistration donorResFrame;
     private JMenuBar menuBar;
+    
+    private static MainWindow mainwindow;
+    
+    public static MainWindow getInstancia(){
+    	if(mainwindow == null){
+    		mainwindow = new MainWindow();
+    	}
+		return mainwindow;
+    	
+    }
+    
+    public static JDesktopPane getDesktopPanel(){
+    	
+		return getInstancia().desktopPane;
+    	
+    }
  
     public MainWindow(){
     	super("Robin Blood");
@@ -39,7 +56,12 @@ public class MainWindow extends JFrame{
         	public void actionPerformed(ActionEvent e) {
            		//Verifica inicialização do Frame
            		if(userResFrame == null){
-                	userResFrame = new UserRegistration();
+                	try {
+						userResFrame = new UserRegistration();
+					} catch (ConnectException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 	userResFrame.setVisible(true);
                     desktopPane.add(userResFrame);
                 }
@@ -54,6 +76,8 @@ public class MainWindow extends JFrame{
                 int lIFrame = userResFrame.getWidth();
                 int aIFrame = userResFrame.getHeight();
                 userResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+                
+                
             }
         		
         });
