@@ -1,13 +1,13 @@
 package models;
 
 import java.util.List;
-//Verificar lista de telefones. Se for o caso será preciso implementar no banco uma nova tabela de ligação.
+
 public class Hospital {
 	private int id;
 	private String name;
 	private String document;
 	private Address address;
-	private Phone phone;
+	private List<Phone> phones;
 
 	public Hospital() {
 		super();

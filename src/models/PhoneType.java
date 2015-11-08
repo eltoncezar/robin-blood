@@ -1,14 +1,14 @@
 package models;
 
-public class PrimaryTest {
+public class PhoneType {
 	private int id;
 	private String name;
 
-	public PrimaryTest() {
+	public PhoneType() {
 		super();
 	}
 
-	public PrimaryTest(int id, String name) {
+	public PhoneType(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,7 +51,7 @@ public class PrimaryTest {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PrimaryTest other = (PrimaryTest) obj;
+		PhoneType other = (PhoneType) obj;
 		if (this.id != other.id)
 			return false;
 		return true;
