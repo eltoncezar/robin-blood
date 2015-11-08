@@ -43,7 +43,13 @@ public class UserRegistrationController {
 	}
 
 	public DefaultTableModel getTableModel(List<User> users) {
-		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0);
+		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 
 		for (User user : users) {
 			Object[] o = new Object[3];
