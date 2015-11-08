@@ -16,12 +16,15 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DonationRegistration extends JInternalFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTable table;
 	private JTable table_1;
+	private DonorList donorlist;
 
 	
 	public DonationRegistration() {
@@ -53,6 +56,27 @@ public class DonationRegistration extends JInternalFrame {
 		JButton btnNovaDoao = new JButton("Nova Doa\u00E7\u00E3o");
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(donorlist == null){
+                	donorlist = new DonorList();
+                	donorlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(donorlist);
+                }
+                else if(!donorlist.isVisible()){
+                	donorlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(donorlist);
+                }
+           		//Inicializa Frame Centralizado
+           		donorlist.setBounds(0, 0, donorlist.getWidth(), donorlist.getHeight());
+           		int lDesk = MainWindow.getDesktopPanel().getWidth();
+                int aDesk = MainWindow.getDesktopPanel().getHeight();
+                int lIFrame = donorlist.getWidth();
+                int aIFrame = donorlist.getHeight();
+                donorlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+                donorlist.moveToFront();
+			}
+		});
 		
 		JLabel lblUltimasDoaes = new JLabel("Ultimas Doa\u00E7\u00F5es");
 		lblUltimasDoaes.setForeground(Color.BLUE);
