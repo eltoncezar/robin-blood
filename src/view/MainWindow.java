@@ -14,7 +14,7 @@ public class MainWindow extends JFrame{
  
     private static JDesktopPane desktopPane;
     private UserRegistration userResFrame;
-    private DonorRegistration donorResFrame;
+	private DonorList donorlist;
     private DonationRegistration donationResFrame;
     private UserList userlist;
     private JMenuBar menuBar;
@@ -76,22 +76,7 @@ public class MainWindow extends JFrame{
                 userlist.moveToFront();
 			
             }
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		
-           		//Verifica inicialização do Frame
-           		
-        		
+         		
         });
         
         JMenuItem mDoador = new JMenuItem("Doador");
@@ -99,23 +84,22 @@ public class MainWindow extends JFrame{
         mDoador.addActionListener(new ActionListener() {        	
            	@Override
         	public void actionPerformed(ActionEvent e) {
-           		//Verifica inicialização do Frame
-           		if(donorResFrame == null){
-           			donorResFrame = new DonorRegistration();
-           			donorResFrame.setVisible(true);
-                    desktopPane.add(donorResFrame);
+           		if(donorlist == null){
+                	donorlist = new DonorList();
+                	donorlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(donorlist);
                 }
-                else if(!donorResFrame.isVisible()){
-                	donorResFrame.setVisible(true);
-                    desktopPane.add(donorResFrame);
+                else if(!donorlist.isVisible()){
+                	donorlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(donorlist);
                 }
            		//Inicializa Frame Centralizado
-           		donorResFrame.setBounds(0, 0, donorResFrame.getWidth(), donorResFrame.getHeight());
-                int lDesk = desktopPane.getWidth();
-                int aDesk = desktopPane.getHeight();
-                int lIFrame = donorResFrame.getWidth();
-                int aIFrame = donorResFrame.getHeight();
-                donorResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+           		donorlist.setBounds(0, 0, donorlist.getWidth(), donorlist.getHeight());
+           		int lDesk = MainWindow.getDesktopPanel().getWidth();
+                int aDesk = MainWindow.getDesktopPanel().getHeight();
+                int lIFrame = donorlist.getWidth();
+                int aIFrame = donorlist.getHeight();
+                donorlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
             }
         		
         });
