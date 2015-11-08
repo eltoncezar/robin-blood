@@ -3,15 +3,19 @@ package models;
 public class PrimaryTest {
 	private int id;
 	private String name;
+	private String result;
+	private User user;
 
 	public PrimaryTest() {
 		super();
 	}
 
-	public PrimaryTest(int id, String name) {
+	public PrimaryTest(int id, String name, String result, User user) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.result = result;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -28,6 +32,22 @@ public class PrimaryTest {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

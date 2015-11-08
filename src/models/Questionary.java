@@ -1,22 +1,18 @@
 package models;
 
-import java.util.List;
 
 public class Questionary {
 	private int id;
-	private Screening screening;
-	private List<QuestionaryQuestion> questions;
+	private int idScreening;
 
 	public Questionary() {
 		super();
 	}
 
-	public Questionary(int id, Screening screening,
-			List<QuestionaryQuestion> questions) {
+	public Questionary(int id, int idScreening) {
 		super();
 		this.id = id;
-		this.screening = screening;
-		this.questions = questions;
+		this.idScreening = idScreening;
 	}
 
 	public int getId() {
@@ -27,27 +23,17 @@ public class Questionary {
 		this.id = id;
 	}
 
-	public Screening getScreening() {
-		return screening;
+	public int getIdScreening() {
+		return idScreening;
 	}
 
-	public void setScreening(Screening donation) {
-		this.screening = donation;
+	public void setIdScreening(int idScreening) {
+		this.idScreening = idScreening;
 	}
-
-	public List<QuestionaryQuestion> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<QuestionaryQuestion> questions) {
-		this.questions = questions;
-	}
-
-	
 
 	@Override
 	public String toString() {
-		return "Questionary [id=" + id + ", screening=" + screening + ", questions=" + questions + "]";
+		return "Questionary [id=" + id + ", idScreening=" + idScreening + "]";
 	}
 
 	@Override
@@ -55,6 +41,7 @@ public class Questionary {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
+		result = prime * result + idScreening;
 		return result;
 	}
 
@@ -67,8 +54,16 @@ public class Questionary {
 		if (getClass() != obj.getClass())
 			return false;
 		Questionary other = (Questionary) obj;
-		if (this.id != other.id)
+		if (id != other.id)
+			return false;
+		if (idScreening != other.idScreening)
 			return false;
 		return true;
 	}
+
+	
+
 }
+	
+
+	

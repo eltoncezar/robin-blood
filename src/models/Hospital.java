@@ -1,20 +1,18 @@
 package models;
 
-import java.util.List;
-
 public class Hospital {
 	private int id;
 	private String name;
 	private String document;
 	private Address address;
-	private List<Phone> phones;
+	private Phone phones;
 
 	public Hospital() {
 		super();
 	}
 
 	public Hospital(int id, String name, String document, Address address,
-			List<Phone> phones) {
+			Phone phones) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -55,11 +53,11 @@ public class Hospital {
 		this.address = address;
 	}
 
-	public List<Phone> getPhones() {
+	public Phone getPhones() {
 		return phones;
 	}
 
-	public void setPhones(List<Phone> phones) {
+	public void setPhones(Phone phones) {
 		this.phones = phones;
 	}
 
