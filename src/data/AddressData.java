@@ -8,10 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import models.Address;
 
-import models.Donor;
-
-public class AddressData implements CrudItf<Donor> {
+public class AddressData implements CrudItf<Address> {
 
 	@Override
 	public List<Address> listAll() throws ConnectException {
@@ -19,20 +18,21 @@ public class AddressData implements CrudItf<Donor> {
 		List<Address> lista = new ArrayList<>();
 
 		try {
-			String query = "SELECT id_address, address_street, address_number,address_country, address_zip, address_state, address_city  FROM address";
+			String query = "SELECT * FROM Address";
 
 			Connection con = DriverManager.getConnection(connection);
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Address(rs.getInt("id"),
-										rs.getString("street"), 
-										rs.setString("number"),
-										rs.getString("city"),
-										rs.getString("state"),
-										rs.getString("cpf"),
-										rs.getString("zipCode"), 
-										rs.getString("country")));
+				lista.add(
+					new Address(
+						rs.getInt("id_address"),
+						rs.getString("address_street"), 
+						rs.getInt("address_number"),
+						rs.getString("address_city"),
+						rs.getString("address_state"),
+						rs.getString("address_zip"), 
+						rs.getString("address_country")));
 			}
 			rs.close();
 			stmt.close();
@@ -46,32 +46,24 @@ public class AddressData implements CrudItf<Donor> {
 
 	@Override
 	public Address select(int id) throws ConnectException {
-		Address address = new Address();
+		Address address = null;
 
 		try {
-			String query = "SELECT id_address, "
-								+ "address_street, "
-								+ "address_number,"
-								+ "address_country, "
-								+ "address_zip, "
-								+ "address_state, "
-								+ "address_city  "
-							+ "FROM address"
-							+ "WHERE id = ?";
+			String query = "SELECT * FROM Address WHERE id_address = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				address = new Address(rs.getInt("id"),
-						rs.getString("street"), 
-						rs.setString("number"),
-						rs.getString("city"),
-						rs.getString("state"),
-						rs.getString("cpf"),
-						rs.getString("zipCode"), 
-						rs.getString("country")));
+				address = new Address(
+					rs.getInt("id_address"),
+					rs.getString("address_street"), 
+					rs.getInt("address_number"),
+					rs.getString("address_city"),
+					rs.getString("address_state"),
+					rs.getString("address_zip"), 
+					rs.getString("address_country"));
 			}
 			rs.close();
 			stmt.close();
@@ -91,13 +83,12 @@ public class AddressData implements CrudItf<Donor> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getid_donor());
-			stmt.setString(2, obj.getstreet());
-			stmt.setString(3, obj.getnumber());
-			stmt.setString(4, obj.getcity());
-			stmt.setString(5, obj.getstate());
-			stmt.setString(6, obj.zipCode());
-			stmt.setString(7,obj.getcountry())
+			stmt.setString(1, obj.getStreet());
+			stmt.setInt(2, obj.getNumber());
+			stmt.setString(3, obj.getCountry());
+			stmt.setString(4, obj.getZipCode());
+			stmt.setString(5, obj.getState());
+			stmt.setString(6, obj.getCity());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -117,7 +108,7 @@ public class AddressData implements CrudItf<Donor> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getId());
+			stmt.setString(1, String.valueOf(obj.getId()));
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -130,24 +121,18 @@ public class AddressData implements CrudItf<Donor> {
 	@Override
 	public Address update(Address obj) throws ConnectException {
 		try{
-			String query = "UPDATE address set address_street=?,"
-											+ "address_number=?,"
-											+ "address_city=?"
-											+ "address_state=? "
-											+ "address_zip=?,"
-											+ "address_country=?,"
-											+ "WHERE id_address=?";
+			String query = "UPDATE Address set address_street=?, address_number=?, address_country=?, address_zip=?, address_state=?  address_city=? WHERE id_address=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getStreet());
-			stmt.setString(2, obj.getNumber());
-			stmt.setString(3, obj.getCity());
-			stmt.setString(4, obj.getState());
-			stmt.setString(5, obj.zipCode());
-			stmt.setString(6, obj.getCountry());
-			stmt.setString(7, obj.getId)
+			stmt.setInt(2, obj.getNumber());
+			stmt.setString(3, obj.getCountry());
+			stmt.setString(4, obj.getZipCode());
+			stmt.setString(5, obj.getState());
+			stmt.setString(6, obj.getCity());
+			stmt.setInt(7, obj.getId());
 			
 			stmt.executeUpdate();
 			stmt.close();

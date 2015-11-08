@@ -9,9 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import models.Donor;
+import models.Address;
+import models.Hospital;
+import models.Phone;
 
-public class HospitalData implements CrudItf<Donor> {
+public class HospitalData implements CrudItf<Hospital> {
+
+	private AddressData addressData = new AddressData();
+	private PhoneData phoneData = new PhoneData();
 
 	@Override
 	public List<Hospital> listAll() throws ConnectException {
@@ -25,11 +30,13 @@ public class HospitalData implements CrudItf<Donor> {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Question(	rs.getString("id"), 
-										rs.getString("name"),
-										rs.getString("document"),
-										rs.getString("address"),
-										rs.getString("phones")));
+				lista.add(
+					new Hospital(
+						rs.getInt("id_hosp"),
+						rs.getString("hosp_name"),
+						rs.getString("hosp_document"),
+						addressData.select(rs.getInt("id_address")),
+						phoneData.select(rs.getInt("id_phone"))));
 			}
 			rs.close();
 			stmt.close();
@@ -43,21 +50,22 @@ public class HospitalData implements CrudItf<Donor> {
 
 	@Override
 	public Hospital select(int id) throws ConnectException {
-		Hospital hospital = new Question();
+		Hospital hospital = null;
 
 		try {
-			String query = "SELECT * FROM hospital WHERE id_hospital = ?";
+			String query = "SELECT * FROM Hospital WHERE id_hosp = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				hospital = new Hospital(rs.getString("id"), 
-										rs.getString("name"),
-										rs.getString("document"),
-										rs.getString("address"),
-										rs.getString("phones")));
+				hospital = new Hospital(
+						rs.getInt("id_hosp"),
+						rs.getString("hosp_name"),
+						rs.getString("hosp_document"),
+						addressData.select(rs.getInt("id_address")),
+						phoneData.select(rs.getInt("id_phone")));
 			}
 			rs.close();
 			stmt.close();
@@ -72,17 +80,20 @@ public class HospitalData implements CrudItf<Donor> {
 	@Override
 	public Hospital save(Hospital obj) throws ConnectException {
 		try {
-			String query = "INSERT INTO hospital VALUES(?,?,?,?,?)";
+			Address address = addressData.save(obj.getAddress());
+			Phone phone = phoneData.save(obj.getPhones());
+			
+			
+			String query = "INSERT INTO Hospital VALUES(?,?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.name());
-			stmt.setString(2, obj.document());
-			stmt.setString(3, obj.address());
-			stmt.setString(4, obj.phones());
-			
-			
+			stmt.setString(1, obj.getName());
+			stmt.setString(2, obj.getDocument());
+			stmt.setInt(3, address.getId());
+			stmt.setInt(4, phone.getId());
+
 			stmt.executeUpdate();
 			stmt.close();
 			con.close();
@@ -96,13 +107,13 @@ public class HospitalData implements CrudItf<Donor> {
 	@Override
 	public void delete(Hospital obj) throws ConnectException {
 		try {
-			String query = "DELETE hospital WHERE id_hospital=?";
+			String query = "DELETE Hospital WHERE id_hosp=?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getId());
-			
+			stmt.setInt(1, obj.getId());
+
 			stmt.executeUpdate();
 			stmt.close();
 			con.close();
@@ -113,22 +124,21 @@ public class HospitalData implements CrudItf<Donor> {
 
 	@Override
 	public Hospital update(Hospital obj) throws ConnectException {
-		try{
-			String query = "UPDATE hospital SET hosp_name=?, hosp_document=?"
-											+ "WHERE id_hospital=?";
-			
-			Connection con = DriverManager.getConnection(connection); 
+		try {
+			String query = "UPDATE Hospital SET hosp_name=?, hosp_document=? WHERE id_hosp=?";
+
+			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
-			
-			stmt.setString(1, obj.name());
-			stmt.setString(2, obj.document());
-			stmt.setString(3, obj.getId());
-			
+
+			stmt.setString(1, obj.getName());
+			stmt.setString(2, obj.getDocument());
+			stmt.setInt(3, obj.getId());
+
 			stmt.executeUpdate();
 			stmt.close();
 			con.close();
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
 		return null;
