@@ -38,7 +38,13 @@ import data.DonorData;
 	}
 
 	public DefaultTableModel getTableModel(List<Donor> donors) {
-		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0);
+		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0) {
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
 
 		for (Donor donor : donors) {
 			Object[] o = new Object[3];

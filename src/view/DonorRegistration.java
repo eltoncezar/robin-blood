@@ -12,18 +12,23 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import models.Donor;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DonorRegistration extends JInternalFrame {
-	private JTextField textField;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtName;
+	private JTextField txtEmail;
+	private JTextField txtCPF;
 	private JTextField textField_1;
 	private JTextField textField_4;
 	private JTextField textField_5;
@@ -31,7 +36,7 @@ public class DonorRegistration extends JInternalFrame {
 	private JTable table;
 
 
-	public DonorRegistration() {
+	public DonorRegistration(Donor param) {
 		setTitle("CADASTRO DOADOR");
 		setMaximizable(true);
 		setIconifiable(true);
@@ -48,14 +53,14 @@ public class DonorRegistration extends JInternalFrame {
 		
 		JLabel lblTipoSanguineo = new JLabel("Tipo Sanguineo:");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtName = new JTextField();
+		txtName.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
 		
@@ -124,6 +129,17 @@ public class DonorRegistration extends JInternalFrame {
 			}
 		});
 		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Tipo", "N\u00FAmero"
+			}
+		));
+		
+		
+		txtName.setText(param.getName());
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -135,7 +151,7 @@ public class DonorRegistration extends JInternalFrame {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblCpf))
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -155,8 +171,8 @@ public class DonorRegistration extends JInternalFrame {
 										.addComponent(lblEmail))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(textField, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-										.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))))
+										.addComponent(txtName, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+										.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))))
 							.addGap(32))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(99)
@@ -226,11 +242,11 @@ public class DonorRegistration extends JInternalFrame {
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNome)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEmail)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCpf)
@@ -238,7 +254,7 @@ public class DonorRegistration extends JInternalFrame {
 						.addComponent(lblTipoSanguineo))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -279,15 +295,7 @@ public class DonorRegistration extends JInternalFrame {
 						.addComponent(btnCancelar))
 					.addGap(18))
 		);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Tipo", "N\u00FAmero"
-			}
-		));
+
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
