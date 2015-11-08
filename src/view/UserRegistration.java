@@ -57,6 +57,7 @@ public class UserRegistration extends JInternalFrame {
 		
 		//Teste Segunda janela
 		desktopPane = new JDesktopPane();
+		desktopPane.setBackground(Color.WHITE);
         setContentPane(desktopPane);
         
 		
@@ -100,18 +101,9 @@ public class UserRegistration extends JInternalFrame {
 				
 			}
 		});
-		
-		JButton btnAlterar = new JButton("Buscar");
-		
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-			
-		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
@@ -134,14 +126,12 @@ public class UserRegistration extends JInternalFrame {
 								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblNewLabel_1))))
 					.addContainerGap(195, Short.MAX_VALUE))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(26)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(69)
 					.addComponent(btnCancelar)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnAlterar)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(224, Short.MAX_VALUE))
+					.addContainerGap(248, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
 					.addContainerGap())
@@ -170,7 +160,6 @@ public class UserRegistration extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
-						.addComponent(btnAlterar)
 						.addComponent(btnCancelar))
 					.addContainerGap())
 		);
