@@ -8,7 +8,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		windows = new MainWindow();
+		windows.getInstancia();
+		
 
 	}
 
