@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
@@ -13,11 +14,18 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import data.ConnectException;
+import models.User;
+import business.UserRegistrationController;
+
 public class UserList extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
+	private UserRegistrationController controller;
 
 	public UserList() {
+		controller = new UserRegistrationController();
+		
 		setClosable(true);
 		setTitle("Listar Usu\u00E1rios");
 		//setBounds(100, 100, 450, 300);
@@ -66,15 +74,9 @@ public class UserList extends JInternalFrame {
 					.addComponent(btnEditar)
 					.addContainerGap(19, Short.MAX_VALUE))
 		);
-		
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nome", "E-mail"
-			}
-		));
+		table.setModel(controller.getAllTableModel());
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
