@@ -9,9 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import models.Donor;
 
-public class QuestionaryData implements CrudItf<Donor> {
+import models.Questionary;
+
+
+public class QuestionaryData implements CrudItf<Questionary> {
 
 	@Override
 	public List<Questionary> listAll() throws ConnectException {
@@ -25,8 +27,8 @@ public class QuestionaryData implements CrudItf<Donor> {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Questionary(	rs.getString("id"), 
-										rs.getString("screening")));
+				lista.add(new Questionary(rs.getInt("id_questionary"),
+						rs.getInt("id_screening")));
 			}
 			rs.close();
 			stmt.close();
@@ -50,8 +52,8 @@ public class QuestionaryData implements CrudItf<Donor> {
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				questionary = new Questionary(rs.getString("id"), 
-									rs.getString("screening")));
+				questionary = new Questionary(rs.getInt("id_questionary"),
+												rs.getInt("id_screening"));
 			}
 			rs.close();
 			stmt.close();
@@ -64,14 +66,14 @@ public class QuestionaryData implements CrudItf<Donor> {
 	}
 
 	@Override
-	public Address save(Questionary obj) throws ConnectException {
+	public Questionary save(Questionary obj) throws ConnectException {
 		try {
 			String query = "INSERT INTO questionary VALUES(?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.screening());
+			stmt.setString(1, Integer.toString(obj.getIdScreening()));
 			
 			
 			stmt.executeUpdate();
@@ -89,7 +91,8 @@ public class QuestionaryData implements CrudItf<Donor> {
 	}
 //Este método não poderá ser implemntado
 	@Override
-	public Donor update(Questionary obj) throws ConnectException {
+	public Questionary update(Questionary obj) throws ConnectException {
+		return null;
 	}
 
 }
