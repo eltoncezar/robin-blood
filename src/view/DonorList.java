@@ -12,6 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import business.DonorController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -19,12 +22,18 @@ public class DonorList extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
 	private DonorRegistration donorResFrame;
+	private DonorController controller;
 
 	public DonorList() {
+		controller = new DonorController();
+		
 		setClosable(true);
 		setTitle("Listar Doadores");
 		//setBounds(100, 100, 450, 300);
 		setSize(450, 350);
+		
+		table = new JTable();
+		table.setModel(controller.getTableModel(controller.getAll()));
 		
 		JLabel lblNome = new JLabel("Nome");
 		
@@ -32,6 +41,11 @@ public class DonorList extends JInternalFrame {
 		textField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(controller.getTableModel(controller.getByFilter(textField.getText())));
+			}
+		});
 		
 		JButton btnEditar = new JButton("Editar");
 		
@@ -98,15 +112,7 @@ public class DonorList extends JInternalFrame {
 						.addComponent(btnNovo))
 					.addContainerGap())
 		);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nome", "E-mail"
-			}
-		));
+
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
