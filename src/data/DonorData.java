@@ -13,22 +13,33 @@ import models.Donor;
 
 public class DonorData implements CrudItf<Donor> {
 
+	AddressData addressData = new AddressData();
+	PhoneData phoneData = new PhoneData();
+	
 	@Override
 	public List<Donor> listAll() throws ConnectException {
 
 		List<Donor> lista = new ArrayList<>();
 
-		try {
+		try {	
 			String query = "SELECT * FROM Donor";
 
 			Connection con = DriverManager.getConnection(connection);
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Donor(rs.getInt("id_donor"),
-						rs.getString("name"), rs.getString("cpf"), rs
-								.getString("gender"), rs.getString("email"), rs
-								.getString("bloodType"), null, null));
+				lista.add(
+					new Donor(
+						rs.getInt("id_donor"),
+						rs.getString("donor_name"),
+						rs.getString("donor_cpf"),
+						rs.getString("donor_gender"),
+						rs.getString("donor_email"),
+						rs.getString("donor_blood_type"),
+						addressData.select(rs.getInt("id_address")),
+						phoneData.listAllDonorPhone(rs.getInt("id_donor"))
+					)
+				);
 			}
 			rs.close();
 			stmt.close();
@@ -52,10 +63,15 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				donor = new Donor(rs.getInt("id_donor"), rs.getString("name"),
-						rs.getString("cpf"), rs.getString("gender"),
-						rs.getString("email"), rs.getString("bloodType"), null,
-						null);
+				donor = new Donor(
+					rs.getInt("id_donor"),
+					rs.getString("donor_name"),
+					rs.getString("donor_cpf"),
+					rs.getString("donor_gender"),
+					rs.getString("donor_email"),
+					rs.getString("donor_blood_type"),
+					addressData.select(rs.getInt("id_address")),
+					phoneData.listAllDonorPhone(rs.getInt("id_donor")));
 			}
 			rs.close();
 			stmt.close();
@@ -65,6 +81,40 @@ public class DonorData implements CrudItf<Donor> {
 		}
 
 		return donor;
+	}
+	
+	public List<Donor> selectByName(String filter) throws ConnectException {
+		List<Donor> lista = new ArrayList<>();
+
+		try {
+			String query = "SELECT * FROM Donor WHERE donor_name like '%' + ? + '%'";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, filter);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lista.add(
+					new Donor(
+						rs.getInt("id_donor"),
+						rs.getString("donor_name"),
+						rs.getString("donor_cpf"),
+						rs.getString("donor_gender"),
+						rs.getString("donor_email"),
+						rs.getString("donor_blood_type"),
+						addressData.select(rs.getInt("id_address")),
+						phoneData.listAllDonorPhone(rs.getInt("id_donor"))
+					)
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return lista;
 	}
 
 	@Override
@@ -100,7 +150,7 @@ public class DonorData implements CrudItf<Donor> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, Integer.toString(obj.getId()));
+			stmt.setInt(1, obj.getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -123,7 +173,7 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.setString(3, obj.getGender());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getBloodType());
-			stmt.setString(6, Integer.toString(obj.getId()));
+			stmt.setInt(6, obj.getId());
 			stmt.executeUpdate();
 
 			stmt.close();

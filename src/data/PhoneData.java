@@ -40,6 +40,39 @@ public class PhoneData implements CrudItf<Phone> {
 
 		return lista;
 	}
+	
+
+	public List<Phone> listAllDonorPhone(int donorId) throws ConnectException {
+
+		List<Phone> lista = new ArrayList<>();
+
+		try {
+			String query = "SELECT p.id_phone, p.phone_number"
+					+ "FROM Donor_Phone as dp"
+					+ "INNER JOIN Phone as p ON p.id_phone = dp.id_phone"
+					+ "WHERE dp.id_donor = ?";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, donorId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lista.add(
+					new Phone(
+						rs.getInt("id_phone"),
+						rs.getString("phone_number")
+					)
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return lista;
+	}
 
 	@Override
 	public Phone select(int id) throws ConnectException {
