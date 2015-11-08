@@ -2,12 +2,14 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -15,6 +17,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import business.UserRegistrationController;
 import data.ConnectException;
+import models.Donor;
+import models.User;
 
 import javax.swing.JFrame;
 
@@ -22,7 +26,7 @@ public class UserList extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
 	private UserRegistrationController controller;
-	private UserRegistration donorResFrame;
+	private UserRegistration userResFrame;
 
 	public UserList() {
 		setClosable(true);
@@ -30,9 +34,12 @@ public class UserList extends JInternalFrame {
 		setTitle("Listar Usu\u00E1rios");
 		// setBounds(100, 100, 450, 300);
 		setSize(450, 350);
-
+		
+		List<User> users = controller.getAll();
 		table = new JTable();
-		table.setModel(controller.getTableModel(controller.getAll()));
+		table.setModel(controller.getTableModel(users));
+		
+
 
 		JLabel lblNome = new JLabel("Nome");
 
@@ -47,6 +54,19 @@ public class UserList extends JInternalFrame {
 		});
 
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = table.getSelectedRow();
+				if (rowIndex > -1) {
+					User selectedItem = users.get(rowIndex);
+					createUserRegistration(selectedItem);
+				}
+				else {
+					JOptionPane.showMessageDialog(getContentPane(), "Selecione um item!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane();
 
@@ -54,28 +74,7 @@ public class UserList extends JInternalFrame {
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// Verifica inicialização do Frame
-				if (donorResFrame == null) {
-					try {
-						donorResFrame = new UserRegistration();
-					} catch (ConnectException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					donorResFrame.setVisible(true);
-					MainWindow.getDesktopPanel().add(donorResFrame);
-				} else if (!donorResFrame.isVisible()) {
-					donorResFrame.setVisible(true);
-					MainWindow.getDesktopPanel().add(donorResFrame);
-				}
-				// Inicializa Frame Centralizado
-				donorResFrame.setBounds(0, 0, donorResFrame.getWidth(), donorResFrame.getHeight());
-				int lDesk = MainWindow.getDesktopPanel().getWidth();
-				int aDesk = MainWindow.getDesktopPanel().getHeight();
-				int lIFrame = donorResFrame.getWidth();
-				int aIFrame = donorResFrame.getHeight();
-				donorResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-				donorResFrame.moveToFront();
+				createUserRegistration(new User());
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -111,4 +110,30 @@ public class UserList extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
+	
+	private void createUserRegistration(User user) {
+		// Verifica inicialização do Frame
+		if (userResFrame == null) {
+			try {
+				userResFrame = new UserRegistration();
+			} catch (ConnectException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			userResFrame.setVisible(true);
+			MainWindow.getDesktopPanel().add(userResFrame);
+		} else if (!userResFrame.isVisible()) {
+			userResFrame.setVisible(true);
+			MainWindow.getDesktopPanel().add(userResFrame);
+		}
+		// Inicializa Frame Centralizado
+		userResFrame.setBounds(0, 0, userResFrame.getWidth(), userResFrame.getHeight());
+		int lDesk = MainWindow.getDesktopPanel().getWidth();
+		int aDesk = MainWindow.getDesktopPanel().getHeight();
+		int lIFrame = userResFrame.getWidth();
+		int aIFrame = userResFrame.getHeight();
+		userResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+		userResFrame.moveToFront();
+	}
+	
 }

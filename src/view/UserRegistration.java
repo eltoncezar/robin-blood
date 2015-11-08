@@ -19,6 +19,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import data.ConnectException;
 import data.UserTypeData;
+import models.User;
 import models.UserType;
 
 import javax.swing.JButton;
@@ -36,9 +37,9 @@ import javax.swing.JDesktopPane;
 import business.UserRegistrationController;
 
 public class UserRegistration extends JInternalFrame {
-	private JTextField textField_nome;
-	private JTextField textField_mail;
-	private JPasswordField passwordField;
+	private JTextField txtnome;
+	private JTextField txtmail;
+	private JPasswordField txtpassword;
 	private JDesktopPane desktopPane;
 	
 	private UserRegistrationController controller;
@@ -67,15 +68,24 @@ public class UserRegistration extends JInternalFrame {
 		
 		JLabel lblEmail = new JLabel("E-mail");
 		
-		textField_nome = new JTextField();
-		textField_nome.setColumns(10);
+		txtnome = new JTextField();
+		txtnome.setColumns(10);
 		
-		textField_mail = new JTextField();
-		textField_mail.setColumns(10);
+		txtmail = new JTextField();
+		txtmail.setColumns(10);
 		
 		JButton btnOk = new JButton("Salvar");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					controller.save(new User(0, txtnome.getText(),
+							String.valueOf(txtpassword.getPassword()),
+							txtmail.getText(),
+							0));
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -86,7 +96,7 @@ public class UserRegistration extends JInternalFrame {
 			}
 		});
 		
-		passwordField = new JPasswordField();
+		txtpassword = new JPasswordField();
 		
 		JSeparator separator = new JSeparator();
 		
@@ -94,8 +104,8 @@ public class UserRegistration extends JInternalFrame {
 		
 		
 		List<UserType> userTypes = controller.getUserTypes();
-		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel<>(userTypes.toArray()));
-		comboBox.addActionListener(new ActionListener() {
+		JComboBox comboType_User = new JComboBox(new DefaultComboBoxModel<>(userTypes.toArray()));
+		comboType_User.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
@@ -115,15 +125,15 @@ public class UserRegistration extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(textField_nome)
-						.addComponent(textField_mail)
+						.addComponent(txtnome)
+						.addComponent(txtmail)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblSenha)
-								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
+								.addComponent(txtpassword, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE))
 							.addGap(48)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboType_User, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblNewLabel_1))))
 					.addContainerGap(195, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
@@ -142,19 +152,19 @@ public class UserRegistration extends JInternalFrame {
 					.addGap(22)
 					.addComponent(lblNome)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtnome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(lblEmail)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField_mail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(14)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblSenha)
 						.addComponent(lblNewLabel_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtpassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboType_User, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
