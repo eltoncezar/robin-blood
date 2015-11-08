@@ -126,6 +126,8 @@ public class DonorList extends JInternalFrame {
    			MainWindow.getDesktopPanel().add(donorResFrame);
         }
         else if(!donorResFrame.isVisible()){
+        	donorResFrame.dispose();
+        	donorResFrame = new DonorRegistration(param);
         	donorResFrame.setVisible(true);
         	MainWindow.getDesktopPanel().add(donorResFrame);
         }
