@@ -31,13 +31,18 @@ public class UserRegistrationController {
 		return result;
 	}
 
-	public List<User> getByFilter(String filter) throws ConnectException {
-		// TODO: implement
-		return null;
+	public List<User> getByFilter(String filter) {
+		List<User> result = null;
+		try {
+			result = userData.selectByName(filter);
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
-	public DefaultTableModel getAllTableModel() {
-		List<User> users = this.getAll();
+	public DefaultTableModel getTableModel(List<User> users) {
 		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0);
 
 		for (User user : users) {
