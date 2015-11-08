@@ -1,26 +1,24 @@
 package data;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import models.Donor;
+import models.PrimaryTest;
 
-public class PrimaryTest implements CrudItf<Donor> {
+
+public class PrimaryTestData implements CrudItf<PrimaryTest> {
 //Este método nao é relevante neste contexto,  pois os testes dependem da doação.
 	@Override
 	public List<PrimaryTest> listAll() throws ConnectException {
-
+		return null;
 	}
 //Este metodo nao é relevante neste contexto.
 	@Override
 	public  PrimaryTest select(int id) throws ConnectException {
-	
+		return null;
 	}
 //Verificar esse método.
 	@Override
@@ -33,8 +31,7 @@ public class PrimaryTest implements CrudItf<Donor> {
 
 			stmt.setString(1, obj.getName());
 			stmt.setString(2, obj.getResult());
-			stmt.setString(3, User.getId());
-			
+			stmt.setInt(3, obj.getUser().getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -54,14 +51,15 @@ public class PrimaryTest implements CrudItf<Donor> {
 	@Override
 	public PrimaryTest update(PrimaryTest obj) throws ConnectException {
 		try{
-			String query = "UPDATE primary_test SET result_test=?,"
-											+ "WHERE id_test=?";
+			String query = "UPDATE primary_test SET test_name=?, result_test=?, id_user=?, WHERE id_test=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, obj.getResult());
-			stmt.setString(2, obj.getId());
+			stmt.setString(1, obj.getName());
+			stmt.setString(2, obj.getResult());
+			stmt.setInt(3, obj.getUser().getId());
+			stmt.setInt(4, obj.getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
