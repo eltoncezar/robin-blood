@@ -6,21 +6,19 @@ public class User {
 	private String password;
 	private String email;
 	private int idType;
-	private int idScreening;
 
 	public User() {
 		super();
 	}
 
 
-	public User(int id, String name, String password, String email, int idType, int idScreening) {
+	public User(int id, String name, String password, String email, int idType) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.idType = idType;
-		this.idScreening = idScreening;
 	}
 
 	public int getId() {
@@ -67,20 +65,10 @@ public class User {
 	}
 
 
-	public int getIdScreening() {
-		return idScreening;
-	}
-
-
-	public void setIdScreening(int idScreening) {
-		this.idScreening = idScreening;
-	}
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", idType="
-				+ idType + ", idScreening=" + idScreening + "]";
+				+ idType + "]";
 	}
 
 	@Override
@@ -89,7 +77,6 @@ public class User {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
-		result = prime * result + idScreening;
 		result = prime * result + idType;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -111,8 +98,6 @@ public class User {
 		} else if (!email.equals(other.email))
 			return false;
 		if (id != other.id)
-			return false;
-		if (idScreening != other.idScreening)
 			return false;
 		if (idType != other.idType)
 			return false;

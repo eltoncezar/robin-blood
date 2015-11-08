@@ -19,18 +19,21 @@ public class UserData implements CrudItf<User> {
 		List<User> lista = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM User";
+			String query = "SELECT * FROM [User]";
 
 			Connection con = DriverManager.getConnection(connection);
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new User(rs.getInt("id_user"),
-						rs.getString("user_nome"),
+				lista.add(
+					new User(
+						rs.getInt("id_user"),
+						rs.getString("user_name"),
 						rs.getString("user_password"),
 						rs.getString("user_email"),
-						rs.getInt("id_type"),
-						rs.getInt("id_screening")));
+						rs.getInt("id_type")
+					)
+				);
 			}
 			rs.close();
 			stmt.close();
@@ -47,19 +50,20 @@ public class UserData implements CrudItf<User> {
 		User User = new User();
 
 		try {
-			String query = "SELECT * FROM User WHERE id_user=?";
+			String query = "SELECT * FROM [User] WHERE id_user=?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				User = new User(rs.getInt("id_user"),
-						rs.getString("user_nome"),
-						rs.getString("user_password"),
-						rs.getString("user_email"),
-						rs.getInt("id_type"),
-						rs.getInt("id_screening"));
+				User = new User(
+					rs.getInt("id_user"),
+					rs.getString("user_name"),
+					rs.getString("user_password"),
+					rs.getString("user_email"),
+					rs.getInt("id_type")
+				);
 			}
 			rs.close();
 			stmt.close();
@@ -70,11 +74,45 @@ public class UserData implements CrudItf<User> {
 
 		return User;
 	}
+	
+	public List<User> selectByName(String filter) throws ConnectException {
+		List<User> lista = new ArrayList<>();
+
+		try {
+			String query = "SELECT * FROM [User] WHERE user_name like '%' + ? + '%'";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, filter);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lista.add(new User(
+					rs.getInt("id_user"),
+					rs.getString("user_name"),
+					rs.getString("user_password"),
+					rs.getString("user_email"),
+					rs.getInt("id_type")
+				));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return lista;
+	}
 
 	@Override
 	public User update(User obj) throws ConnectException {
 		try{
-			String query = "UPDATE User set user_name=?, user_password=?, user_email=?, id_type=?,id_screening=? WHERE id_user=?";
+			String query = "UPDATE [User]"
+					+ "set user_name=?,"
+					+ "user_password=?,"
+					+ "user_email=?,"
+					+ "id_type=?,"
+					+ "WHERE id_user=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -82,9 +120,8 @@ public class UserData implements CrudItf<User> {
 			stmt.setString(1, obj.getName());
 			stmt.setString(2, obj.getPassword());
 			stmt.setString(3, obj.getEmail());
-			stmt.setString(4, Integer.toString(obj.getIdType()));
-			stmt.setString(4, Integer.toString(obj.getIdScreening()));
-			stmt.setString(4, Integer.toString(obj.getId()));
+			stmt.setInt(4, obj.getIdType());
+			stmt.setInt(5, obj.getId());
 			stmt.executeUpdate();
 
 			stmt.close();
@@ -99,7 +136,7 @@ public class UserData implements CrudItf<User> {
 	@Override
 	public User save(User obj) throws ConnectException {
 		try {
-			String query = "INSERT INTO User VALUES(?,?,?,?,?)";
+			String query = "INSERT INTO [User] VALUES(?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -108,7 +145,6 @@ public class UserData implements CrudItf<User> {
 			stmt.setString(2, obj.getPassword());
 			stmt.setString(3, obj.getEmail());
 			stmt.setInt(4, obj.getIdType());
-			stmt.setInt(5, obj.getIdScreening());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -123,12 +159,12 @@ public class UserData implements CrudItf<User> {
 	@Override
 	public void delete(User obj) throws ConnectException {
 		try {
-			String query = "DELETE User WHERE id_user=?";
+			String query = "DELETE [User] WHERE id_user=?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, Integer.toString(obj.getId()));
+			stmt.setInt(1, obj.getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
