@@ -22,13 +22,18 @@ import data.UserTypeData;
 import models.UserType;
 
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
+
+import business.UserRegistrationController;
 
 public class UserRegistration extends JInternalFrame {
 	private JTextField textField_nome;
@@ -37,8 +42,13 @@ public class UserRegistration extends JInternalFrame {
 	private UserList userlist;
 	private JDesktopPane desktopPane;
 	
+	private UserRegistrationController controller;
+	
 
 	public UserRegistration() throws ConnectException {
+		
+		controller = new UserRegistrationController();
+		
 		setMaximizable(true);
 		setIconifiable(true);
 		setClosable(true);
@@ -81,11 +91,10 @@ public class UserRegistration extends JInternalFrame {
 		JSeparator separator = new JSeparator();
 		
 		JLabel lblNewLabel_1 = new JLabel("Tipo Usuário");
-		UserTypeData UTD = new UserTypeData();
 		
 		
-		//String[] tipo_user = {"Administrador","Atendente","Médico","Hospital","Exame","Coleta"};
-		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel<>(UTD.listAll().toArray()));
+		List<UserType> userTypes = controller.getUserTypes();
+		JComboBox comboBox = new JComboBox(new DefaultComboBoxModel<>(userTypes.toArray()));
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
