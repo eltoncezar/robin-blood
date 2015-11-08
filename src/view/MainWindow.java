@@ -15,6 +15,7 @@ public class MainWindow extends JFrame{
     private static JDesktopPane desktopPane;
     private UserRegistration userResFrame;
     private DonorRegistration donorResFrame;
+    private DonationRegistration donationResFrame;
     private JMenuBar menuBar;
     
     private static MainWindow mainwindow;
@@ -113,6 +114,29 @@ public class MainWindow extends JFrame{
         
         JMenuItem mntmDoao = new JMenuItem("Doa\u00E7\u00E3o");
         mnNewMenu.add(mntmDoao);
+        mntmDoao.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Verifica inicialização do Frame
+           		if(donationResFrame == null){
+           			donationResFrame = new DonationRegistration();
+           			donationResFrame.setVisible(true);
+                    desktopPane.add(donationResFrame);
+                }
+                else if(!donationResFrame.isVisible()){
+                	donationResFrame.setVisible(true);
+                    desktopPane.add(donationResFrame);
+                }
+           		//Inicializa Frame Centralizado
+           		donationResFrame.setBounds(0, 0, donationResFrame.getWidth(), donationResFrame.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = donationResFrame.getWidth();
+                int aIFrame = donationResFrame.getHeight();
+                donationResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+            }
+		});
         
         
         //Menu Serviços
