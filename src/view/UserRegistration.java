@@ -39,7 +39,6 @@ public class UserRegistration extends JInternalFrame {
 	private JTextField textField_nome;
 	private JTextField textField_mail;
 	private JPasswordField passwordField;
-	private UserList userlist;
 	private JDesktopPane desktopPane;
 	
 	private UserRegistrationController controller;
@@ -106,25 +105,8 @@ public class UserRegistration extends JInternalFrame {
 		
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(userlist == null){
-                	userlist = new UserList();
-                	userlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(userlist);
-                }
-                else if(!userlist.isVisible()){
-                	userlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(userlist);
-                }
-           		//Inicializa Frame Centralizado
-           		userlist.setBounds(0, 0, userlist.getWidth(), userlist.getHeight());
-           		int lDesk = MainWindow.getDesktopPanel().getWidth();
-                int aDesk = MainWindow.getDesktopPanel().getHeight();
-                int lIFrame = userlist.getWidth();
-                int aIFrame = userlist.getHeight();
-                userlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-                userlist.moveToFront();
-			
-            }
+				
+			}
 			
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
