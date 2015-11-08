@@ -16,6 +16,7 @@ public class MainWindow extends JFrame{
     private UserRegistration userResFrame;
     private DonorRegistration donorResFrame;
     private DonationRegistration donationResFrame;
+    private UserList userlist;
     private JMenuBar menuBar;
     
     private static MainWindow mainwindow;
@@ -55,31 +56,41 @@ public class MainWindow extends JFrame{
         mUsuario.addActionListener(new ActionListener() {        	
            	@Override
         	public void actionPerformed(ActionEvent e) {
-           		//Verifica inicialização do Frame
-           		if(userResFrame == null){
-                	try {
-						userResFrame = new UserRegistration();
-					} catch (ConnectException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-                	userResFrame.setVisible(true);
-                    desktopPane.add(userResFrame);
+           		
+           		if(userlist == null){
+                	userlist = new UserList();
+                	userlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(userlist);
                 }
-                else if(!userResFrame.isVisible()){
-                	userResFrame.setVisible(true);
-                    desktopPane.add(userResFrame);
+                else if(!userlist.isVisible()){
+                	userlist.setVisible(true);
+                	MainWindow.getDesktopPanel().add(userlist);
                 }
            		//Inicializa Frame Centralizado
-           		userResFrame.setBounds(0, 0, userResFrame.getWidth(), userResFrame.getHeight());
-                int lDesk = desktopPane.getWidth();
-                int aDesk = desktopPane.getHeight();
-                int lIFrame = userResFrame.getWidth();
-                int aIFrame = userResFrame.getHeight();
-                userResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-                
-                
+           		userlist.setBounds(0, 0, userlist.getWidth(), userlist.getHeight());
+           		int lDesk = MainWindow.getDesktopPanel().getWidth();
+                int aDesk = MainWindow.getDesktopPanel().getHeight();
+                int lIFrame = userlist.getWidth();
+                int aIFrame = userlist.getHeight();
+                userlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+                userlist.moveToFront();
+			
             }
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		
+           		//Verifica inicialização do Frame
+           		
         		
         });
         
