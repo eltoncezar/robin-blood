@@ -73,9 +73,9 @@ public class PhoneData implements CrudItf<Phone> {
 		List<Phone> lista = new ArrayList<>();
 
 		try {
-			String query = "SELECT p.id_phone, p.phone_number"
-					+ "FROM Donor_Phone as dp"
-					+ "INNER JOIN Phone as p ON p.id_phone = dp.id_phone"
+			String query = "SELECT p.id_phone, p.phone_number "
+					+ "FROM Donor_Phone dp "
+					+ "INNER JOIN Phone p ON p.id_phone = dp.id_phone "
 					+ "WHERE dp.id_donor = ?";
 
 			Connection con = DriverManager.getConnection(connection);

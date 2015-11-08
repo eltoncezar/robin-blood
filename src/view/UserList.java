@@ -22,7 +22,7 @@ public class UserList extends JInternalFrame {
 	private JTextField textField;
 	private JTable table;
 	private UserRegistrationController controller;
-	private DonorRegistration donorResFrame;
+	private UserRegistration donorResFrame;
 
 	public UserList() {
 		setClosable(true);
@@ -56,7 +56,12 @@ public class UserList extends JInternalFrame {
 
 				// Verifica inicialização do Frame
 				if (donorResFrame == null) {
-					donorResFrame = new DonorRegistration();
+					try {
+						donorResFrame = new UserRegistration();
+					} catch (ConnectException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					donorResFrame.setVisible(true);
 					MainWindow.getDesktopPanel().add(donorResFrame);
 				} else if (!donorResFrame.isVisible()) {

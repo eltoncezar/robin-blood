@@ -6,6 +6,8 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -13,12 +15,16 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import models.Donor;
 import business.DonorController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DonorList extends JInternalFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTable table;
 	private DonorRegistration donorResFrame;
@@ -32,8 +38,9 @@ public class DonorList extends JInternalFrame {
 		//setBounds(100, 100, 450, 300);
 		setSize(450, 350);
 		
+		List<Donor> donors = controller.getAll();
 		table = new JTable();
-		table.setModel(controller.getTableModel(controller.getAll()));
+		table.setModel(controller.getTableModel(donors));
 		
 		JLabel lblNome = new JLabel("Nome");
 		
@@ -48,31 +55,25 @@ public class DonorList extends JInternalFrame {
 		});
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = table.getSelectedRow();
+				if (rowIndex > -1) {
+					Donor selectedItem = donors.get(rowIndex);
+					createDonorRegistration(selectedItem);
+				}
+				else {
+					JOptionPane.showMessageDialog(getContentPane(), "Selecione um item!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
-		JButton btnNovo = new JButton("Novo");
+		JButton btnNovo = new JButton("Novo"); 	
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				//Verifica inicialização do Frame
-           		if(donorResFrame == null){
-           			donorResFrame = new DonorRegistration();
-           			donorResFrame.setVisible(true);
-           			MainWindow.getDesktopPanel().add(donorResFrame);
-                }
-                else if(!donorResFrame.isVisible()){
-                	donorResFrame.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorResFrame);
-                }
-           		//Inicializa Frame Centralizado
-           		donorResFrame.setBounds(0, 0, donorResFrame.getWidth(), donorResFrame.getHeight());
-                int lDesk = MainWindow.getDesktopPanel().getWidth();
-                int aDesk = MainWindow.getDesktopPanel().getHeight();
-                int lIFrame = donorResFrame.getWidth();
-                int aIFrame = donorResFrame.getHeight();
-                donorResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-                donorResFrame.moveToFront();
+				createDonorRegistration(new Donor());
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -115,6 +116,26 @@ public class DonorList extends JInternalFrame {
 
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
-
+	}
+	
+	private void createDonorRegistration(Donor param) {
+		//Verifica inicialização do Frame
+   		if(donorResFrame == null){
+   			donorResFrame = new DonorRegistration(param);
+   			donorResFrame.setVisible(true);
+   			MainWindow.getDesktopPanel().add(donorResFrame);
+        }
+        else if(!donorResFrame.isVisible()){
+        	donorResFrame.setVisible(true);
+        	MainWindow.getDesktopPanel().add(donorResFrame);
+        }
+   		//Inicializa Frame Centralizado
+   		donorResFrame.setBounds(0, 0, donorResFrame.getWidth(), donorResFrame.getHeight());
+        int lDesk = MainWindow.getDesktopPanel().getWidth();
+        int aDesk = MainWindow.getDesktopPanel().getHeight();
+        int lIFrame = donorResFrame.getWidth();
+        int aIFrame = donorResFrame.getHeight();
+        donorResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        donorResFrame.moveToFront();
 	}
 }
