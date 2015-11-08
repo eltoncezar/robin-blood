@@ -29,7 +29,7 @@ public class DonorRegistration extends JInternalFrame {
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTable table;
-	private DonorList donorlist;
+
 
 	public DonorRegistration() {
 		setTitle("CADASTRO DOADOR");
@@ -119,23 +119,7 @@ public class DonorRegistration extends JInternalFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
-				if(donorlist == null){
-                	donorlist = new DonorList();
-                	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
-                }
-                else if(!donorlist.isVisible()){
-                	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
-                }
-           		//Inicializa Frame Centralizado
-           		donorlist.setBounds(0, 0, donorlist.getWidth(), donorlist.getHeight());
-           		int lDesk = MainWindow.getDesktopPanel().getWidth();
-                int aDesk = MainWindow.getDesktopPanel().getHeight();
-                int lIFrame = donorlist.getWidth();
-                int aIFrame = donorlist.getHeight();
-                donorlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-                donorlist.moveToFront();
+				              
 				
 			}
 		});
