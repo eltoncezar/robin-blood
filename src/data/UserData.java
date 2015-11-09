@@ -135,6 +135,10 @@ public class UserData implements CrudItf<User> {
 
 	@Override
 	public User save(User obj) throws ConnectException {
+		if (obj.getId() != 0) {
+			return this.update(obj);
+		}
+			
 		try {
 			String query = "INSERT INTO [User] VALUES(?,?,?,?)";
 
