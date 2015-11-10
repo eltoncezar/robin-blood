@@ -21,9 +21,11 @@ import models.Donor;
 import models.User;
 
 import javax.swing.JFrame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class UserList extends JInternalFrame {
-	private JTextField textField;
+	private JTextField txtParBusca;
 	private JTable table;
 	private UserRegistrationController controller;
 	private UserRegistration userResFrame;
@@ -43,13 +45,43 @@ public class UserList extends JInternalFrame {
 
 		JLabel lblNome = new JLabel("Nome");
 
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtParBusca = new JTextField();
+		
+		txtParBusca.setColumns(10);
 
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {  
+					btnBuscar.doClick();  
+		          }  
+			}
+		});
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				table.setModel(controller.getTableModel(controller.getByFilter("el")));
+				if(txtParBusca.getText().equals("")){
+					JOptionPane.showMessageDialog(getParent(), "Nome Invalido!","Robin Blood",JOptionPane.ERROR_MESSAGE);
+				}else{
+					if(controller.getByFilter(txtParBusca.getText()).isEmpty()){
+						JOptionPane.showMessageDialog(getParent(), "Usuário não registrado!","Robin Blood",JOptionPane.INFORMATION_MESSAGE);
+					}
+					else{
+						table.setModel(controller.getTableModel(controller.getByFilter(txtParBusca.getText())));
+					}
+						
+					
+					
+				}
+				
+			}
+		});
+		txtParBusca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {  
+					btnBuscar.doClick();  
+		          } 
 			}
 		});
 
@@ -87,7 +119,7 @@ public class UserList extends JInternalFrame {
 														.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406,
 																Short.MAX_VALUE)
 												.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(textField, GroupLayout.DEFAULT_SIZE, 323,
+														.addComponent(txtParBusca, GroupLayout.DEFAULT_SIZE, 323,
 																Short.MAX_VALUE)
 														.addGap(18).addComponent(btnBuscar)).addComponent(lblNome))
 				.addContainerGap()).addGroup(
@@ -97,7 +129,7 @@ public class UserList extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lblNome)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								.addComponent(txtParBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnBuscar))
 						.addPreferredGap(ComponentPlacement.RELATED)
@@ -115,7 +147,7 @@ public class UserList extends JInternalFrame {
 		// Verifica inicialização do Frame
 		if (userResFrame == null) {
 			try {
-				userResFrame = new UserRegistration();
+				userResFrame = new UserRegistration(user);
 			} catch (ConnectException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -123,6 +155,12 @@ public class UserList extends JInternalFrame {
 			userResFrame.setVisible(true);
 			MainWindow.getDesktopPanel().add(userResFrame);
 		} else if (!userResFrame.isVisible()) {
+			try {
+				userResFrame = new UserRegistration(user);
+			} catch (ConnectException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			userResFrame.setVisible(true);
 			MainWindow.getDesktopPanel().add(userResFrame);
 		}
