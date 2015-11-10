@@ -35,6 +35,9 @@ public class UserRegistrationController {
 		List<User> result = null;
 		try {
 			result = userData.selectByName(filter);
+			if(result.size() == 0){
+				
+			}
 		} catch (ConnectException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
