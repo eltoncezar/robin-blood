@@ -29,10 +29,13 @@ public class AddressData implements CrudItf<Address> {
 						rs.getInt("id_address"),
 						rs.getString("address_street"), 
 						rs.getInt("address_number"),
-						rs.getString("address_city"),
-						rs.getString("address_state"),
+						rs.getString("address_country"),
 						rs.getString("address_zip"), 
-						rs.getString("address_country")));
+						rs.getString("address_state"),
+						rs.getString("address_city")
+						
+						));
+						
 			}
 			rs.close();
 			stmt.close();
@@ -74,9 +77,8 @@ public class AddressData implements CrudItf<Address> {
 
 		return address;
 	}
-
 	@Override
-	public Address save(Address obj) throws ConnectException {
+	public  Address save(Address obj) throws ConnectException {
 		try {
 			String query = "INSERT INTO Address VALUES(?,?,?,?,?,?,?)";
 

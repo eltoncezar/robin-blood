@@ -15,7 +15,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import models.Address;
 import models.Donor;
+import business.AdressController;
 import business.DonorController;
 
 import java.awt.event.ActionListener;
@@ -29,7 +31,9 @@ public class DonorList extends JInternalFrame {
 	private JTable table;
 	private DonorRegistration donorResFrame;
 	private DonorController controller;
+	private AdressController controlleraddress;
 
+	
 	public DonorList() {
 		controller = new DonorController();
 		
@@ -39,6 +43,8 @@ public class DonorList extends JInternalFrame {
 		setSize(450, 350);
 		
 		List<Donor> donors = controller.getAll();
+		List<Address> address = controlleraddress.getAll();
+
 		table = new JTable();
 		table.setModel(controller.getTableModel(donors));
 		
@@ -60,7 +66,8 @@ public class DonorList extends JInternalFrame {
 				int rowIndex = table.getSelectedRow();
 				if (rowIndex > -1) {
 					Donor selectedItem = donors.get(rowIndex);
-					createDonorRegistration(selectedItem);
+					Address selectedItemAddress = address.get(rowIndex);
+					createDonorRegistration(selectedItem, selectedItemAddress);
 				}
 				else {
 					JOptionPane.showMessageDialog(getContentPane(), "Selecione um item!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
@@ -73,7 +80,7 @@ public class DonorList extends JInternalFrame {
 		JButton btnNovo = new JButton("Novo"); 	
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				createDonorRegistration(new Donor());
+				createDonorRegistration(new Donor(), new Address());
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -118,16 +125,16 @@ public class DonorList extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 	}
 	
-	private void createDonorRegistration(Donor param) {
+	private void createDonorRegistration(Donor param, Address paramAddress) {
 		//Verifica inicialização do Frame
    		if(donorResFrame == null){
-   			donorResFrame = new DonorRegistration(param);
+   			donorResFrame = new DonorRegistration(param, paramAddress);
    			donorResFrame.setVisible(true);
    			MainWindow.getDesktopPanel().add(donorResFrame);
         }
         else if(!donorResFrame.isVisible()){
         	donorResFrame.dispose();
-        	donorResFrame = new DonorRegistration(param);
+        	donorResFrame = new DonorRegistration(param, paramAddress);
         	donorResFrame.setVisible(true);
         	MainWindow.getDesktopPanel().add(donorResFrame);
         }

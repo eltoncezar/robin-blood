@@ -20,24 +20,42 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
+import business.AdressController;
+import business.DonorController;
+import business.UserRegistrationController;
+import data.ConnectException;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionModel;
+import models.Address;
 import models.ComboBoxItem;
 import models.Donor;
+import models.Phone;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DonorRegistration extends JInternalFrame {
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtName;
 	private JTextField txtEmail;
 	private JTextField txtCPF;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
+	private JTextField txtrua;
+	private JTextField txtnumero;
+	private JTextField txtcidade;
+	private JTextField txtcep;
 	private JTable table;
+	
+	private DonorController donorcontroller;
+	private AdressController adressController;
+	
 
-	public DonorRegistration(Donor param) {
+	public DonorRegistration(Donor paramDonor, Address paramAddress) {
 		setTitle("CADASTRO DOADOR");
 		setMaximizable(true);
 		setIconifiable(true);
@@ -62,12 +80,56 @@ public class DonorRegistration extends JInternalFrame {
 
 		txtCPF = new JTextField();
 		txtCPF.setColumns(10);
+		
+		JComboBox<ComboBoxItem> comboBloodType = new JComboBox<ComboBoxItem>();
+		comboBloodType.addItem(new ComboBoxItem("A", "A"));
+		comboBloodType.addItem(new ComboBoxItem("B", "B"));
+		comboBloodType.addItem(new ComboBoxItem("AB", "AB"));
+		comboBloodType.addItem(new ComboBoxItem("O", "O"));
 
 		JComboBox<ComboBoxItem> comboGender = new JComboBox<ComboBoxItem>();
 		comboGender.addItem(new ComboBoxItem("M", "Masculino"));
 		comboGender.addItem(new ComboBoxItem("F", "Feminino"));
-
+		
+		JComboBox<String> comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AM", "AP",
+				"BA", "CE", "DF", "ES", "GO",
+				"MA", "MG", "MS", "MT", "PA",
+				"PB", "PE", "PI", "PR", "RJ",
+				"RN", "RO", "RS", "SC", "SE",
+				"SP", "TO"}));
+		
+		
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				try {
+					donorcontroller.save(new Donor(0,
+							txtName.getText(),
+							txtCPF.getText(),
+							comboGender.getSelectedItem().toString(),
+							txtEmail.getText(),
+							"M",//comboBloodType.getSelectedItem().toString(),
+							//Tem que retornar o ID do endereço cadastrado no banco
+							1
+//							int i = adressController.save(new Address(0,
+//									txtrua.getText(),
+//									Integer.parseInt(txtnumero.getText()),
+//									"Brasil",
+//									txtcep.getText(),
+//									comboBoxEstado.getSelectedItem().toString(),
+//									txtcep.getText()))
+							
+							
+							));
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -78,11 +140,7 @@ public class DonorRegistration extends JInternalFrame {
 
 		JSeparator separator = new JSeparator();
 
-		JComboBox<ComboBoxItem> comboBloodType = new JComboBox<ComboBoxItem>();
-		comboBloodType.addItem(new ComboBoxItem("A", "A"));
-		comboBloodType.addItem(new ComboBoxItem("B", "B"));
-		comboBloodType.addItem(new ComboBoxItem("AB", "AB"));
-		comboBloodType.addItem(new ComboBoxItem("O", "O"));
+		
 
 		JComboBox<ComboBoxItem> comboBloodTypeFactor = new JComboBox<ComboBoxItem>();
 		comboBloodTypeFactor.addItem(new ComboBoxItem("+", "+"));
@@ -103,27 +161,29 @@ public class DonorRegistration extends JInternalFrame {
 
 		JLabel lblRua = new JLabel("Rua");
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		txtrua = new JTextField();
+		txtrua.setColumns(10);
 
 		JLabel lblNumero = new JLabel("Numero");
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
+		txtnumero = new JTextField();
+		txtnumero.setColumns(10);
 
 		JLabel lblCidade = new JLabel("Cidade");
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
+		txtcidade = new JTextField();
+		txtcidade.setColumns(10);
 
 		JLabel lblEstado = new JLabel("Estado");
 
-		JComboBox comboBox_3 = new JComboBox();
+		
+		
+		
 
 		JLabel lblCep = new JLabel("CEP");
 
-		textField_6 = new JTextField();
-		textField_6.setColumns(10);
+		txtcep = new JTextField();
+		txtcep.setColumns(10);
 
 		JLabel lblContato = new JLabel("Contato");
 		lblContato.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -144,9 +204,15 @@ public class DonorRegistration extends JInternalFrame {
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
 				"Tipo", "N\u00FAmero" }));
 
-		txtName.setText(param.getName());
-		txtEmail.setText(param.getEmail());
-		txtCPF.setText(param.getCpf());
+		txtName.setText(paramDonor.getName());
+		txtEmail.setText(paramDonor.getEmail());
+		txtCPF.setText(paramDonor.getCpf());
+		txtrua.setText(paramAddress.getStreet());
+		txtnumero.setText(String.valueOf(paramAddress.getNumber()));
+		txtcidade.setText(paramAddress.getCity());
+		txtcep.setText(paramAddress.getZipCode());
+		
+		
 
 		DefaultComboBoxModel<ComboBoxItem> model;
 		String code;
@@ -156,7 +222,7 @@ public class DonorRegistration extends JInternalFrame {
 			ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
 			code = item.getCode();
 
-			if (code.equals(param.getGender())) {
+			if (code.equals(paramDonor.getGender())) {
 				comboGender.setSelectedItem(comboGender.getItemAt(i));
 			}
 		}
@@ -165,20 +231,26 @@ public class DonorRegistration extends JInternalFrame {
 		for (int i = 0; i < model.getSize(); ++i) {
 			ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
 			code = item.getCode();
-
-			if (code.equals(param.getBloodType().substring(0, param.getBloodType().length() - 1))) {
-				comboBloodType.setSelectedItem(comboBloodType.getItemAt(i));
+			if(paramDonor.getName() != null){
+				if (code.equals(paramDonor.getBloodType().substring(0, paramDonor.getBloodType().length() - 1))) {
+					comboBloodType.setSelectedItem(comboBloodType.getItemAt(i));
+				}
 			}
+
+			
 		}
 		
 		model = (DefaultComboBoxModel<ComboBoxItem>) comboBloodTypeFactor.getModel();
 		for (int i = 0; i < model.getSize(); ++i) {
 			ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
 			code = item.getCode();
-
-			if (code.equals(param.getBloodType().substring(param.getBloodType().length() - 1))) {
-				comboBloodTypeFactor.setSelectedItem(comboBloodTypeFactor.getItemAt(i));
+			if(paramDonor.getName() != null){
+				if (code.equals(paramDonor.getBloodType().substring(paramDonor.getBloodType().length() - 1))) {
+					comboBloodTypeFactor.setSelectedItem(comboBloodTypeFactor.getItemAt(i));
+				}				
 			}
+
+			
 		}
 
 		// string.substring(string.length() - 1))
@@ -340,7 +412,7 @@ public class DonorRegistration extends JInternalFrame {
 																								lblRua,
 																								Alignment.LEADING)
 																						.addComponent(
-																								textField_1,
+																								txtrua,
 																								Alignment.LEADING,
 																								GroupLayout.PREFERRED_SIZE,
 																								322,
@@ -353,7 +425,7 @@ public class DonorRegistration extends JInternalFrame {
 																						.addComponent(
 																								lblNumero)
 																						.addComponent(
-																								textField_4,
+																								txtnumero,
 																								GroupLayout.PREFERRED_SIZE,
 																								95,
 																								GroupLayout.PREFERRED_SIZE)))
@@ -367,7 +439,7 @@ public class DonorRegistration extends JInternalFrame {
 																						.addComponent(
 																								lblCidade)
 																						.addComponent(
-																								textField_5,
+																								txtcidade,
 																								GroupLayout.PREFERRED_SIZE,
 																								135,
 																								GroupLayout.PREFERRED_SIZE))
@@ -379,7 +451,7 @@ public class DonorRegistration extends JInternalFrame {
 																						.addComponent(
 																								lblEstado)
 																						.addComponent(
-																								comboBox_3,
+																								comboBoxEstado,
 																								GroupLayout.PREFERRED_SIZE,
 																								134,
 																								GroupLayout.PREFERRED_SIZE))
@@ -389,7 +461,7 @@ public class DonorRegistration extends JInternalFrame {
 																						.createParallelGroup(
 																								Alignment.LEADING)
 																						.addComponent(
-																								textField_6,
+																								txtcep,
 																								GroupLayout.DEFAULT_SIZE,
 																								120,
 																								Short.MAX_VALUE)
@@ -524,12 +596,12 @@ public class DonorRegistration extends JInternalFrame {
 														.createParallelGroup(
 																Alignment.BASELINE)
 														.addComponent(
-																textField_1,
+																txtrua,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																textField_4,
+																txtnumero,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE))
@@ -549,17 +621,17 @@ public class DonorRegistration extends JInternalFrame {
 														.createParallelGroup(
 																Alignment.BASELINE)
 														.addComponent(
-																textField_5,
+																txtcidade,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																comboBox_3,
+																comboBoxEstado,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE)
 														.addComponent(
-																textField_6,
+																txtcep,
 																GroupLayout.PREFERRED_SIZE,
 																GroupLayout.DEFAULT_SIZE,
 																GroupLayout.PREFERRED_SIZE))

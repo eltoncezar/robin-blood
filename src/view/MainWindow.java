@@ -89,7 +89,7 @@ public class MainWindow extends JFrame{
            		if(donorlist == null){
                 	donorlist = new DonorList();
                 	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
+                	desktopPane.add(donorlist);
                 }
                 else if(!donorlist.isVisible()){
                 	donorlist.setVisible(true);
