@@ -28,16 +28,16 @@ public class AdressController {
 		return result;
 	}
 
-//	public List<Address> getByFilter(String filter) {
-//		List<Address> result = null;
-//		try {
-//			result = addressData.selectByName(filter);
-//		} catch (ConnectException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
+	public List<Address> getByFilter(int filter) {
+		List<Address> result = null;
+		try {
+			result = (List<Address>) addressData.select(filter);
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	public DefaultTableModel getTableModel(List<Donor> donors) {
 		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0) {

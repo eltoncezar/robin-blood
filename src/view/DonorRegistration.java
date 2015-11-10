@@ -52,10 +52,10 @@ public class DonorRegistration extends JInternalFrame {
 	private JTable table;
 	
 	private DonorController donorcontroller;
-	private AdressController adressController;
+	private AdressController addresscontroller;
 	
 
-	public DonorRegistration(Donor paramDonor, Address paramAddress) {
+	public DonorRegistration(Donor paramDonor) {
 		setTitle("CADASTRO DOADOR");
 		setMaximizable(true);
 		setIconifiable(true);
@@ -207,6 +207,9 @@ public class DonorRegistration extends JInternalFrame {
 		txtName.setText(paramDonor.getName());
 		txtEmail.setText(paramDonor.getEmail());
 		txtCPF.setText(paramDonor.getCpf());
+		
+		Address paramAddress = (Address) addresscontroller.getByFilter(paramDonor.getAddresses());
+		
 		txtrua.setText(paramAddress.getStreet());
 		txtnumero.setText(String.valueOf(paramAddress.getNumber()));
 		txtcidade.setText(paramAddress.getCity());

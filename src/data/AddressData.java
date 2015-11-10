@@ -32,10 +32,8 @@ public class AddressData implements CrudItf<Address> {
 						rs.getString("address_country"),
 						rs.getString("address_zip"), 
 						rs.getString("address_state"),
-						rs.getString("address_city")
-						
-						));
-						
+						rs.getString("address_city")						
+			));						
 			}
 			rs.close();
 			stmt.close();
