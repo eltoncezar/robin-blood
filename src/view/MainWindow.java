@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import data.ConnectException;
 import javafx.scene.image.Image;
+import models.Address;
  
 public class MainWindow extends JFrame{
 
@@ -18,6 +19,8 @@ public class MainWindow extends JFrame{
     private DonationRegistration donationResFrame;
     private UserList userlist;
     private JMenuBar menuBar;
+    
+    private Address address;
     
     private static MainWindow mainwindow;
     
@@ -84,12 +87,16 @@ public class MainWindow extends JFrame{
         JMenuItem mDoador = new JMenuItem("Doador");
         mnNewMenu.add(mDoador);
         mDoador.addActionListener(new ActionListener() {        	
-           	@Override
+           	
+
+			@Override
         	public void actionPerformed(ActionEvent e) {
            		if(donorlist == null){
+           			address = new Address();
                 	donorlist = new DonorList();
+                	
                 	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
+                	desktopPane.add(donorlist);
                 }
                 else if(!donorlist.isVisible()){
                 	donorlist.setVisible(true);

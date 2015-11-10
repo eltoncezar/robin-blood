@@ -13,8 +13,8 @@ public class Address {
 		super();
 	}
 
-	public Address(int id, String street, int number, String city,
-			String state, String zipCode, String country) {
+	public Address(int id, String street, int number,String country,
+			String zipCode,String state, String city) {
 		super();
 		this.id = id;
 		this.street = street;

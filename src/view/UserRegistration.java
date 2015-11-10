@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -19,6 +20,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import data.ConnectException;
 import data.UserTypeData;
+import javafx.print.PageRange;
 import models.User;
 import models.UserType;
 
@@ -45,7 +47,7 @@ public class UserRegistration extends JInternalFrame {
 	private UserRegistrationController controller;
 	
 
-	public UserRegistration() throws ConnectException {
+	public UserRegistration(User paran) throws ConnectException {
 		
 		controller = new UserRegistrationController();
 		
@@ -78,14 +80,22 @@ public class UserRegistration extends JInternalFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					controller.save(new User(0, txtnome.getText(),
+					controller.save(new User(
+							txtnome.getText(),
+							0,
 							String.valueOf(txtpassword.getPassword()),
 							txtmail.getText(),
-							0));
+							1,
+							1
+				));	
+					JOptionPane.showMessageDialog(getContentPane(), "Salvo com Sucesso!", "Robin Blood", JOptionPane.INFORMATION_MESSAGE);
+					txtnome.setText(null);
+					txtpassword.setText(null);
+					txtmail.setText(null);
 				} catch (ConnectException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 			}
 		});
 		
@@ -111,6 +121,12 @@ public class UserRegistration extends JInternalFrame {
 				
 			}
 		});
+		//Recarregando User para editar
+		txtnome.setText(paran.getName());
+		txtmail.setText(paran.getEmail());
+		txtpassword.setText(paran.getPassword());
+		
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

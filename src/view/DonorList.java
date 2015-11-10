@@ -15,7 +15,9 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import models.Address;
 import models.Donor;
+import business.AdressController;
 import business.DonorController;
 
 import java.awt.event.ActionListener;
@@ -29,7 +31,9 @@ public class DonorList extends JInternalFrame {
 	private JTable table;
 	private DonorRegistration donorResFrame;
 	private DonorController controller;
+	
 
+	
 	public DonorList() {
 		controller = new DonorController();
 		
@@ -39,6 +43,9 @@ public class DonorList extends JInternalFrame {
 		setSize(450, 350);
 		
 		List<Donor> donors = controller.getAll();
+
+		
+
 		table = new JTable();
 		table.setModel(controller.getTableModel(donors));
 		
@@ -60,6 +67,7 @@ public class DonorList extends JInternalFrame {
 				int rowIndex = table.getSelectedRow();
 				if (rowIndex > -1) {
 					Donor selectedItem = donors.get(rowIndex);
+					
 					createDonorRegistration(selectedItem);
 				}
 				else {

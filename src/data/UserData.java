@@ -27,11 +27,13 @@ public class UserData implements CrudItf<User> {
 			while (rs.next()) {
 				lista.add(
 					new User(
-						rs.getInt("id_user"),
 						rs.getString("user_name"),
+						rs.getInt("id_user"),
 						rs.getString("user_password"),
 						rs.getString("user_email"),
-						rs.getInt("id_type")
+						rs.getInt("id_type"),
+						rs.getInt("id_screening")
+						
 					)
 				);
 			}
@@ -58,11 +60,12 @@ public class UserData implements CrudItf<User> {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				User = new User(
-					rs.getInt("id_user"),
 					rs.getString("user_name"),
+					rs.getInt("id_user"),
 					rs.getString("user_password"),
 					rs.getString("user_email"),
-					rs.getInt("id_type")
+					rs.getInt("id_type"),
+					rs.getInt("id_screning")
 				);
 			}
 			rs.close();
@@ -87,11 +90,12 @@ public class UserData implements CrudItf<User> {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				lista.add(new User(
-					rs.getInt("id_user"),
 					rs.getString("user_name"),
+					rs.getInt("id_user"),
 					rs.getString("user_password"),
 					rs.getString("user_email"),
-					rs.getInt("id_type")
+					rs.getInt("id_type"),
+					rs.getInt("id_screening")
 				));
 			}
 			rs.close();
@@ -112,6 +116,7 @@ public class UserData implements CrudItf<User> {
 					+ "user_password=?,"
 					+ "user_email=?,"
 					+ "id_type=?,"
+					+ "id_screning"
 					+ "WHERE id_user=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
@@ -135,12 +140,14 @@ public class UserData implements CrudItf<User> {
 
 	@Override
 	public User save(User obj) throws ConnectException {
+		
 		if (obj.getId() != 0) {
+			
 			return this.update(obj);
 		}
 			
 		try {
-			String query = "INSERT INTO [User] VALUES(?,?,?,?)";
+			String query = "INSERT INTO [User] VALUES(?,?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -149,6 +156,10 @@ public class UserData implements CrudItf<User> {
 			stmt.setString(2, obj.getPassword());
 			stmt.setString(3, obj.getEmail());
 			stmt.setInt(4, obj.getIdType());
+			stmt.setInt(5, obj.getIdScreening());
+			
+			
+			
 			
 			stmt.executeUpdate();
 			stmt.close();

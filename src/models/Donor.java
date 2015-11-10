@@ -9,15 +9,15 @@ public class Donor {
 	private String gender;
 	private String email;
 	private String bloodType;
-	private Address address;
-	private List<Phone> phones;
+	private int address;
+
 
 	public Donor() {
 		super();
 	}
 
 	public Donor(int id, String name, String cpf, String gender, String email,
-			String bloodType, Address address, List<Phone> phones) {
+			String bloodType,  int address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,7 +26,6 @@ public class Donor {
 		this.email = email;
 		this.bloodType = bloodType;
 		this.address = address;
-		this.phones = phones;
 	}
 
 	public int getId() {
@@ -77,21 +76,14 @@ public class Donor {
 		this.bloodType = bloodType;
 	}
 
-	public Address getAddresses() {
+	public int getAddresses() {
 		return address;
 	}
 
-	public void setAddresses(Address address) {
+	public void setAddresses(int address) {
 		this.address = address;
 	}
 
-	public List<Phone> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
-	}
 
 	@Override
 	public String toString() {

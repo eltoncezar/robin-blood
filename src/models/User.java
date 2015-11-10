@@ -6,20 +6,25 @@ public class User {
 	private String password;
 	private String email;
 	private int idType;
+	private int idScreening;
 
 	public User() {
 		super();
 	}
 
 
-	public User(int id, String name, String password, String email, int idType) {
+
+
+	public User(String name,int id, String password, String email, int idType, int idScreening) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.idType = idType;
+		this.idScreening = idScreening;
 	}
+
 
 	public int getId() {
 		return id;
@@ -112,5 +117,15 @@ public class User {
 		} else if (!password.equals(other.password))
 			return false;
 		return true;
+	}
+
+
+	public int getIdScreening() {
+		return idScreening;
+	}
+
+
+	public void setIdScreening(int idScreening) {
+		this.idScreening = idScreening;
 	}
 }
