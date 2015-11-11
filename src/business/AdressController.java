@@ -28,10 +28,10 @@ public class AdressController {
 		return result;
 	}
 
-	public List<Address> getByFilter(int filter) {
-		List<Address> result = null;
+	public Address getByFilter(int filter) {
+		Address result = null;
 		try {
-			result = (List<Address>) addressData.select(filter);
+			result =  addressData.select(filter);
 		} catch (ConnectException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

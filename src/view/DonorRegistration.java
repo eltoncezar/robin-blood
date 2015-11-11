@@ -56,6 +56,7 @@ public class DonorRegistration extends JInternalFrame {
 	
 
 	public DonorRegistration(Donor paramDonor) {
+		addresscontroller = new AdressController();
 		setTitle("CADASTRO DOADOR");
 		setMaximizable(true);
 		setIconifiable(true);
@@ -91,14 +92,45 @@ public class DonorRegistration extends JInternalFrame {
 		comboGender.addItem(new ComboBoxItem("M", "Masculino"));
 		comboGender.addItem(new ComboBoxItem("F", "Feminino"));
 		
-		JComboBox<String> comboBoxEstado = new JComboBox<String>();
-		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AM", "AP",
-				"BA", "CE", "DF", "ES", "GO",
-				"MA", "MG", "MS", "MT", "PA",
-				"PB", "PE", "PI", "PR", "RJ",
-				"RN", "RO", "RS", "SC", "SE",
-				"SP", "TO"}));
+		JComboBox<ComboBoxItem> comboBoxEstado = new JComboBox<ComboBoxItem>();
+		comboBoxEstado.addItem(new ComboBoxItem("", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("AC", "Acre"));
+		comboBoxEstado.addItem(new ComboBoxItem("AL", "Alagoas"));
+		comboBoxEstado.addItem(new ComboBoxItem("AM", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("AP", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("BA", "Bahia"));
+		comboBoxEstado.addItem(new ComboBoxItem("CE", "Ceara"));
+		comboBoxEstado.addItem(new ComboBoxItem("DF", "Destrito Fedaral"));
+		comboBoxEstado.addItem(new ComboBoxItem("ES", "Espirito Santo"));
+		comboBoxEstado.addItem(new ComboBoxItem("GO", "Goias"));
+		comboBoxEstado.addItem(new ComboBoxItem("MA", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("MG", "Minas Gerais"));
+		comboBoxEstado.addItem(new ComboBoxItem("MS", "Mato Groso do Sul"));
+		comboBoxEstado.addItem(new ComboBoxItem("MT", "Mato Groso"));
+		comboBoxEstado.addItem(new ComboBoxItem("PA", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("PB", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("PE", "Pernanbuco"));
+		comboBoxEstado.addItem(new ComboBoxItem("PI", "Piaui"));
+		comboBoxEstado.addItem(new ComboBoxItem("PR", "Parana"));
+		comboBoxEstado.addItem(new ComboBoxItem("RJ", "Rio de Janeiro"));
+		comboBoxEstado.addItem(new ComboBoxItem("RN", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("RO", "Rondonia"));
+		comboBoxEstado.addItem(new ComboBoxItem("RS", "Rio Grande do Sul"));
+		comboBoxEstado.addItem(new ComboBoxItem("SC", "Santa Catarina"));
+		comboBoxEstado.addItem(new ComboBoxItem("SE", ""));
+		comboBoxEstado.addItem(new ComboBoxItem("SP", "São Paulo"));
+		comboBoxEstado.addItem(new ComboBoxItem("TO", "Tocantis"));
 		
+		
+		
+		
+//		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AM", "AP",
+//				"BA", "CE", "DF", "ES", "GO",
+//				"MA", "MG", "MS", "MT", "PA",
+//				"PB", "PE", "PI", "PR", "RJ",
+//				"RN", "RO", "RS", "SC", "SE",
+//				"SP", "TO"}));
+//		
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -208,7 +240,8 @@ public class DonorRegistration extends JInternalFrame {
 		txtEmail.setText(paramDonor.getEmail());
 		txtCPF.setText(paramDonor.getCpf());
 		
-		Address paramAddress = (Address) addresscontroller.getByFilter(paramDonor.getAddresses());
+		int tes = paramDonor.getAddresses();
+		Address paramAddress = addresscontroller.getByFilter(paramDonor.getAddresses());
 		
 		txtrua.setText(paramAddress.getStreet());
 		txtnumero.setText(String.valueOf(paramAddress.getNumber()));
@@ -219,7 +252,18 @@ public class DonorRegistration extends JInternalFrame {
 
 		DefaultComboBoxModel<ComboBoxItem> model;
 		String code;
+		
+		model = (DefaultComboBoxModel<ComboBoxItem>) comboBoxEstado.getModel();
+		for (int i = 0; i < model.getSize(); ++i) {
+			ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
+			code = item.getCode();
 
+			if (code.equals(paramAddress.getState())) {
+				comboBoxEstado.setSelectedItem(comboBoxEstado.getItemAt(i));
+			}
+		}
+		
+		//
 		model = (DefaultComboBoxModel<ComboBoxItem>) comboGender.getModel();
 		for (int i = 0; i < model.getSize(); ++i) {
 			ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
