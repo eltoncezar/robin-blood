@@ -81,6 +81,10 @@ public class AddressData implements CrudItf<Address> {
 	}
 	@Override
 	public  Address save(Address obj) throws ConnectException {
+		if (obj.getId() != 0) {
+			
+			return this.update(obj);
+		}
 		try {
 			String query = "INSERT INTO Address VALUES(?,?,?,?,?,?,?)";
 

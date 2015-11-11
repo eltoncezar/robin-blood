@@ -124,7 +124,7 @@ public class DonorData implements CrudItf<Donor> {
 		}
 		try {
 			
-			String query = "INSERT INTO Donor VALUES(?,?,?,?,?)";
+			String query = "INSERT INTO Donor VALUES(?,?,?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -134,6 +134,8 @@ public class DonorData implements CrudItf<Donor> {
 			stmt.setString(3, obj.getGender());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getBloodType());
+			stmt.setInt(6, obj.getAddresses());
+			
 			
 			
 			stmt.executeUpdate();

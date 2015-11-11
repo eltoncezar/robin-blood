@@ -3,7 +3,7 @@ package models;
 import java.util.List;
 
 public class Donor {
-	private int id;
+	private int id = 0;
 	private String name;
 	private String cpf;
 	private String gender;
