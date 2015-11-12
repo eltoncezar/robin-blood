@@ -4,15 +4,21 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
+import models.Address;
 import models.Donor;
+import data.AddressData;
 import data.ConnectException;
 import data.DonorData;
+import data.DonorPhoneData;
 
  public class DonorController {
 	private DonorData donorData;
+	private AddressData addressData;
+	
 
 	public DonorController() {
 		donorData = new DonorData();
+		addressData = new AddressData();
 	}
 
 	public List<Donor> getAll() {
@@ -60,10 +66,22 @@ import data.DonorData;
 
 	public Donor save(Donor donor) throws ConnectException {
 		return donorData.save(donor);
+		
 	}
 
 	public void delete(Donor donor) throws ConnectException {
 		donorData.delete(donor);
+	}
+	
+	public Address getById(int id) {
+		Address result = null;
+		try {
+			result =  addressData.select(id);
+		} catch (ConnectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
  
  }
