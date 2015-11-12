@@ -68,6 +68,32 @@ public class PhoneData implements CrudItf<Phone> {
 		return phone;
 	}
 	
+	public Phone selectLast(int id) throws ConnectException {
+		Phone phone = null;
+
+		try {
+			String query = "SELECT TOP 1 *	FROM phone WHERE id_phone <=id_phone 	ORDER BY id_phone DESC";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				phone = new Phone(
+					rs.getInt("id_phone"),
+					rs.getString("phone_number")
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return phone;
+	}
+	
 	public List<Phone> listAllDonorPhone(int donorId) throws ConnectException {
 
 		List<Phone> lista = new ArrayList<>();
@@ -115,7 +141,7 @@ public class PhoneData implements CrudItf<Phone> {
 			stmt.close();
 			con.close();
 
-			return this.select(obj.getId());
+			return this.selectLast(obj.getId());
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}

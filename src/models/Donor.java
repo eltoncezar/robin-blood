@@ -3,21 +3,21 @@ package models;
 import java.util.List;
 
 public class Donor {
-	private int id;
+	private int id = 0;
 	private String name;
 	private String cpf;
 	private String gender;
 	private String email;
 	private String bloodType;
 	private Address address;
-	private List<Phone> phones;
+
 
 	public Donor() {
 		super();
 	}
 
 	public Donor(int id, String name, String cpf, String gender, String email,
-			String bloodType, Address address, List<Phone> phones) {
+			String bloodType,  Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,7 +26,6 @@ public class Donor {
 		this.email = email;
 		this.bloodType = bloodType;
 		this.address = address;
-		this.phones = phones;
 	}
 
 	public int getId() {
@@ -85,13 +84,6 @@ public class Donor {
 		this.address = address;
 	}
 
-	public List<Phone> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(List<Phone> phones) {
-		this.phones = phones;
-	}
 
 	@Override
 	public String toString() {
