@@ -79,6 +79,42 @@ public class AddressData implements CrudItf<Address> {
 
 		return address;
 	}
+	
+	public Address selectLestID() throws ConnectException {
+		Address address = null;
+
+		try {
+			String query = "SELECT TOP 1 *	FROM address WHERE id_address <=id_address 	ORDER BY id_address DESC";
+			
+			
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				address = new Address(
+					rs.getInt("id_address"),
+					rs.getString("address_street"), 
+					rs.getInt("address_number"),
+					rs.getString("address_country"),
+					rs.getString("address_zip"),
+					rs.getString("address_state"),
+					rs.getString("address_city")
+					
+					
+					
+			);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return address;
+	}
 	@Override
 	public  Address save(Address obj) throws ConnectException {
 		if (obj.getId() != 0) {
@@ -86,7 +122,7 @@ public class AddressData implements CrudItf<Address> {
 			return this.update(obj);
 		}
 		try {
-			String query = "INSERT INTO Address VALUES(?,?,?,?,?,?,?)";
+			String query = "INSERT INTO Address VALUES(?,?,?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -102,7 +138,8 @@ public class AddressData implements CrudItf<Address> {
 			stmt.close();
 			con.close();
 
-			return this.select(obj.getId());
+			return this.selectLestID();
+			
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}

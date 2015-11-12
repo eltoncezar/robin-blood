@@ -1,44 +1,50 @@
 package models;
 
 public class DonorPhone {
-	private int idPhone;
-	private int idDonor;
+	private Phone Phone;
+	private Donor Donor;
 	
 	public DonorPhone() {
 		super();
 	}
 
 	
-	public DonorPhone(int idPhone, int idDonor) {
+	public DonorPhone(Phone Phone, Donor Donor) {
 		super();
-		this.idPhone = idPhone;
-		this.idDonor = idDonor;
+		this.Phone = Phone;
+		this.Donor = Donor;
 	}
 
-	public int getIdPhone() {
-		return idPhone;
+
+	public Phone getPhone() {
+		return Phone;
 	}
 
-	public void setIdPhone(int idPhone) {
-		this.idPhone = idPhone;
+
+	public void setPhone(Phone Phone) {
+		this.Phone = Phone;
 	}
 
-	public int getIdDonor() {
-		return idDonor;
+
+	public Donor getDonor() {
+		return Donor;
 	}
 
-	public void setIdDonor(int idDonor) {
-		this.idDonor = idDonor;
+
+	public void setDonor(Donor Donor) {
+		this.Donor = Donor;
 	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idDonor;
-		result = prime * result + idPhone;
+		result = prime * result + ((Donor == null) ? 0 : Donor.hashCode());
+		result = prime * result + ((Phone == null) ? 0 : Phone.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,13 +55,20 @@ public class DonorPhone {
 		if (getClass() != obj.getClass())
 			return false;
 		DonorPhone other = (DonorPhone) obj;
-		if (idDonor != other.idDonor)
+		if (Donor == null) {
+			if (other.Donor != null)
+				return false;
+		} else if (!Donor.equals(other.Donor))
 			return false;
-		if (idPhone != other.idPhone)
+		if (Phone == null) {
+			if (other.Phone != null)
+				return false;
+		} else if (!Phone.equals(other.Phone))
 			return false;
 		return true;
 	}
-	
+
+
 	
 	
 

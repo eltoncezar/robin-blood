@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import models.Address;
 import models.Donor;
 import models.Phone;
 
@@ -16,6 +17,7 @@ public class DonorData implements CrudItf<Donor> {
 	
 	AddressData addressData = new AddressData();
 	PhoneData phoneData = new PhoneData();
+	
 
 	@Override
 	public List<Donor> listAll() throws ConnectException {
@@ -37,7 +39,7 @@ public class DonorData implements CrudItf<Donor> {
 							rs.getString("donor_gender"),
 							rs.getString("donor_email"),
 							rs.getString("donor_blood_type"),
-							rs.getInt("id_address")
+							addressData.select(rs.getInt("id_address")) 
 						)
 					);
 			}
@@ -70,7 +72,7 @@ public class DonorData implements CrudItf<Donor> {
 						rs.getString("donor_gender"),
 						rs.getString("donor_email"),
 						rs.getString("donor_blood_type"),
-						rs.getInt("id_address"));
+						addressData.select(rs.getInt("id_address")));
 			}
 			rs.close();
 			stmt.close();
@@ -101,7 +103,7 @@ public class DonorData implements CrudItf<Donor> {
 						rs.getString("donor_gender"),
 						rs.getString("donor_email"),
 						rs.getString("donor_blood_type"),
-						rs.getInt("id_address")
+						addressData.select(rs.getInt("id_address"))
 						
 					)
 				);
@@ -122,19 +124,24 @@ public class DonorData implements CrudItf<Donor> {
 			
 			return this.update(obj);
 		}
+		
+		
 		try {
 			
+			
+			obj.setAddresses(addressData.save(obj.getAddresses()));	
 			String query = "INSERT INTO Donor VALUES(?,?,?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
+			
 			stmt.setString(1, obj.getName());
 			stmt.setString(2, obj.getCpf());
 			stmt.setString(3, obj.getGender());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getBloodType());
-			stmt.setInt(6, obj.getAddresses());
+			stmt.setInt(6, obj.getAddresses().getId());
 			
 			
 			

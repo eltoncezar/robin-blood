@@ -11,6 +11,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,10 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import business.AdressController;
+
 import business.DonorController;
 import business.DonorPhoneController;
 import business.PhoneController;
+import business.Utils;
 import data.ConnectException;
 import models.Address;
 import models.ComboBoxItem;
@@ -47,22 +49,22 @@ public class DonorRegistration extends JInternalFrame {
 	private JTable table;
 	
 	private DonorController donorcontroller;
-	private AdressController addresscontroller;
 	private PhoneController phonecontroller;
 	private DonorPhoneController donorphonecontroller;
+
 	
 
 	public DonorRegistration(Donor paramDonor) {
-		addresscontroller = new AdressController();
+		donorcontroller = new DonorController();
 		phonecontroller = new PhoneController();
-		addresscontroller = new AdressController();
+		DefaultTableModel modelo = new DefaultTableModel();
 		Address paramAddress = null;
 		
 		setTitle("CADASTRO DOADOR");
 		setMaximizable(true);
 		setIconifiable(true);
 		setClosable(true);
-		setSize(500, 590);
+		setSize(500, 630);
 
 		JLabel lblNome = new JLabel("Nome");
 
@@ -80,6 +82,7 @@ public class DonorRegistration extends JInternalFrame {
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 
+		//txtCPF = new JFormattedTextField(new Utils().Mascara("###.###.###-##"));
 		txtCPF = new JTextField();
 		txtCPF.setColumns(10);
 		
@@ -92,48 +95,40 @@ public class DonorRegistration extends JInternalFrame {
 
 		JComboBox<ComboBoxItem> comboGender = new JComboBox<ComboBoxItem>();
 		comboGender.addItem(new ComboBoxItem("", ""));
-		comboGender.addItem(new ComboBoxItem("M", "Masculino"));
-		comboGender.addItem(new ComboBoxItem("F", "Feminino"));
+		comboGender.addItem(new ComboBoxItem("M", "M"));
+		comboGender.addItem(new ComboBoxItem("F", "F"));
 		
 		JComboBox<ComboBoxItem> comboBoxEstado = new JComboBox<ComboBoxItem>();
 		comboBoxEstado.addItem(new ComboBoxItem("", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("AC", "Acre"));
-		comboBoxEstado.addItem(new ComboBoxItem("AL", "Alagoas"));
-		comboBoxEstado.addItem(new ComboBoxItem("AM", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("AP", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("BA", "Bahia"));
-		comboBoxEstado.addItem(new ComboBoxItem("CE", "Ceara"));
-		comboBoxEstado.addItem(new ComboBoxItem("DF", "Destrito Fedaral"));
-		comboBoxEstado.addItem(new ComboBoxItem("ES", "Espirito Santo"));
-		comboBoxEstado.addItem(new ComboBoxItem("GO", "Goias"));
-		comboBoxEstado.addItem(new ComboBoxItem("MA", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("MG", "Minas Gerais"));
-		comboBoxEstado.addItem(new ComboBoxItem("MS", "Mato Groso do Sul"));
-		comboBoxEstado.addItem(new ComboBoxItem("MT", "Mato Groso"));
-		comboBoxEstado.addItem(new ComboBoxItem("PA", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("PB", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("PE", "Pernanbuco"));
-		comboBoxEstado.addItem(new ComboBoxItem("PI", "Piaui"));
-		comboBoxEstado.addItem(new ComboBoxItem("PR", "Parana"));
-		comboBoxEstado.addItem(new ComboBoxItem("RJ", "Rio de Janeiro"));
-		comboBoxEstado.addItem(new ComboBoxItem("RN", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("RO", "Rondonia"));
-		comboBoxEstado.addItem(new ComboBoxItem("RS", "Rio Grande do Sul"));
-		comboBoxEstado.addItem(new ComboBoxItem("SC", "Santa Catarina"));
-		comboBoxEstado.addItem(new ComboBoxItem("SE", ""));
-		comboBoxEstado.addItem(new ComboBoxItem("SP", "São Paulo"));
-		comboBoxEstado.addItem(new ComboBoxItem("TO", "Tocantis"));
+		comboBoxEstado.addItem(new ComboBoxItem("AC", "AC"));
+		comboBoxEstado.addItem(new ComboBoxItem("AL", "AC"));
+		comboBoxEstado.addItem(new ComboBoxItem("AM", "AM"));
+		comboBoxEstado.addItem(new ComboBoxItem("AP", "AP"));
+		comboBoxEstado.addItem(new ComboBoxItem("BA", "BA"));
+		comboBoxEstado.addItem(new ComboBoxItem("CE", "CE"));
+		comboBoxEstado.addItem(new ComboBoxItem("DF", "DF"));
+		comboBoxEstado.addItem(new ComboBoxItem("ES", "ES"));
+		comboBoxEstado.addItem(new ComboBoxItem("GO", "GO"));
+		comboBoxEstado.addItem(new ComboBoxItem("MA", "MA"));
+		comboBoxEstado.addItem(new ComboBoxItem("MG", "MG"));
+		comboBoxEstado.addItem(new ComboBoxItem("MS", "MS"));
+		comboBoxEstado.addItem(new ComboBoxItem("MT", "MT"));
+		comboBoxEstado.addItem(new ComboBoxItem("PA", "PA"));
+		comboBoxEstado.addItem(new ComboBoxItem("PB", "PB"));
+		comboBoxEstado.addItem(new ComboBoxItem("PE", "PE"));
+		comboBoxEstado.addItem(new ComboBoxItem("PI", "PI"));
+		comboBoxEstado.addItem(new ComboBoxItem("PR", "PR"));
+		comboBoxEstado.addItem(new ComboBoxItem("RJ", "RJ"));
+		comboBoxEstado.addItem(new ComboBoxItem("RN", "RN"));
+		comboBoxEstado.addItem(new ComboBoxItem("RO", "RO"));
+		comboBoxEstado.addItem(new ComboBoxItem("RS", "RS"));
+		comboBoxEstado.addItem(new ComboBoxItem("SC", "SC"));
+		comboBoxEstado.addItem(new ComboBoxItem("SE", "SE"));
+		comboBoxEstado.addItem(new ComboBoxItem("SP", "SP"));
+		comboBoxEstado.addItem(new ComboBoxItem("TO", "TO"));
 		
 		
-		
-		
-//		comboBoxEstado.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AM", "AP",
-//				"BA", "CE", "DF", "ES", "GO",
-//				"MA", "MG", "MS", "MT", "PA",
-//				"PB", "PE", "PI", "PR", "RJ",
-//				"RN", "RO", "RS", "SC", "SE",
-//				"SP", "TO"}));
-//		
+
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -145,24 +140,25 @@ public class DonorRegistration extends JInternalFrame {
 				
 				
 				try {
+					Address add = new Address(idaddres,
+							txtrua.getText(),
+							Integer.valueOf(txtnumero.getText()),
+							"Brasil",
+							txtcep.getText(),
+							comboBoxEstado.getSelectedItem().toString(),
+							txtcidade.getText());
 					
-					donorcontroller.save(new Donor(paramDonor.getId(),
+					Donor don = new Donor(paramDonor.getId(),
 							txtName.getText(),
 							txtCPF.getText(),
 							comboGender.getSelectedItem().toString(),
 							txtEmail.getText(),
 							comboBloodType.getSelectedItem().toString(),
-							addresscontroller.save(new Address(idaddres,
-																	txtrua.getText(),
-																	Integer.parseInt(txtnumero.getText()),
-																	"Brasil",
-																	txtcep.getText(),
-																	comboBoxEstado.getSelectedItem().toString(),
-																	txtcidade.getText()))
-							
-							
-							
-							));
+							add);
+					
+					
+					donorcontroller.save(don);
+					JOptionPane.showMessageDialog(getContentPane(), "Salvo com Sucesso!", "Robin Blood", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ConnectException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -243,7 +239,7 @@ public class DonorRegistration extends JInternalFrame {
 		List<Phone> phones = phonecontroller.getByFilter(paramDonor.getId());		
 		
 		
-		DefaultTableModel modelo = new DefaultTableModel();
+		
 		modelo.addColumn("Numero");
 
 		table = new JTable(modelo);
@@ -255,7 +251,8 @@ public class DonorRegistration extends JInternalFrame {
 			txtEmail.setText(paramDonor.getEmail());
 			txtCPF.setText(paramDonor.getCpf());
 			
-			paramAddress = addresscontroller.getByFilter(paramDonor.getAddresses());
+			int idadd = paramDonor.getAddresses().getId();
+			paramAddress = donorcontroller.getById(idadd);
 			
 			
 			txtrua.setText(paramAddress.getStreet());
@@ -274,6 +271,7 @@ public class DonorRegistration extends JInternalFrame {
 
 				if (code.equals(paramAddress.getState())) {
 					comboBoxEstado.setSelectedItem(comboBoxEstado.getItemAt(i));
+	
 				}
 			}
 			
@@ -360,54 +358,53 @@ public class DonorRegistration extends JInternalFrame {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblCpf))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblGenero)
-											.addGap(75)
-											.addComponent(lblTipoSanguineo, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-											.addGap(18)
-											.addComponent(comboBloodType, 0, 143, Short.MAX_VALUE)
-											.addGap(18)
-											.addComponent(comboBloodTypeFactor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNome)
-										.addComponent(lblEmail))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtName, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-										.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))))
-							.addGap(32))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(99)
-							.addComponent(btnCancelar)
-							.addGap(18)
-							.addComponent(btnBuscar)
-							.addGap(18)
-							.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
-					.addGap(24))
-				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblInformaoesPessoais)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 361, GroupLayout.PREFERRED_SIZE)
+					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 340, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNome)
+					.addContainerGap(463, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblEmail)
+					.addContainerGap(462, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblCpf)
+									.addGap(121)
+									.addComponent(lblGenero)
+									.addGap(77))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(comboBloodTypeFactor, 0, 41, Short.MAX_VALUE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblTipoSanguineo, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+									.addGap(30))))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(txtName)
+								.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))))
+					.addGap(39))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator_2, GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+					.addComponent(separator_2, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
@@ -432,25 +429,34 @@ public class DonorRegistration extends JInternalFrame {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(txtcep, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
 								.addComponent(lblCep))))
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addContainerGap(40, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblContato)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator_3, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(31, Short.MAX_VALUE))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 453, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(37, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(293, Short.MAX_VALUE)
+					.addComponent(btnRemover)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnAdicionarTelefone)
+					.addGap(45))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnRemover)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnAdicionarTelefone))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 453, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(52, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-					.addGap(20))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(separator, Alignment.LEADING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblContato)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(separator_3, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(16, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(116, Short.MAX_VALUE)
+					.addComponent(btnCancelar)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnBuscar)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addGap(140))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -459,30 +465,37 @@ public class DonorRegistration extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblInformaoesPessoais)
 						.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNome)
-						.addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
+					.addComponent(lblNome)
+					.addGap(5)
+					.addComponent(txtName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEmail)
-						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addComponent(lblEmail)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCpf)
-						.addComponent(lblGenero)
-						.addComponent(lblTipoSanguineo))
+					.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBloodTypeFactor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblCpf)
+								.addComponent(lblGenero))
+							.addGap(18))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblTipoSanguineo)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBloodTypeFactor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(6)))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblNewLabel)
 						.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblRua)
 						.addComponent(lblNumero))
@@ -508,15 +521,16 @@ public class DonorRegistration extends JInternalFrame {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAdicionarTelefone)
-						.addComponent(btnRemover))
+						.addComponent(btnRemover)
+						.addComponent(btnAdicionarTelefone))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 3, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSalvar)
 						.addComponent(btnBuscar)
-						.addComponent(btnCancelar)))
+						.addComponent(btnCancelar))
+					.addGap(32))
 		);
 
 		scrollPane.setViewportView(table);

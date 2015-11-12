@@ -9,7 +9,7 @@ public class Donor {
 	private String gender;
 	private String email;
 	private String bloodType;
-	private int address;
+	private Address address;
 
 
 	public Donor() {
@@ -17,7 +17,7 @@ public class Donor {
 	}
 
 	public Donor(int id, String name, String cpf, String gender, String email,
-			String bloodType,  int address) {
+			String bloodType,  Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -76,11 +76,11 @@ public class Donor {
 		this.bloodType = bloodType;
 	}
 
-	public int getAddresses() {
+	public Address getAddresses() {
 		return address;
 	}
 
-	public void setAddresses(int address) {
+	public void setAddresses(Address address) {
 		this.address = address;
 	}
 
