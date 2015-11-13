@@ -16,6 +16,7 @@ public class DonorPhoneController {
 
 	public DonorPhoneController(){
 		phoneData = new PhoneData();
+		donorphoneData = new DonorPhoneData();
 	}
 
 	public List<Phone> getAll() {
@@ -62,6 +63,7 @@ public class DonorPhoneController {
 
 
 	public Object save(DonorPhone donorphone) throws ConnectException {
+				
 		return donorphoneData.save(donorphone);
 		
 
