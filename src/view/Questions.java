@@ -1,14 +1,16 @@
 package view;
 
 
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
+
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 
 public class Questions extends JInternalFrame {
@@ -20,7 +22,7 @@ public class Questions extends JInternalFrame {
 		setClosable(true);
 		setMaximizable(true);
 		setIconifiable(true);
-		setSize(679, 545);
+		setSize(755, 545);
 		FormLayout formLayout = new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
