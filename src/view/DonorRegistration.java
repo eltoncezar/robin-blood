@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -57,6 +58,7 @@ public class DonorRegistration extends JInternalFrame {
 	public DonorRegistration(Donor paramDonor) {
 		donorcontroller = new DonorController();
 		phonecontroller = new PhoneController();
+		donorphonecontroller = new DonorPhoneController();
 		DefaultTableModel modelo = new DefaultTableModel();
 		Address paramAddress = null;
 		
@@ -156,8 +158,22 @@ public class DonorRegistration extends JInternalFrame {
 							comboBloodType.getSelectedItem().toString(),
 							add);
 					
-					
 					donorcontroller.save(don);
+					
+					List<Phone> phon = new ArrayList<>();
+					
+					for (int count = 0; count < modelo.getRowCount(); count++){
+						phon.add(new Phone(0, modelo.getValueAt(count, 0).toString()));
+						//phon.add(modelo.getValueAt(count, 0).toString());
+			        }
+					List<Phone> phons = phonecontroller.save(phon);
+					
+					for (Phone phone : phons) {
+						donorphonecontroller.save(new DonorPhone(phone, don));
+					}
+					
+					
+					
 					JOptionPane.showMessageDialog(getContentPane(), "Salvo com Sucesso!", "Robin Blood", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ConnectException e) {
 					// TODO Auto-generated catch block
@@ -318,7 +334,7 @@ public class DonorRegistration extends JInternalFrame {
 		btnAdicionarTelefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String tel = JOptionPane.showInputDialog("Insira o Telefone");
-				modelo.addRow(new Object[]{tel});
+				modelo.addRow(new Object[]{tel});	
 				
 			}
 		});

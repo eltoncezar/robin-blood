@@ -11,6 +11,8 @@ import java.util.List;
 import models.DonorPhone;
 
 public class DonorPhoneData implements CrudItf<DonorPhone> {
+	
+	private DonorData donorData;
 
 	@Override
 	public List<DonorPhone> listAll() throws ConnectException {
@@ -87,14 +89,17 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 
 	@Override
 	public DonorPhone save(DonorPhone obj) throws ConnectException {
+		donorData = new DonorData();
+		
 		try {
 			String query = "INSERT INTO donor_phone VALUES(?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
-
+			
+			
 			stmt.setInt(1, obj.getPhone().getId());
-			stmt.setInt(2, obj.getDonor().getId());
+			stmt.setInt(2, donorData.selectLast().getId());
 			
 			stmt.executeUpdate();
 			stmt.close();

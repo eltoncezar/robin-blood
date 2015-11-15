@@ -9,6 +9,7 @@ import javax.swing.*;
 import data.ConnectException;
 import javafx.scene.image.Image;
 import models.Address;
+import models.Hospital;
  
 public class MainWindow extends JFrame{
 
@@ -17,6 +18,10 @@ public class MainWindow extends JFrame{
     private UserRegistration userResFrame;
 	private DonorList donorlist;
     private DonationRegistration donationResFrame;
+    private HospitalList hospitalFrame;
+    private EstoqueEntrada estoqueestradaframe;
+    private Distribution distributionframe;
+    private ReportInventory reportInventory;
     private UserList userlist;
     private JMenuBar menuBar;
     
@@ -114,16 +119,33 @@ public class MainWindow extends JFrame{
         });
         
         JMenuItem mntmHospital = new JMenuItem("Hospital");
+        mntmHospital.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		hospitalFrame = new HospitalList();
+        		hospitalFrame.setVisible(true);
+        		desktopPane.add(hospitalFrame);
+        		
+        		hospitalFrame.setBounds(0, 0, hospitalFrame.getWidth(), hospitalFrame.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = hospitalFrame.getWidth();
+                int aIFrame = hospitalFrame.getHeight();
+                hospitalFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        		
+        	}
+        });
         mnNewMenu.add(mntmHospital);
         
-        JMenuItem mntmDoao = new JMenuItem("Doa\u00E7\u00E3o");
-        mnNewMenu.add(mntmDoao);
-        mntmDoao.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Verifica inicialização do Frame
-           		if(donationResFrame == null){
+        
+        //Menu Serviços
+        JMenu mnNewMenu_1 = new JMenu("Servi\u00E7os");
+        menuBar.add(mnNewMenu_1);
+        
+        JMenuItem mntmDoao_1 = new JMenuItem("Doa\u00E7\u00E3o");
+        mntmDoao_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		if(donationResFrame == null){
            			donationResFrame = new DonationRegistration();
            			donationResFrame.setVisible(true);
                     desktopPane.add(donationResFrame);
@@ -139,16 +161,49 @@ public class MainWindow extends JFrame{
                 int lIFrame = donationResFrame.getWidth();
                 int aIFrame = donationResFrame.getHeight();
                 donationResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-            }
-		});
-        
-        
-        //Menu Serviços
-        JMenu mnNewMenu_1 = new JMenu("Servi\u00E7os");
-        menuBar.add(mnNewMenu_1);
-        
-        JMenuItem mntmDoao_1 = new JMenuItem("Doa\u00E7\u00E3o");
+        	}
+        });
         mnNewMenu_1.add(mntmDoao_1);
+        
+        JMenu mnEstoque = new JMenu("Estoque");
+        menuBar.add(mnEstoque);
+        
+        JMenuItem mntmReserva = new JMenuItem("Entrada");
+        mntmReserva.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		estoqueestradaframe = new EstoqueEntrada();
+        		estoqueestradaframe.setVisible(true);
+        		desktopPane.add(estoqueestradaframe);
+        		
+        		estoqueestradaframe.setBounds(0, 0, estoqueestradaframe.getWidth(), estoqueestradaframe.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = estoqueestradaframe.getWidth();
+                int aIFrame = estoqueestradaframe.getHeight();
+                estoqueestradaframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        	
+        		
+        	
+        	}
+        });
+        mnEstoque.add(mntmReserva);
+        
+        JMenuItem mntmDistribuicao = new JMenuItem("Distribuição");
+        mntmDistribuicao.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		distributionframe = new Distribution();
+        		distributionframe.setVisible(true);
+        		desktopPane.add(distributionframe);
+        		
+        		distributionframe.setBounds(0, 0, distributionframe.getWidth(), distributionframe.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = distributionframe.getWidth();
+                int aIFrame = distributionframe.getHeight();
+                distributionframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        	}
+        });
+        mnEstoque.add(mntmDistribuicao);
         
         
         
@@ -156,14 +211,28 @@ public class MainWindow extends JFrame{
         JMenu mnNewMenu_2 = new JMenu("Relat\u00F3rios");
         menuBar.add(mnNewMenu_2);
         
-        JMenuItem mntmEstoque = new JMenuItem("Estoque");
-        mnNewMenu_2.add(mntmEstoque);
-        
         JMenuItem mntmFila = new JMenuItem("Fila");
         mnNewMenu_2.add(mntmFila);
         
         JMenuItem mntmDoador = new JMenuItem("Doador");
         mnNewMenu_2.add(mntmDoador);
+        
+        JMenuItem mntmEstoque = new JMenuItem("Estoque");
+        mntmEstoque.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		reportInventory = new ReportInventory();
+        		reportInventory.setVisible(true);
+        		desktopPane.add(reportInventory);
+        		
+        		reportInventory.setBounds(0, 0, reportInventory.getWidth(), reportInventory.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = reportInventory.getWidth();
+                int aIFrame = reportInventory.getHeight();
+                reportInventory.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        	}
+        });
+        mnNewMenu_2.add(mntmEstoque);
  
    
         setJMenuBar(menuBar);
@@ -174,7 +243,4 @@ public class MainWindow extends JFrame{
         setIconImage(new ImageIcon("/robin-blood/Imagens/IconBlood1.png").getImage());
         
     }
- 
-    
- 
 }

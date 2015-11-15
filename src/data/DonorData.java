@@ -14,6 +14,7 @@ public class DonorData implements CrudItf<Donor> {
 	
 	AddressData addressData = new AddressData();
 	PhoneData phoneData = new PhoneData();
+	private int tes;
 	
 
 	@Override
@@ -48,6 +49,37 @@ public class DonorData implements CrudItf<Donor> {
 		}
 
 		return lista;
+	}
+	
+	public Donor selectLast() throws ConnectException {
+		Donor don = null;
+
+		try {
+			String query = "SELECT TOP 1 *	FROM donor WHERE id_donor <=id_donor ORDER BY id_donor DESC";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			//stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				don = new Donor(
+						rs.getInt("id_donor"),
+						rs.getString("donor_name"),
+						rs.getString("donor_cpf"),
+						rs.getString("donor_gender"),
+						rs.getString("donor_email"),
+						rs.getString("donor_blood_type"),
+						addressData.select(rs.getInt("id_address"))
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return don;
 	}
 
 	@Override
@@ -147,6 +179,8 @@ public class DonorData implements CrudItf<Donor> {
 
 	@Override
 	public Donor save(Donor obj) throws ConnectException {
+		
+		tes = obj.getId();
 		if (obj.getId() != 0) {
 			
 			return this.update(obj);
