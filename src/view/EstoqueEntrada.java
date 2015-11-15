@@ -1,27 +1,22 @@
 package view;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import business.Utils;
 import models.ComboBoxItem;
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class EstoqueEntrada extends JInternalFrame {
 	private JTextField textField;
-	private Utils utils;
-
 	public EstoqueEntrada() {
 		setClosable(true);
 		setTitle("Estoque - Entrada de Sangue");

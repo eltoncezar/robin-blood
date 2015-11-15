@@ -1,44 +1,34 @@
 package view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import business.UserRegistrationController;
 import data.ConnectException;
-import data.UserTypeData;
-import javafx.print.PageRange;
 import models.User;
 import models.UserType;
 
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
-
-import javax.swing.JFormattedTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-
-import business.UserRegistrationController;
-
 public class UserRegistration extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtnome;
 	private JTextField txtmail;
 	private JPasswordField txtpassword;
@@ -114,7 +104,7 @@ public class UserRegistration extends JInternalFrame {
 		
 		
 		List<UserType> userTypes = controller.getUserTypes();
-		JComboBox comboType_User = new JComboBox(new DefaultComboBoxModel<>(userTypes.toArray()));
+		JComboBox<Object> comboType_User = new JComboBox<Object>(new DefaultComboBoxModel<>(userTypes.toArray()));
 		comboType_User.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

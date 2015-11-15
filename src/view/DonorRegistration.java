@@ -12,7 +12,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,14 +26,12 @@ import javax.swing.table.DefaultTableModel;
 import business.DonorController;
 import business.DonorPhoneController;
 import business.PhoneController;
-import business.Utils;
 import data.ConnectException;
 import models.Address;
 import models.ComboBoxItem;
 import models.Donor;
 import models.DonorPhone;
 import models.Phone;
-import models.User;
 
 public class DonorRegistration extends JInternalFrame {
 	
@@ -164,7 +161,6 @@ public class DonorRegistration extends JInternalFrame {
 					
 					for (int count = 0; count < modelo.getRowCount(); count++){
 						phon.add(new Phone(0, modelo.getValueAt(count, 0).toString()));
-						//phon.add(modelo.getValueAt(count, 0).toString());
 			        }
 					List<Phone> phons = phonecontroller.save(phon);
 					
@@ -176,7 +172,6 @@ public class DonorRegistration extends JInternalFrame {
 					
 					JOptionPane.showMessageDialog(getContentPane(), "Salvo com Sucesso!", "Robin Blood", JOptionPane.INFORMATION_MESSAGE);
 				} catch (ConnectException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -194,6 +189,7 @@ public class DonorRegistration extends JInternalFrame {
 		
 
 		JComboBox<ComboBoxItem> comboBloodTypeFactor = new JComboBox<ComboBoxItem>();
+		comboBloodTypeFactor.addItem(new ComboBoxItem("", ""));
 		comboBloodTypeFactor.addItem(new ComboBoxItem("+", "+"));
 		comboBloodTypeFactor.addItem(new ComboBoxItem("-", "-"));
 

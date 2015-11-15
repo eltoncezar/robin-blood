@@ -1,5 +1,7 @@
 package models;
 
+
+
 public class Donor {
 	private int id = 0;
 	private String name;
@@ -8,6 +10,16 @@ public class Donor {
 	private String email;
 	private String bloodType;
 	private Address address;
+	private static Donor donor;
+	
+	public static Donor getInstace(){
+		if(donor == null){
+			donor = new Donor();
+    	}
+		
+		return donor;
+		
+	}
 
 	public Donor() {
 		super();
@@ -25,6 +37,7 @@ public class Donor {
 		this.address = address;
 	}
 
+	
 	public int getId() {
 		return id;
 	}

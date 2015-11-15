@@ -1,16 +1,19 @@
 package view;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
 
-import javax.swing.JInternalFrame;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Font;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import org.jfree.chart.ChartFactory;
@@ -19,15 +22,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
 
 public class ReportInventory extends JInternalFrame {
 	private JTextField textField;
