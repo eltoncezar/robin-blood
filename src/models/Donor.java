@@ -1,7 +1,5 @@
 package models;
 
-import java.util.List;
-
 public class Donor {
 	private int id = 0;
 	private String name;
@@ -10,7 +8,6 @@ public class Donor {
 	private String email;
 	private String bloodType;
 	private Address address;
-
 
 	public Donor() {
 		super();

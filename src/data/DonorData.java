@@ -8,10 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import models.Address;
 import models.Donor;
-import models.Phone;
 
 public class DonorData implements CrudItf<Donor> {
 	
@@ -63,6 +60,36 @@ public class DonorData implements CrudItf<Donor> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				donor = new Donor(
+						rs.getInt("id_donor"),
+						rs.getString("donor_name"),
+						rs.getString("donor_cpf"),
+						rs.getString("donor_gender"),
+						rs.getString("donor_email"),
+						rs.getString("donor_blood_type"),
+						addressData.select(rs.getInt("id_address")));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return donor;
+	}
+	
+	public Donor selectByCpf(String cpf) throws ConnectException {
+		Donor donor = new Donor();
+
+		try {
+			String query = "SELECT * FROM Donor WHERE donor_cpf like '%' + ? + '%'";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				donor = new Donor(
