@@ -6,7 +6,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 
-import javafx.scene.layout.Border;
+
 import models.ComboBoxItem;
 
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
-import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;

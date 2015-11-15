@@ -1,31 +1,27 @@
 package view;
 
-import java.awt.*;
 import java.awt.event.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import data.ConnectException;
-import javafx.scene.image.Image;
-import models.Address;
-import models.Hospital;
  
 public class MainWindow extends JFrame{
 
  
-    private static JDesktopPane desktopPane;
-    private UserRegistration userResFrame;
-	private DonorList donorlist;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static JDesktopPane desktopPane;
+    private DonorList donorlist;
     private DonationRegistration donationResFrame;
     private HospitalList hospitalFrame;
     private EstoqueEntrada estoqueestradaframe;
     private Distribution distributionframe;
     private ReportInventory reportInventory;
     private UserList userlist;
+    private Questions questionsframe;
     private JMenuBar menuBar;
-    
-    private Address address;
     
     private static MainWindow mainwindow;
     
@@ -39,7 +35,8 @@ public class MainWindow extends JFrame{
     
     public static JDesktopPane getDesktopPanel(){
     	
-		return getInstancia().desktopPane;
+		getInstancia();
+		return MainWindow.desktopPane;
     	
     }
  
@@ -57,11 +54,11 @@ public class MainWindow extends JFrame{
         
         //Menu Cadastro
         JMenu mnNewMenu = new JMenu("Cadastro");
-        mnNewMenu.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconForm.png"));
+        mnNewMenu.setIcon(new ImageIcon("/robin-blood/Imagens/IconForm.png"));
         menuBar.add(mnNewMenu);
         
         JMenuItem mUsuario = new JMenuItem("Usu\u00E1rio");
-        mUsuario.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconUser.png"));
+        mUsuario.setIcon(new ImageIcon("/robin-blood/Imagens/IconUser.png"));
         mnNewMenu.add(mUsuario);
         mUsuario.addActionListener(new ActionListener() {        	
            	@Override
@@ -92,25 +89,17 @@ public class MainWindow extends JFrame{
         });
         
         JMenuItem mDoador = new JMenuItem("Doador");
-        mDoador.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconDonor.png"));
+        mDoador.setIcon(new ImageIcon("/robin-blood/Imagens/IconDonor.png"));
         mnNewMenu.add(mDoador);
         mDoador.addActionListener(new ActionListener() {        	
            	
 
 			@Override
         	public void actionPerformed(ActionEvent e) {
-           		if(donorlist == null){
-           			address = new Address();
-                	donorlist = new DonorList();
-                	
+					donorlist = new DonorList();
                 	donorlist.setVisible(true);
                 	desktopPane.add(donorlist);
-                }
-                else if(!donorlist.isVisible()){
-                	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
-                }
-           		//Inicializa Frame Centralizado
+                            
            		donorlist.setBounds(0, 0, donorlist.getWidth(), donorlist.getHeight());
            		int lDesk = MainWindow.getDesktopPanel().getWidth();
                 int aDesk = MainWindow.getDesktopPanel().getHeight();
@@ -122,7 +111,7 @@ public class MainWindow extends JFrame{
         });
         
         JMenuItem mntmHospital = new JMenuItem("Hospital");
-        mntmHospital.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconHospital.png"));
+        mntmHospital.setIcon(new ImageIcon("/robin-blood/Imagens/IconHospital.png"));
         mntmHospital.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -144,10 +133,11 @@ public class MainWindow extends JFrame{
         
         //Menu Serviços
         JMenu mnNewMenu_1 = new JMenu("Servi\u00E7os");
-        mnNewMenu_1.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\Iconservico.png"));
+        mnNewMenu_1.setIcon(new ImageIcon("/robin-blood/Imagens/Iconservico.png"));
         menuBar.add(mnNewMenu_1);
         
         JMenuItem mntmDoao_1 = new JMenuItem("Doa\u00E7\u00E3o");
+        mntmDoao_1.setIcon(new ImageIcon("/robin-blood/Imagens/IconDoacao_1.png"));
         mntmDoao_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		if(donationResFrame == null){
@@ -171,11 +161,11 @@ public class MainWindow extends JFrame{
         mnNewMenu_1.add(mntmDoao_1);
         
         JMenu mnEstoque = new JMenu("Estoque");
-        mnEstoque.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\Iconestoque.png"));
+        mnEstoque.setIcon(new ImageIcon("/robin-blood/Imagens/Iconestoque.png"));
         menuBar.add(mnEstoque);
         
         JMenuItem mntmReserva = new JMenuItem("Entrada");
-        mntmReserva.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconIn.png"));
+        mntmReserva.setIcon(new ImageIcon("/robin-blood/Imagens/IconIn.png"));
         mntmReserva.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		estoqueestradaframe = new EstoqueEntrada();
@@ -196,7 +186,7 @@ public class MainWindow extends JFrame{
         mnEstoque.add(mntmReserva);
         
         JMenuItem mntmDistribuicao = new JMenuItem("Distribuição");
-        mntmDistribuicao.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\Icondistribuicao.png"));
+        mntmDistribuicao.setIcon(new ImageIcon("/robin-blood/Imagens/Icondistribuicao.png"));
         mntmDistribuicao.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		distributionframe = new Distribution();
@@ -217,19 +207,19 @@ public class MainWindow extends JFrame{
         
         //Menu Relatórios
         JMenu mnNewMenu_2 = new JMenu("Relat\u00F3rios");
-        mnNewMenu_2.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\IconRelatorio.png"));
+        mnNewMenu_2.setIcon(new ImageIcon("/robin-blood/Imagens/IconRelatorio.png"));
         menuBar.add(mnNewMenu_2);
         
         JMenuItem mntmFila = new JMenuItem("Fila");
-        mntmFila.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\iconfila.png"));
+        mntmFila.setIcon(new ImageIcon("/robin-blood/Imagens/iconfila.png"));
         mnNewMenu_2.add(mntmFila);
         
         JMenuItem mntmDoador = new JMenuItem("Doador");
-        mntmDoador.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\Icondonor_1.png"));
+        mntmDoador.setIcon(new ImageIcon("/robin-blood/Imagens/Icondonor_1.png"));
         mnNewMenu_2.add(mntmDoador);
         
         JMenuItem mntmEstoque = new JMenuItem("Estoque");
-        mntmEstoque.setIcon(new ImageIcon("D:\\robin-blood\\Imagens\\iconestoque_1.png"));
+        mntmEstoque.setIcon(new ImageIcon("/robin-blood/Imagens/iconestoque_1.png"));
         mntmEstoque.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		reportInventory = new ReportInventory();
@@ -248,6 +238,41 @@ public class MainWindow extends JFrame{
  
    
         setJMenuBar(menuBar);
+        
+        JMenu mnDoador = new JMenu("Doador");
+        mnDoador.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		questionsframe = new Questions();
+        		questionsframe.setVisible(true);
+        		desktopPane.add(reportInventory);
+        		
+        		questionsframe.setBounds(0, 0, questionsframe.getWidth(), questionsframe.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = questionsframe.getWidth();
+                int aIFrame = questionsframe.getHeight();
+                questionsframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        	}
+        });
+        menuBar.add(mnDoador);
+        
+        JMenuItem mntmNewMenuItem = new JMenuItem("Questionario");
+        mnDoador.add(mntmNewMenuItem);
+        mntmNewMenuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		questionsframe = new Questions();
+        		questionsframe.setVisible(true);
+        		desktopPane.add(questionsframe);
+        		
+        		questionsframe.setBounds(0, 0, questionsframe.getWidth(), questionsframe.getHeight());
+                int lDesk = desktopPane.getWidth();
+                int aDesk = desktopPane.getHeight();
+                int lIFrame = questionsframe.getWidth();
+                int aIFrame = questionsframe.getHeight();
+                questionsframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+        	}
+        });
  
         setVisible(true);
         setResizable(true);
