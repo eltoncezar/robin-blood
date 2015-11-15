@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import models.UserType;
 
 public class UserTypeData implements CrudItf<UserType> {
@@ -22,8 +23,12 @@ public class UserTypeData implements CrudItf<UserType> {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new UserType(rs.getInt("id_type"),
-						rs.getString("type_name")));
+				lista.add(
+					new UserType(
+						rs.getInt("id_type"),
+						rs.getString("type_name")
+					)
+				);
 			}
 			rs.close();
 			stmt.close();
@@ -37,26 +42,22 @@ public class UserTypeData implements CrudItf<UserType> {
 
 	@Override
 	public UserType select(int id) throws ConnectException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public UserType update(UserType obj) throws ConnectException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public UserType save(UserType obj) throws ConnectException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void delete(UserType obj) throws ConnectException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 }
