@@ -68,6 +68,32 @@ public class PhoneData implements CrudItf<Phone> {
 		return phone;
 	}
 	
+	public Phone selectLast(int id) throws ConnectException {
+		Phone phone = null;
+
+		try {
+			String query = "SELECT TOP 1 *	FROM phone WHERE id_phone <=id_phone ORDER BY id_phone DESC";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			//stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				phone = new Phone(
+					rs.getInt("id_phone"),
+					rs.getString("phone_number")
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return phone;
+	}
+	
 	public List<Phone> listAllDonorPhone(int donorId) throws ConnectException {
 
 		List<Phone> lista = new ArrayList<>();
@@ -101,24 +127,55 @@ public class PhoneData implements CrudItf<Phone> {
 	}
 
 	@Override
-	public Phone save(Phone obj) throws ConnectException {
+	public Phone save(Phone phon) throws ConnectException {
 		try {
 			String query = "INSERT INTO Phone VALUES(?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, obj.getNumber());
+			stmt.setString(1, phon.getNumber());
 			
 			
 			stmt.executeUpdate();
 			stmt.close();
 			con.close();
 
-			return this.select(obj.getId());
+			return this.selectLast(phon.getId());
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
+	}
+	
+	
+	public List<Phone> saveListPhone(List<Phone> phon) throws ConnectException {
+		List<Phone> listanphone = new ArrayList<>();
+		
+		for (Phone phone : phon) {
+			
+			try {
+				String query = "INSERT INTO Phone VALUES(?)";
+
+				Connection con = DriverManager.getConnection(connection);
+				PreparedStatement stmt = con.prepareStatement(query);
+
+				stmt.setString(1,  phone.getNumber());
+				
+				
+				stmt.executeUpdate();
+				stmt.close();
+				con.close();
+				
+
+				
+				listanphone.add(selectLast(phone.getId()));
+						
+						
+			} catch (SQLException e) {
+				throw new ConnectException(e.getMessage());
+			}
+		}
+		return listanphone;
 	}
 
 	@Override

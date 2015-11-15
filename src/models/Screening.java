@@ -10,10 +10,10 @@ public class Screening {
 	}
 
 
-	public Screening(int id, int ifDonation) {
+	public Screening(int id, int idDonation) {
 		super();
 		this.id = id;
-		this.idDonation = ifDonation;
+		this.idDonation = idDonation;
 	}
 
 

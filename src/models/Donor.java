@@ -1,6 +1,6 @@
 package models;
 
-import java.util.List;
+
 
 public class Donor {
 	private int id = 0;
@@ -9,15 +9,24 @@ public class Donor {
 	private String gender;
 	private String email;
 	private String bloodType;
-	private int address;
-
+	private Address address;
+	private static Donor donor;
+	
+	public static Donor getInstace(){
+		if(donor == null){
+			donor = new Donor();
+    	}
+		
+		return donor;
+		
+	}
 
 	public Donor() {
 		super();
 	}
 
 	public Donor(int id, String name, String cpf, String gender, String email,
-			String bloodType,  int address) {
+			String bloodType,  Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,6 +37,7 @@ public class Donor {
 		this.address = address;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -76,11 +86,11 @@ public class Donor {
 		this.bloodType = bloodType;
 	}
 
-	public int getAddresses() {
+	public Address getAddresses() {
 		return address;
 	}
 
-	public void setAddresses(int address) {
+	public void setAddresses(Address address) {
 		this.address = address;
 	}
 

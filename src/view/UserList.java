@@ -17,14 +17,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import business.UserRegistrationController;
 import data.ConnectException;
-import models.Donor;
 import models.User;
 
-import javax.swing.JFrame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class UserList extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtParBusca;
 	private JTable table;
 	private UserRegistrationController controller;
@@ -40,7 +42,9 @@ public class UserList extends JInternalFrame {
 		List<User> users = controller.getAll();
 		table = new JTable();
 		table.setModel(controller.getTableModel(users));
-		
+		table.getColumnModel().getColumn(0).setPreferredWidth(5);
+		table.getColumnModel().getColumn(1).setPreferredWidth(100);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 
 
 		JLabel lblNome = new JLabel("Nome");
@@ -110,33 +114,42 @@ public class UserList extends JInternalFrame {
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout
-				.setHorizontalGroup(
-						groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(
-										groupLayout.createSequentialGroup().addGap(18)
-												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-														.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406,
-																Short.MAX_VALUE)
-												.addGroup(groupLayout.createSequentialGroup()
-														.addComponent(txtParBusca, GroupLayout.DEFAULT_SIZE, 323,
-																Short.MAX_VALUE)
-														.addGap(18).addComponent(btnBuscar)).addComponent(lblNome))
-				.addContainerGap()).addGroup(
-						groupLayout.createSequentialGroup().addContainerGap(246, Short.MAX_VALUE).addComponent(btnNovo)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditar).addGap(32)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lblNome)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtParBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnBuscar))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
-						.addGap(18).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnEditar)
-								.addComponent(btnNovo))
-						.addContainerGap(19, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(278, Short.MAX_VALUE)
+					.addComponent(btnNovo)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnEditar)
+					.addGap(32))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNome)
+						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(txtParBusca, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(btnBuscar)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNome)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtParBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnBuscar))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEditar)
+						.addComponent(btnNovo))
+					.addContainerGap(19, Short.MAX_VALUE))
+		);
 
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
@@ -149,7 +162,6 @@ public class UserList extends JInternalFrame {
 			try {
 				userResFrame = new UserRegistration(user);
 			} catch (ConnectException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			userResFrame.setVisible(true);
@@ -158,7 +170,6 @@ public class UserList extends JInternalFrame {
 			try {
 				userResFrame = new UserRegistration(user);
 			} catch (ConnectException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			userResFrame.setVisible(true);

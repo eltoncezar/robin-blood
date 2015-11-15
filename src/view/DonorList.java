@@ -1,28 +1,23 @@
 package view;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
-import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
 
-import models.Address;
-import models.Donor;
-import business.AdressController;
 import business.DonorController;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
+import data.ConnectException;
+import models.Donor;
 
 public class DonorList extends JInternalFrame {
 
@@ -31,6 +26,7 @@ public class DonorList extends JInternalFrame {
 	private JTable table;
 	private DonorRegistration donorResFrame;
 	private DonorController controller;
+	private List<Donor> donors;
 	
 
 	
@@ -42,12 +38,11 @@ public class DonorList extends JInternalFrame {
 		//setBounds(100, 100, 450, 300);
 		setSize(450, 350);
 		
-		List<Donor> donors = controller.getAll();
-
+		donors = controller.getAll();
 		
-
 		table = new JTable();
 		table.setModel(controller.getTableModel(donors));
+		table.getColumnModel().getColumn(0).setPreferredWidth(5);
 		
 		JLabel lblNome = new JLabel("Nome");
 		
@@ -84,25 +79,49 @@ public class DonorList extends JInternalFrame {
 				createDonorRegistration(new Donor());
 			}
 		});
+		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rowIndex = table.getSelectedRow();
+				if (rowIndex > -1) {
+					Donor selectedItem = donors.get(rowIndex);
+					
+					try {
+						controller.delete(selectedItem);
+						donors = controller.getAll();
+						table.setModel(controller.getTableModel(donors));
+						JOptionPane.showMessageDialog(getContentPane(), "Deletado com Sucesso!", "Robin Blood", JOptionPane.INFORMATION_MESSAGE);
+					} catch (ConnectException e1) {
+						e1.printStackTrace();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(getContentPane(), "Selecione um item!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(190, Short.MAX_VALUE)
+					.addComponent(btnExcluir)
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
-							.addGap(18)
-							.addComponent(btnBuscar))
-						.addComponent(lblNome))
-					.addContainerGap())
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(239, Short.MAX_VALUE)
 					.addComponent(btnNovo)
 					.addGap(18)
 					.addComponent(btnEditar)
 					.addGap(27))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNome)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(btnBuscar)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -118,7 +137,8 @@ public class DonorList extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnEditar)
-						.addComponent(btnNovo))
+						.addComponent(btnNovo)
+						.addComponent(btnExcluir))
 					.addContainerGap())
 		);
 

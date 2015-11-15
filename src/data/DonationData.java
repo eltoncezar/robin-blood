@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,10 @@ import models.Donation;
 
 
 public class DonationData implements CrudItf<Donation> {
+	
+	DonorData donorData = new DonorData();
+	StatusData statusData = new StatusData();
+	UserData userData = new UserData();
 
 	@Override
 	public List<Donation> listAll() throws ConnectException {
@@ -26,11 +31,46 @@ public class DonationData implements CrudItf<Donation> {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				lista.add(new Donation(rs.getInt("id_donation"),
-						rs.getInt("id_donor"),
+				lista.add(
+					new Donation(
+						rs.getInt("id_donation"),
+						donorData.select(rs.getInt("id_donor")),
 						rs.getDate("donation_date"),
-						rs.getInt("id_status"),
-						rs.getInt("id_user")));	
+						statusData.select(rs.getInt("id_status")),
+						userData.select(rs.getInt("id_user"))
+					)
+				);	
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
+		return lista;
+	}
+	
+	public List<Donation> listAllByDonor(int donorId) throws ConnectException {
+		List<Donation> lista = new ArrayList<>();
+		
+		try {
+			String query = "SELECT * FROM donation WHERE id_donor = ?";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, donorId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lista.add(
+					new Donation(
+						rs.getInt("id_donation"),
+						donorData.select(rs.getInt("id_donor")),
+						rs.getDate("donation_date"),
+						statusData.select(rs.getInt("id_status")),
+						userData.select(rs.getInt("id_user"))
+					)
+				);	
 			}
 			rs.close();
 			stmt.close();
@@ -44,9 +84,9 @@ public class DonationData implements CrudItf<Donation> {
 
 	@Override
 	public Donation select(int id) throws ConnectException {
-		Donation donation = new Donation();
-
 		try {
+			Donation donation = new Donation();
+			
 			String query = "SELECT * FROM donation WHERE id_donation=?";
 
 			Connection con = DriverManager.getConnection(connection);
@@ -54,60 +94,59 @@ public class DonationData implements CrudItf<Donation> {
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				donation = new Donation(rs.getInt("id_donation"),
-						rs.getInt("id_donor"),
-						rs.getDate("donation_date"),
-						rs.getInt("id_status"),
-						rs.getInt("id_user"));
+				donation = new Donation(
+					rs.getInt("id_donation"),
+					donorData.select(rs.getInt("id_donor")),
+					rs.getDate("donation_date"),
+					statusData.select(rs.getInt("id_status")),
+					userData.select(rs.getInt("id_user"))
+				);
 			}
 			rs.close();
 			stmt.close();
 			con.close();
+			
+			return donation;
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-
-		return donation;
 	}
 
 	@Override
 	public Donation update(Donation obj) throws ConnectException {
-		Utils utils = new Utils();
-		try{
+		try {
 			String query = "UPDATE donation set id_donor=?,donation_date=?, id_status=?,id_user=?  WHERE id_donation=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, Integer.toString(obj.getIdDonor()));
-			stmt.setString(2, utils.convertStringToDate(obj.getDonationDate()));
-			stmt.setString(3, Integer.toString(obj.getIdStatus()));
-			stmt.setString(4, Integer.toString(obj.getIdUser()));
-			stmt.setString(5, Integer.toString(obj.getId()));
+			stmt.setInt(1, obj.getDonor().getId());
+			stmt.setDate(2, (Date) obj.getDonationDate());
+			stmt.setInt(3, obj.getStatus().getId());
+			stmt.setInt(4, obj.getUser().getId());
+			stmt.setInt(5, obj.getDonor().getId());
 			stmt.executeUpdate();
 
 			stmt.close();
 			con.close();
-			
-		}catch (SQLException e) {
+			return select(obj.getId());
+		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
 	public Donation save(Donation obj) throws ConnectException {
-		Utils utils = new Utils();
 		try {
 			String query = "INSERT INTO donation VALUES(?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, Integer.toString(obj.getIdDonor()));
-			stmt.setString(2, utils.convertStringToDate(obj.getDonationDate()));
-			stmt.setString(3, Integer.toString(obj.getIdStatus()));
-			stmt.setString(4, Integer.toString(obj.getIdUser()));
+			stmt.setInt(1, obj.getDonor().getId());
+			stmt.setDate(2, (Date) obj.getDonationDate());
+			stmt.setInt(3, obj.getStatus().getId());
+			stmt.setInt(4, obj.getUser().getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -135,8 +174,6 @@ public class DonationData implements CrudItf<Donation> {
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-		
-		
 	}
 
 }

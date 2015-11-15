@@ -15,10 +15,9 @@ public class ScreeningData implements CrudItf<Screening> {
 
 	@Override
 	public List<Screening> listAll() throws ConnectException {
-		List<Screening> lista = new ArrayList<>();
-		
-
 		try {
+			List<Screening> lista = new ArrayList<>();
+			
 			String query = "SELECT * FROM screening";
 
 			Connection con = DriverManager.getConnection(connection);
@@ -31,18 +30,18 @@ public class ScreeningData implements CrudItf<Screening> {
 			rs.close();
 			stmt.close();
 			con.close();
+			
+			return lista;
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-
-		return lista;
 	}
 
 	@Override
 	public Screening select(int id) throws ConnectException {
-		Screening screening = new Screening();
-
 		try {
+			Screening screening = new Screening();
+			
 			String query = "SELECT * FROM screening WHERE id_screening=?";
 
 			Connection con = DriverManager.getConnection(connection);
@@ -56,32 +55,32 @@ public class ScreeningData implements CrudItf<Screening> {
 			rs.close();
 			stmt.close();
 			con.close();
+			
+			return screening;
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-
-		return screening;
 	}
 
 	@Override
 	public Screening update(Screening obj) throws ConnectException {
-		try{
+		try {
 			String query = "UPDATE screening set id_donation=?, WHERE id_screening=?";
 			
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setString(1, Integer.toString(obj.getIdDonation()));
-			stmt.setString(2, Integer.toString(obj.getId()));
+			stmt.setInt(1, obj.getIdDonation());
+			stmt.setInt(2, obj.getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
 			con.close();
 			
-		}catch (SQLException e) {
+			return this.select(obj.getId());
+		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}
-		return null;
 	}
 
 	@Override
@@ -92,7 +91,7 @@ public class ScreeningData implements CrudItf<Screening> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setString(1, Integer.toString(obj.getIdDonation()));
+			stmt.setInt(1, obj.getIdDonation());
 						
 			stmt.executeUpdate();
 			stmt.close();

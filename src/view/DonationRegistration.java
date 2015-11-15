@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -16,18 +14,22 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import models.Donor;
+import business.DonationController;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class DonationRegistration extends JInternalFrame {
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTable table;
-	private JTable table_1;
-	private DonorList donorlist;
+	private static final long serialVersionUID = 1L;
+	private JTextField txtNome;
+	private JTextField txtCpf;
+	private JTable tableDonations;
+	private JTable tableStatuses;
 
 	
 	public DonationRegistration() {
+		DonationController controller = new DonationController();
+		
 		setTitle("Cadastro Doa\u00E7\u00E3o");
 		setClosable(true);
 		setMaximizable(true);
@@ -42,39 +44,37 @@ public class DonationRegistration extends JInternalFrame {
 		
 		JLabel lblNome = new JLabel("Nome");
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setColumns(10);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		
 		JLabel lblCpf = new JLabel("CPF");
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		txtCpf = new JTextField();
+		txtCpf.setColumns(10);
 		
-		JButton btnNovaDoao = new JButton("Nova Doa\u00E7\u00E3o");
+		JButton btnNovaDoacao = new JButton("Nova Doa\u00E7\u00E3o");
+		btnNovaDoacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(donorlist == null){
-                	donorlist = new DonorList();
-                	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
-                }
-                else if(!donorlist.isVisible()){
-                	donorlist.setVisible(true);
-                	MainWindow.getDesktopPanel().add(donorlist);
-                }
-           		//Inicializa Frame Centralizado
-           		donorlist.setBounds(0, 0, donorlist.getWidth(), donorlist.getHeight());
-           		int lDesk = MainWindow.getDesktopPanel().getWidth();
-                int aDesk = MainWindow.getDesktopPanel().getHeight();
-                int lIFrame = donorlist.getWidth();
-                int aIFrame = donorlist.getHeight();
-                donorlist.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-                donorlist.moveToFront();
+				String param = txtCpf.getText();
+				if(param != null && !param.isEmpty())
+				{
+					Donor donor = controller.getDonorByCpf(param);
+					txtNome.setText(donor.getName());
+					txtCpf.setText(donor.getCpf());
+					
+					tableDonations.setModel(controller.getDonationsTableModel(controller.getLastDonations(donor.getId())));
+					tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(donor.getId())));
+				}
+				
 			}
 		});
 		
@@ -112,13 +112,13 @@ public class DonationRegistration extends JInternalFrame {
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 									.addComponent(lblNome)
 									.addComponent(lblCpf)
-									.addComponent(textField_1)
+									.addComponent(txtCpf)
 									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(textField, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(ComponentPlacement.UNRELATED)))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(25)
-									.addComponent(btnNovaDoao)
+									.addComponent(btnNovaDoacao)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(btnBuscar))
 								.addGroup(groupLayout.createSequentialGroup()
@@ -147,14 +147,14 @@ public class DonationRegistration extends JInternalFrame {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblNome)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtNome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblCpf)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtCpf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNovaDoao)
+								.addComponent(btnNovaDoacao)
 								.addComponent(btnBuscar))
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -166,25 +166,28 @@ public class DonationRegistration extends JInternalFrame {
 					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		tableDonations = new JTable();
+		tableDonations.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id", "Data", "Status"
+			}
+		));
+		scrollPane.setViewportView(tableDonations);
+		
+
+		tableStatuses = new JTable();
+		tableStatuses.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Data/Hora", "Status"
 			}
 		));
-		scrollPane_1.setViewportView(table_1);
+		scrollPane_1.setViewportView(tableStatuses);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Data", "Status"
-			}
-		));
-		scrollPane.setViewportView(table);
+		
 		getContentPane().setLayout(groupLayout);
 
 	}

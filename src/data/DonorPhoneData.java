@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import models.Donation;
 import models.DonorPhone;
 
 public class DonorPhoneData implements CrudItf<DonorPhone> {
+	
+	private DonorData donorData;
 
 	@Override
 	public List<DonorPhone> listAll() throws ConnectException {
@@ -26,8 +26,8 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 								
-				lista.add(new DonorPhone(rs.getInt("id_phone"),
-											rs.getInt("id_donor")));
+//				lista.add(new DonorPhone(rs.getInt("id_phone"),
+//											rs.getInt("id_donor")));
 			}
 			rs.close();
 			stmt.close();
@@ -51,8 +51,8 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				donorphone = new DonorPhone(rs.getInt("id_phone"),
-						rs.getInt("id_donor"));
+//				donorphone = new DonorPhone(rs.getInt("id_phone"),
+//						rs.getInt("id_donor"));
 			}
 			rs.close();
 			stmt.close();
@@ -72,8 +72,8 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 			Connection con = DriverManager.getConnection(connection); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
-			stmt.setInt(1, obj.getIdPhone());
-			stmt.setInt(2, obj.getIdDonor());
+			stmt.setInt(1, obj.getPhone().getId());
+			stmt.setInt(2, obj.getDonor().getId());
 			
 			
 			stmt.executeUpdate();
@@ -89,14 +89,17 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 
 	@Override
 	public DonorPhone save(DonorPhone obj) throws ConnectException {
+		donorData = new DonorData();
+		
 		try {
 			String query = "INSERT INTO donor_phone VALUES(?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
-
-			stmt.setInt(1, obj.getIdPhone());
-			stmt.setInt(2, obj.getIdDonor());
+			
+			
+			stmt.setInt(1, obj.getPhone().getId());
+			stmt.setInt(2, donorData.selectLast().getId());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -117,7 +120,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
 
-			stmt.setInt(1, obj.getIdPhone());
+			stmt.setInt(1, obj.getPhone().getId());
 			
 			stmt.executeUpdate();
 			stmt.close();

@@ -49,17 +49,18 @@ public class PhoneController {
 		for (Phone phone : phones) {
 			Object[] o = new Object[3];
 			o[0] = phone.getNumber();
-
-
+			
 			model.addRow(o);
 		}
 
 		return model;
 	}
+	
 
 
-	public int save(Phone phone) throws ConnectException {
-		return phoneData.save(phone).getId();
+
+	public List<Phone> save(List<Phone> phon) throws ConnectException {
+		return phoneData.saveListPhone(phon);
 
 	}
 
