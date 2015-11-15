@@ -9,7 +9,6 @@ import models.Donor;
 import data.AddressData;
 import data.ConnectException;
 import data.DonorData;
-import data.DonorPhoneData;
 
  public class DonorController {
 	private DonorData donorData;
@@ -45,6 +44,9 @@ import data.DonorPhoneData;
 
 	public DefaultTableModel getTableModel(List<Donor> donors) {
 		DefaultTableModel model = new DefaultTableModel(new String[] { "Id", "Nome", "E-mail" }, 0) {
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false

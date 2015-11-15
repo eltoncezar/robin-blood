@@ -4,22 +4,22 @@ import java.util.Date;
 
 public class Donation {
 	private int id;
-	private int idDonor;
+	private Donor donor;
 	private Date donationDate;
-	private int idStatus;	
-	private int idUser;
+	private Status status;	
+	private User user;
 
 	public Donation() {
 		super();
 	}
 
-	public Donation(int id, int idDonor, Date donationDate, int idStatus, int idUser) {
+	public Donation(int id, Donor donor, Date donationDate, Status status, User user) {
 		super();
 		this.id = id;
-		this.idDonor = idDonor;
+		this.donor = donor;
 		this.donationDate = donationDate;
-		this.idStatus = idStatus;
-		this.idUser = idUser;
+		this.status = status;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -30,12 +30,12 @@ public class Donation {
 		this.id = id;
 	}
 
-	public int getIdDonor() {
-		return idDonor;
+	public Donor getDonor() {
+		return donor;
 	}
 
-	public void setIdDonor(int idDonor) {
-		this.idDonor = idDonor;
+	public void setDonor(Donor donor) {
+		this.donor = donor;
 	}
 
 	public Date getDonationDate() {
@@ -46,20 +46,20 @@ public class Donation {
 		this.donationDate = donationDate;
 	}
 
-	public int getIdStatus() {
-		return idStatus;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setIdStatus(int idStatus) {
-		this.idStatus = idStatus;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public User getUser() {
+		return user;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -68,9 +68,6 @@ public class Donation {
 		int result = 1;
 		result = prime * result + ((donationDate == null) ? 0 : donationDate.hashCode());
 		result = prime * result + id;
-		result = prime * result + idDonor;
-		result = prime * result + idStatus;
-		result = prime * result + idUser;
 		return result;
 	}
 
@@ -89,12 +86,6 @@ public class Donation {
 		} else if (!donationDate.equals(other.donationDate))
 			return false;
 		if (id != other.id)
-			return false;
-		if (idDonor != other.idDonor)
-			return false;
-		if (idStatus != other.idStatus)
-			return false;
-		if (idUser != other.idUser)
 			return false;
 		return true;
 	}
