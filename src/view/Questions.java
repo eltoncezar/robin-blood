@@ -22,7 +22,7 @@ public class Questions extends JInternalFrame {
 		setClosable(true);
 		setMaximizable(true);
 		setIconifiable(true);
-		setSize(755, 545);
+		setSize(755, 940);
 		FormLayout formLayout = new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
@@ -39,6 +39,38 @@ public class Questions extends JInternalFrame {
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,},
 			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
@@ -194,6 +226,96 @@ public class Questions extends JInternalFrame {
 		
 		JLabel lblMarqueSeJ = new JLabel("MARQUE SE J\u00C1 TEVE/TEM ALGUM DESTES PROBLEMAS ou CIRURGIAS:");
 		getContentPane().add(lblMarqueSeJ, "2, 34, right, default");
+		
+		JLabel lblAtaqueEpileticoConvulsodesmaio = new JLabel("Ataque epiletico, convuls\u00E3o/desmaio");
+		getContentPane().add(lblAtaqueEpileticoConvulsodesmaio, "2, 36");
+		
+		JRadioButton radioButton_21 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_21, "4, 36");
+		
+		JLabel lblDiabetes = new JLabel("Diabetes");
+		getContentPane().add(lblDiabetes, "2, 38");
+		
+		JRadioButton radioButton_22 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_22, "4, 38");
+		
+		JLabel lblTuberculoseProblemasDe = new JLabel("Tuberculose, problemas de pulm\u00E3o, asma, broquite");
+		getContentPane().add(lblTuberculoseProblemasDe, "2, 40");
+		
+		JRadioButton radioButton_23 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_23, "4, 40");
+		
+		JLabel lblDorNoPeito = new JLabel("Dor no peito, problemas cardiacos");
+		getContentPane().add(lblDorNoPeito, "2, 42");
+		
+		JRadioButton radioButton_24 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_24, "4, 42");
+		
+		JLabel lblUsoContinuoDe = new JLabel("Uso continuo de \u00E1lcool");
+		getContentPane().add(lblUsoContinuoDe, "2, 44");
+		
+		JRadioButton radioButton_25 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_25, "4, 44");
+		
+		JLabel lblReumatismo = new JLabel("Reumatismo");
+		getContentPane().add(lblReumatismo, "2, 46");
+		
+		JRadioButton radioButton_26 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_26, "4, 46");
+		
+		JLabel lblUsoDeInsulina = new JLabel("Uso de insulina bovina ou Uso de horm\u00F4nio de crescimento");
+		getContentPane().add(lblUsoDeInsulina, "2, 48");
+		
+		JRadioButton radioButton_27 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_27, "4, 48");
+		
+		JLabel lblProblemaCirculatrio = new JLabel("Problema circulat\u00F3rio");
+		getContentPane().add(lblProblemaCirculatrio, "2, 50");
+		
+		JRadioButton radioButton_28 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_28, "4, 50");
+		
+		JLabel lblPeleOuOutros = new JLabel("Pele ou outros problemas dematol\u00F3gicos cr\u00F4nicos");
+		getContentPane().add(lblPeleOuOutros, "2, 52");
+		
+		JRadioButton radioButton_29 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_29, "4, 52");
+		
+		JLabel lblTireide = new JLabel("Tire\u00F3ide");
+		getContentPane().add(lblTireide, "2, 54");
+		
+		JRadioButton radioButton_30 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_30, "4, 54");
+		
+		JLabel lblSangramentoExcessivo = new JLabel("Sangramento excessivo");
+		getContentPane().add(lblSangramentoExcessivo, "2, 56");
+		
+		JRadioButton radioButton_31 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_31, "4, 56");
+		
+		JLabel lblCncer = new JLabel("C\u00E2ncer");
+		getContentPane().add(lblCncer, "2, 58");
+		
+		JRadioButton radioButton_32 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_32, "4, 58");
+		
+		JLabel lblTransplantesexCrnea = new JLabel("Transplantes(ex.: c\u00F3rnea)");
+		getContentPane().add(lblTransplantesexCrnea, "2, 60");
+		
+		JRadioButton radioButton_33 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_33, "4, 60");
+		
+		JLabel lblProblemaNoRim = new JLabel("Problema no rim");
+		getContentPane().add(lblProblemaNoRim, "2, 62");
+		
+		JRadioButton radioButton_34 = new JRadioButton("Sim");
+		getContentPane().add(radioButton_34, "4, 62");
+		
+		JLabel lblCirurgiaNeurolgica = new JLabel("Cirurgia neurol\u00F3gica");
+		getContentPane().add(lblCirurgiaNeurolgica, "2, 64");
+		
+		JLabel lblExamesEndoscpios = new JLabel("Exames endosc\u00F3pios");
+		getContentPane().add(lblExamesEndoscpios, "2, 66");
 
 	}
 
