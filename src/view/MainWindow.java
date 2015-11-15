@@ -19,8 +19,9 @@ public class MainWindow extends JFrame{
     private EstoqueEntrada estoqueestradaframe;
     private Distribution distributionframe;
     private ReportInventory reportInventory;
+    private QuestionsInDonor questionsindonor;
     private UserList userlist;
-    private Questions questionsframe;
+    
     private JMenuBar menuBar;
     
     private static MainWindow mainwindow;
@@ -240,37 +241,22 @@ public class MainWindow extends JFrame{
         setJMenuBar(menuBar);
         
         JMenu mnDoador = new JMenu("Doador");
-        mnDoador.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		questionsframe = new Questions();
-        		questionsframe.setVisible(true);
-        		desktopPane.add(reportInventory);
-        		
-        		questionsframe.setBounds(0, 0, questionsframe.getWidth(), questionsframe.getHeight());
-                int lDesk = desktopPane.getWidth();
-                int aDesk = desktopPane.getHeight();
-                int lIFrame = questionsframe.getWidth();
-                int aIFrame = questionsframe.getHeight();
-                questionsframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
-        	}
-        });
         menuBar.add(mnDoador);
         
         JMenuItem mntmNewMenuItem = new JMenuItem("Questionario");
         mnDoador.add(mntmNewMenuItem);
         mntmNewMenuItem.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		questionsframe = new Questions();
-        		questionsframe.setVisible(true);
-        		desktopPane.add(questionsframe);
+        		questionsindonor = new QuestionsInDonor();
+        		questionsindonor.setVisible(true);
+        		desktopPane.add(questionsindonor);
         		
-        		questionsframe.setBounds(0, 0, questionsframe.getWidth(), questionsframe.getHeight());
+        		questionsindonor.setBounds(0, 0, questionsindonor.getWidth(), questionsindonor.getHeight());
                 int lDesk = desktopPane.getWidth();
                 int aDesk = desktopPane.getHeight();
-                int lIFrame = questionsframe.getWidth();
-                int aIFrame = questionsframe.getHeight();
-                questionsframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
+                int lIFrame = questionsindonor.getWidth();
+                int aIFrame = questionsindonor.getHeight();
+                questionsindonor.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
         	}
         });
  
