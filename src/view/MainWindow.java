@@ -216,7 +216,7 @@ public class MainWindow extends JFrame{
         mnNewMenu_2.add(mntmFila);
         
         JMenuItem mntmDoador = new JMenuItem("Doador");
-        mntmDoador.setIcon(new ImageIcon("/robin-blood/Imagens/Icondonor_1.png"));
+        mntmDoador.setIcon(new ImageIcon("Imagens/Icondonor_1.png"));
         mnNewMenu_2.add(mntmDoador);
         
         JMenuItem mntmEstoque = new JMenuItem("Estoque");
@@ -241,9 +241,11 @@ public class MainWindow extends JFrame{
         setJMenuBar(menuBar);
         
         JMenu mnDoador = new JMenu("Doador");
+        mnDoador.setIcon(new ImageIcon("Imagens/IconSponsor.png"));
         menuBar.add(mnDoador);
         
         JMenuItem mntmNewMenuItem = new JMenuItem("Questionario");
+        mntmNewMenuItem.setIcon(new ImageIcon("Imagens/Iconq_and_a.png"));
         mnDoador.add(mntmNewMenuItem);
         mntmNewMenuItem.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -263,7 +265,7 @@ public class MainWindow extends JFrame{
         setVisible(true);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("/robin-blood/Imagens/IconBlood1.png").getImage());
+        setIconImage(new ImageIcon("Imagens/IconLogo.png").getImage());
         
     }
 }
