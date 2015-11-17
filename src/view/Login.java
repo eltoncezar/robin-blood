@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import business.LoginController;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	/**
@@ -54,9 +55,9 @@ public class Login extends JFrame {
 			}
 		});
 
-		BufferedImage myPicture = ImageIO.read(new File(
-				"Imagens\\logo_small.png"));
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+
+		JLabel picLabel = new JLabel();
+		picLabel.setIcon(new ImageIcon(Login.class.getResource("/Imagens/logo_small.png")));
 
 		
 		btnEntrar.addKeyListener(new KeyAdapter() {
@@ -112,6 +113,6 @@ public class Login extends JFrame {
 					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
-		setIconImage(new ImageIcon("Imagens/IconLogo.png").getImage());
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/Imagens/IconLogo.png")));
 	}
 }
