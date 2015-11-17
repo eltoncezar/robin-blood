@@ -71,7 +71,30 @@ public class StatusData implements CrudItf<Status> {
 
 	@Override
 	public Status select(int id) throws ConnectException {
-		throw new UnsupportedOperationException();
+		Status result = new Status();
+
+		try {
+			String query = "SELECT * FROM status WHERE id_status = ?";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				result = new Status(
+					rs.getInt("id_status"),
+					rs.getString("status_name")
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			return result;
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
+
 	}
 
 	@Override

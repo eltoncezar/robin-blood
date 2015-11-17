@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import models.Donation;
 import models.DonationStatus;
 
 public class DonationStatusData implements CrudItf<DonationStatus> {
@@ -47,7 +49,30 @@ public class DonationStatusData implements CrudItf<DonationStatus> {
 
 	@Override
 	public DonationStatus select(int id) throws ConnectException {
-		throw new UnsupportedOperationException();
+		try {
+			DonationStatus donationStatus = new DonationStatus();
+			
+			String query = "SELECT * FROM donation_status WHERE id_donation=?";
+
+			Connection con = DriverManager.getConnection(connection);
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				donationStatus = new DonationStatus(
+					donationData.select(rs.getInt("id_donation")),
+					statusData.select(rs.getInt("id_status")),
+					rs.getDate("date")
+				);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+			
+			return donationStatus;
+		} catch (SQLException e) {
+			throw new ConnectException(e.getMessage());
+		}
 	};
 	
 	public List<DonationStatus> listByDonation(int donationId) throws ConnectException {
@@ -95,7 +120,7 @@ public class DonationStatusData implements CrudItf<DonationStatus> {
 			
 			stmt.setInt(1, obj.getDonation().getId());
 			stmt.setInt(2, obj.getStatus().getId());
-			stmt.setDate(3, (Date) obj.getDate());			
+			stmt.setDate(3, new java.sql.Date(obj.getDate().getTime()));			
 			
 			stmt.executeUpdate();
 			stmt.close();

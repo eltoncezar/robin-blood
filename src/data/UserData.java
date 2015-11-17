@@ -65,7 +65,7 @@ public class UserData implements CrudItf<User> {
 					rs.getString("user_password"),
 					rs.getString("user_email"),
 					rs.getInt("id_type"),
-					rs.getInt("id_screning")
+					rs.getInt("id_screening")
 				);
 			}
 			rs.close();
