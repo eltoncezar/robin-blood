@@ -2,13 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Imagens"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="Libs/jgoodies-common-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Libs/jgoodies-common-1.4.0.jar"/>
-	<classpathentry kind="lib" path="Libs/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="lib" path="Libs/jgoodies-looks-2.5.3.jar"/>
-	<classpathentry kind="lib" path="Libs/miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="Libs/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="D:/robin-blood/Libs/jfreechart-1.0.14/jfreechart-1.0.14.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="Libs/jgoodies-common-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libs/jgoodies-common-1.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libs/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libs/jgoodies-looks-2.5.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libs/miglayout15-swing.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libs/sqljdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/robin-blood/Libs/jfreechart-1.0.14/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

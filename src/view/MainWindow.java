@@ -1,8 +1,15 @@
 package view;
 
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
  
 public class MainWindow extends JFrame{
@@ -50,6 +57,7 @@ public class MainWindow extends JFrame{
     	setSize(800,600);
 	
         desktopPane = new JDesktopPane();
+        desktopPane.setBackground(Color.WHITE);
         menuBar = new JMenuBar();
         setContentPane(desktopPane);
         
@@ -141,15 +149,11 @@ public class MainWindow extends JFrame{
         mntmDoao_1.setIcon(new ImageIcon("/robin-blood/Imagens/IconDoacao_1.png"));
         mntmDoao_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		if(donationResFrame == null){
+        		
            			donationResFrame = new DonationRegistration();
            			donationResFrame.setVisible(true);
                     desktopPane.add(donationResFrame);
-                }
-                else if(!donationResFrame.isVisible()){
-                	donationResFrame.setVisible(true);
-                    desktopPane.add(donationResFrame);
-                }
+                               
            		//Inicializa Frame Centralizado
            		donationResFrame.setBounds(0, 0, donationResFrame.getWidth(), donationResFrame.getHeight());
                 int lDesk = desktopPane.getWidth();

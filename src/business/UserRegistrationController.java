@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import models.User;
-import models.UserType;
 import data.ConnectException;
 import data.UserData;
 import data.UserTypeData;
+import models.User;
+import models.UserType;
 
 public class UserRegistrationController {
 

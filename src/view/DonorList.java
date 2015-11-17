@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -22,7 +24,7 @@ import models.Donor;
 public class DonorList extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField txtbusca;
 	private JTable table;
 	private DonorRegistration donorResFrame;
 	private DonorController controller;
@@ -45,14 +47,36 @@ public class DonorList extends JInternalFrame {
 		table.getColumnModel().getColumn(0).setPreferredWidth(5);
 		
 		JLabel lblNome = new JLabel("Nome");
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
 		JButton btnBuscar = new JButton("Buscar");
+		txtbusca = new JTextField();
+		txtbusca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				if (evt.getKeyCode()==java.awt.event.KeyEvent.VK_ENTER) {  
+					btnBuscar.doClick();  
+		          }
+			}
+		});
+		txtbusca.setColumns(10);
+		
+		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				table.setModel(controller.getTableModel(controller.getByFilter(textField.getText())));
+				
+				if(txtbusca.getText().equals("")){
+					JOptionPane.showMessageDialog(getParent(), "Nome Invalido!","Robin Blood",JOptionPane.ERROR_MESSAGE);
+				}else{
+					if(controller.getByFilter(txtbusca.getText()).isEmpty()){
+						JOptionPane.showMessageDialog(getParent(), "Usuário não registrado!","Robin Blood",JOptionPane.INFORMATION_MESSAGE);
+					}
+					else{
+						table.setModel(controller.getTableModel(controller.getByFilter(txtbusca.getText())));
+						table.getColumnModel().getColumn(0).setPreferredWidth(5);
+					}	
+				
+				
+				
+				}
 			}
 		});
 		
@@ -103,8 +127,8 @@ public class DonorList extends JInternalFrame {
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(190, Short.MAX_VALUE)
 					.addComponent(btnExcluir)
 					.addGap(18)
@@ -112,13 +136,13 @@ public class DonorList extends JInternalFrame {
 					.addGap(18)
 					.addComponent(btnEditar)
 					.addGap(27))
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNome)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+						.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(txtbusca, GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
 							.addGap(18)
 							.addComponent(btnBuscar)))
 					.addContainerGap())
@@ -130,7 +154,7 @@ public class DonorList extends JInternalFrame {
 					.addComponent(lblNome)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtbusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnBuscar))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)

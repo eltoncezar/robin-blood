@@ -15,6 +15,10 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class HospitalRegistration extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -22,6 +26,7 @@ public class HospitalRegistration extends JInternalFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 
+	
 	public HospitalRegistration() {
 		setTitle("Cadastrar Hospital");
 		setMaximizable(true);
@@ -68,7 +73,8 @@ public class HospitalRegistration extends JInternalFrame {
 		
 		JLabel lblEstado = new JLabel("Estado");
 		
-		JComboBox comboBox = new JComboBox();
+		
+		JComboBox<?> comboBox = new JComboBox<>();
 		
 		JLabel lblCep = new JLabel("CEP");
 		

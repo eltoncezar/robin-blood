@@ -25,7 +25,7 @@ public class Utils {
 	       MaskFormatter F_Mascara = new MaskFormatter();  
 	       try{  
 	           F_Mascara.setMask(Mascara); //Atribui a mascara  
-	           F_Mascara.setPlaceholderCharacter(' '); //Caracter para preencimento   
+	           F_Mascara.setPlaceholderCharacter('_'); //Caracter para preencimento   
 	       }  
 	       catch (Exception excecao) {  
 	       excecao.printStackTrace();  

@@ -1,19 +1,24 @@
 package view;
 
-import javax.swing.JInternalFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class QuestionsInDonor extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private Questions questionsframe;
-	private MainWindow mainwindows;
+
 
 	
 	public QuestionsInDonor() {
@@ -30,11 +35,11 @@ public class QuestionsInDonor extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				questionsframe = new Questions();
         		questionsframe.setVisible(true);
-        		mainwindows.getInstancia().getContentPane().add(questionsframe);
+        		MainWindow.getInstancia().getContentPane().add(questionsframe);
         		
         		questionsframe.setBounds(0, 0, questionsframe.getWidth(), questionsframe.getHeight());
-                int lDesk = mainwindows.getInstancia().getWidth();
-                int aDesk = mainwindows.getInstancia().getHeight();
+                int lDesk = MainWindow.getInstancia().getWidth();
+                int aDesk = MainWindow.getInstancia().getHeight();
                 int lIFrame = questionsframe.getWidth();
                 int aIFrame = questionsframe.getHeight();
                 questionsframe.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);

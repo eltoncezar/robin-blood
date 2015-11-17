@@ -3,21 +3,21 @@ package view;
 
 
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTabbedPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JButton;
 
 
 public class Questions extends JInternalFrame {
