@@ -1,35 +1,35 @@
 package view;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 
-import business.DonationController;
 import business.LoginController;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtUsuario;
 	private JPasswordField txtPassword;
 
-	private static MainWindow windows;
 
 	public Login() throws IOException {
 		LoginController controller = new LoginController();
@@ -55,9 +55,9 @@ public class Login extends JFrame {
 			}
 		});
 
-		BufferedImage myPicture = ImageIO.read(new File(
-				"Imagens\\logo_small.png"));
-		JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+
+		JLabel picLabel = new JLabel();
+		picLabel.setIcon(new ImageIcon(Login.class.getResource("/Imagens/logo_small.png")));
 
 		
 		btnEntrar.addKeyListener(new KeyAdapter() {
@@ -72,7 +72,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (controller.validateUser(txtUsuario.getText(), new String(txtPassword.getPassword()))) {
-					windows.getInstancia();
+					MainWindow.getInstancia();
 					dispose();
 				}
 			}
@@ -113,6 +113,6 @@ public class Login extends JFrame {
 					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
-		setIconImage(new ImageIcon("Imagens/IconLogo.png").getImage());
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/Imagens/IconLogo.png")));
 	}
 }

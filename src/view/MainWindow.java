@@ -1,8 +1,16 @@
 package view;
 
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import java.awt.Toolkit;
 
  
 public class MainWindow extends JFrame{
@@ -50,16 +58,17 @@ public class MainWindow extends JFrame{
     	setSize(800,600);
 	
         desktopPane = new JDesktopPane();
+        desktopPane.setBackground(Color.WHITE);
         menuBar = new JMenuBar();
         setContentPane(desktopPane);
         
         //Menu Cadastro
         JMenu mnNewMenu = new JMenu("Cadastro");
-        mnNewMenu.setIcon(new ImageIcon("/robin-blood/Imagens/IconForm.png"));
+        mnNewMenu.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconForm.png")));
         menuBar.add(mnNewMenu);
         
         JMenuItem mUsuario = new JMenuItem("Usu\u00E1rio");
-        mUsuario.setIcon(new ImageIcon("/robin-blood/Imagens/IconUser.png"));
+        mUsuario.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconUser.png")));
         mnNewMenu.add(mUsuario);
         mUsuario.addActionListener(new ActionListener() {        	
            	@Override
@@ -90,7 +99,7 @@ public class MainWindow extends JFrame{
         });
         
         JMenuItem mDoador = new JMenuItem("Doador");
-        mDoador.setIcon(new ImageIcon("/robin-blood/Imagens/IconDonor.png"));
+        mDoador.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconDonor.png")));
         mnNewMenu.add(mDoador);
         mDoador.addActionListener(new ActionListener() {        	
            	
@@ -112,7 +121,7 @@ public class MainWindow extends JFrame{
         });
         
         JMenuItem mntmHospital = new JMenuItem("Hospital");
-        mntmHospital.setIcon(new ImageIcon("/robin-blood/Imagens/IconHospital.png"));
+        mntmHospital.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconHospital.png")));
         mntmHospital.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -134,22 +143,18 @@ public class MainWindow extends JFrame{
         
         //Menu Serviços
         JMenu mnNewMenu_1 = new JMenu("Servi\u00E7os");
-        mnNewMenu_1.setIcon(new ImageIcon("/robin-blood/Imagens/Iconservico.png"));
+        mnNewMenu_1.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/Iconservico.png")));
         menuBar.add(mnNewMenu_1);
         
         JMenuItem mntmDoao_1 = new JMenuItem("Doa\u00E7\u00E3o");
-        mntmDoao_1.setIcon(new ImageIcon("/robin-blood/Imagens/IconDoacao_1.png"));
+        mntmDoao_1.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconDoacao_1.png")));
         mntmDoao_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		if(donationResFrame == null){
+        		
            			donationResFrame = new DonationRegistration();
            			donationResFrame.setVisible(true);
                     desktopPane.add(donationResFrame);
-                }
-                else if(!donationResFrame.isVisible()){
-                	donationResFrame.setVisible(true);
-                    desktopPane.add(donationResFrame);
-                }
+                               
            		//Inicializa Frame Centralizado
            		donationResFrame.setBounds(0, 0, donationResFrame.getWidth(), donationResFrame.getHeight());
                 int lDesk = desktopPane.getWidth();
@@ -162,11 +167,11 @@ public class MainWindow extends JFrame{
         mnNewMenu_1.add(mntmDoao_1);
         
         JMenu mnEstoque = new JMenu("Estoque");
-        mnEstoque.setIcon(new ImageIcon("/robin-blood/Imagens/Iconestoque.png"));
+        mnEstoque.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/Iconestoque.png")));
         menuBar.add(mnEstoque);
         
         JMenuItem mntmReserva = new JMenuItem("Entrada");
-        mntmReserva.setIcon(new ImageIcon("/robin-blood/Imagens/IconIn.png"));
+        mntmReserva.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconIn.png")));
         mntmReserva.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		estoqueestradaframe = new EstoqueEntrada();
@@ -187,7 +192,7 @@ public class MainWindow extends JFrame{
         mnEstoque.add(mntmReserva);
         
         JMenuItem mntmDistribuicao = new JMenuItem("Distribuição");
-        mntmDistribuicao.setIcon(new ImageIcon("/robin-blood/Imagens/Icondistribuicao.png"));
+        mntmDistribuicao.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/Icondistribuicao.png")));
         mntmDistribuicao.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		distributionframe = new Distribution();
@@ -208,19 +213,19 @@ public class MainWindow extends JFrame{
         
         //Menu Relatórios
         JMenu mnNewMenu_2 = new JMenu("Relat\u00F3rios");
-        mnNewMenu_2.setIcon(new ImageIcon("/robin-blood/Imagens/IconRelatorio.png"));
+        mnNewMenu_2.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconRelatorio.png")));
         menuBar.add(mnNewMenu_2);
         
         JMenuItem mntmFila = new JMenuItem("Fila");
-        mntmFila.setIcon(new ImageIcon("/robin-blood/Imagens/iconfila.png"));
+        mntmFila.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/iconfila.png")));
         mnNewMenu_2.add(mntmFila);
         
         JMenuItem mntmDoador = new JMenuItem("Doador");
-        mntmDoador.setIcon(new ImageIcon("Imagens/Icondonor_1.png"));
+        mntmDoador.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/Icondonor_1.png")));
         mnNewMenu_2.add(mntmDoador);
         
         JMenuItem mntmEstoque = new JMenuItem("Estoque");
-        mntmEstoque.setIcon(new ImageIcon("/robin-blood/Imagens/iconestoque_1.png"));
+        mntmEstoque.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/iconestoque_1.png")));
         mntmEstoque.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		reportInventory = new ReportInventory();
@@ -241,11 +246,11 @@ public class MainWindow extends JFrame{
         setJMenuBar(menuBar);
         
         JMenu mnDoador = new JMenu("Doador");
-        mnDoador.setIcon(new ImageIcon("Imagens/IconSponsor.png"));
+        mnDoador.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/IconSponsor.png")));
         menuBar.add(mnDoador);
         
         JMenuItem mntmNewMenuItem = new JMenuItem("Questionario");
-        mntmNewMenuItem.setIcon(new ImageIcon("Imagens/Iconq_and_a.png"));
+        mntmNewMenuItem.setIcon(new ImageIcon(MainWindow.class.getResource("/Imagens/Iconq_and_a.png")));
         mnDoador.add(mntmNewMenuItem);
         mntmNewMenuItem.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -265,7 +270,7 @@ public class MainWindow extends JFrame{
         setVisible(true);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("Imagens/IconLogo.png").getImage());
+        setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/Imagens/IconLogo.png")));
         
     }
 }

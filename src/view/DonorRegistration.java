@@ -12,6 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,10 +23,10 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-
 import business.DonorController;
 import business.DonorPhoneController;
 import business.PhoneController;
+import business.Utils;
 import data.ConnectException;
 import models.Address;
 import models.ComboBoxItem;
@@ -39,16 +40,17 @@ public class DonorRegistration extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtName;
 	private JTextField txtEmail;
-	private JTextField txtCPF;
+	private JFormattedTextField txtCPF;
 	private JTextField txtrua;
 	private JTextField txtnumero;
 	private JTextField txtcidade;
-	private JTextField txtcep;
+	private JFormattedTextField txtcep;
 	private JTable table;
 	
 	private DonorController donorcontroller;
 	private PhoneController phonecontroller;
 	private DonorPhoneController donorphonecontroller;
+	private Utils utils;
 
 	
 
@@ -57,6 +59,7 @@ public class DonorRegistration extends JInternalFrame {
 		phonecontroller = new PhoneController();
 		donorphonecontroller = new DonorPhoneController();
 		DefaultTableModel modelo = new DefaultTableModel();
+		utils = new Utils();
 		Address paramAddress = null;
 		
 		setTitle("CADASTRO DOADOR");
@@ -81,8 +84,8 @@ public class DonorRegistration extends JInternalFrame {
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 
-		//txtCPF = new JFormattedTextField(new Utils().Mascara("###.###.###-##"));
-		txtCPF = new JTextField();
+		txtCPF = new JFormattedTextField(utils.Mascara("###.###.###-##"));
+		//txtCPF = new JFormattedTextField();
 		txtCPF.setColumns(10);
 		
 		JComboBox<ComboBoxItem> comboBloodType = new JComboBox<ComboBoxItem>();
@@ -147,9 +150,15 @@ public class DonorRegistration extends JInternalFrame {
 							comboBoxEstado.getSelectedItem().toString(),
 							txtcidade.getText());
 					
+					String CPF = txtCPF.getText();
+					CPF = CPF.replace("-", " ");
+					CPF = CPF.replace(".", " ");
+					CPF = CPF.replace(" ", "");
+					
+					
 					Donor don = new Donor(paramDonor.getId(),
 							txtName.getText(),
-							txtCPF.getText(),
+							CPF,
 							comboGender.getSelectedItem().toString(),
 							txtEmail.getText(),
 							comboBloodType.getSelectedItem().toString(),
@@ -229,7 +238,7 @@ public class DonorRegistration extends JInternalFrame {
 
 		JLabel lblCep = new JLabel("CEP");
 
-		txtcep = new JTextField();
+		txtcep = new JFormattedTextField(utils.Mascara("#####-###"));
 		txtcep.setColumns(10);
 
 		JLabel lblContato = new JLabel("Contato");
@@ -239,13 +248,7 @@ public class DonorRegistration extends JInternalFrame {
 		JSeparator separator_3 = new JSeparator();
 
 		JScrollPane scrollPane = new JScrollPane();
-
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
+		
 		
 		
 		List<Phone> phones = phonecontroller.getByFilter(paramDonor.getId());		
@@ -302,10 +305,9 @@ public class DonorRegistration extends JInternalFrame {
 			for (int i = 0; i < model.getSize(); ++i) {
 				ComboBoxItem item = (ComboBoxItem) model.getElementAt(i);
 				code = item.getCode();
-				if(paramDonor.getName() != null){
-					if (code.equals(paramDonor.getBloodType().substring(0, paramDonor.getBloodType().length() - 1))) {
+				if(code.equals(paramDonor.getBloodType())){
 						comboBloodType.setSelectedItem(comboBloodType.getItemAt(i));
-					}
+					
 				}
 
 				
@@ -329,8 +331,16 @@ public class DonorRegistration extends JInternalFrame {
 		JButton btnAdicionarTelefone = new JButton("Adicionar");
 		btnAdicionarTelefone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String tel = JOptionPane.showInputDialog("Insira o Telefone");
-				modelo.addRow(new Object[]{tel});	
+				JFormattedTextField txtphone = new JFormattedTextField(utils.Mascara("(##) ####-####"));
+		       
+		        
+				int result = JOptionPane.showConfirmDialog(getContentPane(), txtphone, "Robin Blood", JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+		            String tel = txtphone.getText();
+		            modelo.addRow(new Object[]{tel});	
+		            
+		        }
+				
 				
 			}
 		});
@@ -378,39 +388,34 @@ public class DonorRegistration extends JInternalFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblNome)
-					.addContainerGap(463, Short.MAX_VALUE))
+					.addContainerGap(447, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblEmail)
-					.addContainerGap(462, Short.MAX_VALUE))
+					.addContainerGap(446, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblCpf)
-									.addGap(121)
-									.addComponent(lblGenero)
-									.addGap(77))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCpf))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblGenero))
+							.addGap(22)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, 124, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
-									.addComponent(comboBloodTypeFactor, 0, 41, Short.MAX_VALUE))
+									.addComponent(comboBloodTypeFactor, 0, 49, Short.MAX_VALUE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblTipoSanguineo, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+									.addComponent(lblTipoSanguineo, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
 									.addGap(30))))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtName)
-								.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(txtName)
+							.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)))
 					.addGap(39))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
@@ -446,29 +451,27 @@ public class DonorRegistration extends JInternalFrame {
 					.addContainerGap()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 453, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(37, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(293, Short.MAX_VALUE)
 					.addComponent(btnRemover)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnAdicionarTelefone)
 					.addGap(45))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(separator, Alignment.LEADING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap(183, Short.MAX_VALUE)
+					.addComponent(btnCancelar)
+					.addGap(18)
+					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addGap(140))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblContato)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(separator_3, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(16, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(116, Short.MAX_VALUE)
-					.addComponent(btnCancelar)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnBuscar)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addGap(140))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -486,24 +489,18 @@ public class DonorRegistration extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblCpf)
-								.addComponent(lblGenero))
-							.addGap(18))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblTipoSanguineo)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(comboBloodTypeFactor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(6)))
-					.addGap(18)
+							.addComponent(lblGenero))
+						.addComponent(lblCpf))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBloodType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtCPF, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBloodTypeFactor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboGender, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(24)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblNewLabel)
 						.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -535,12 +532,11 @@ public class DonorRegistration extends JInternalFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnRemover)
 						.addComponent(btnAdicionarTelefone))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 3, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSalvar)
-						.addComponent(btnBuscar)
 						.addComponent(btnCancelar))
 					.addGap(32))
 		);
