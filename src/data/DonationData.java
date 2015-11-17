@@ -138,21 +138,31 @@ public class DonationData implements CrudItf<Donation> {
 	@Override
 	public Donation save(Donation obj) throws ConnectException {
 		try {
+			if (obj.getId() != 0) {
+				return this.update(obj);
+			}
+			
 			String query = "INSERT INTO donation VALUES(?,?,?,?)";
 
 			Connection con = DriverManager.getConnection(connection);
-			PreparedStatement stmt = con.prepareStatement(query);
+			PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, obj.getDonor().getId());
-			stmt.setDate(2, (Date) obj.getDonationDate());
+			stmt.setDate(2, new java.sql.Date(obj.getDonationDate().getTime()));
 			stmt.setInt(3, obj.getStatus().getId());
 			stmt.setInt(4, obj.getUser().getId());
-			
 			stmt.executeUpdate();
+			
+			int newId = 0;
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()){
+				newId = rs.getInt(1);
+			}
+			
 			stmt.close();
 			con.close();
 
-			return this.select(obj.getId());
+			return this.select(newId);
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
 		}

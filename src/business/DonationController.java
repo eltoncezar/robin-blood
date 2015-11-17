@@ -9,6 +9,7 @@ import models.Donation;
 import models.DonationStatus;
 import models.Donor;
 import models.Screening;
+import models.Status;
 import data.ConnectException;
 import data.DonationData;
 import data.DonationStatusData;
@@ -34,15 +35,18 @@ public class DonationController {
 		screeningData = new ScreeningData();
 	}
 
-	public Donor createNew(int donorId) {
+	public Donation createNew(int donorId) {
 		try {
 			Donor donor = donorData.select(donorId);
-
-			Donation donation = donationData.save(new Donation(0, donor, new Date(), statusData.select(1), userData.select(1)));
+			Status status = statusData.select(1);
+			Date date = new Date();
+			
+			Donation donation = donationData.save(new Donation(0, donor, date, status, userData.select(1)));
+			DonationStatus donationStatus = donationStatusData.save(new DonationStatus(donation, status, date));
 			
 			Screening screening = screeningData.save(new Screening(0, donation.getId()));
 
-			return null;
+			return donation;
 
 		} catch (ConnectException e) {
 			// TODO Auto-generated catch block

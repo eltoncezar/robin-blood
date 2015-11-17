@@ -4,8 +4,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.awt.Color;
+
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
@@ -13,11 +15,17 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import models.DonationStatus;
 import models.Donor;
 import business.DonationController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DonationRegistration extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,10 +33,11 @@ public class DonationRegistration extends JInternalFrame {
 	private JTextField txtCpf;
 	private JTable tableDonations;
 	private JTable tableStatuses;
-
+	private Donor donor = null;
 	
 	public DonationRegistration() {
 		DonationController controller = new DonationController();
+		
 		
 		setTitle("Cadastro Doa\u00E7\u00E3o");
 		setClosable(true);
@@ -58,6 +67,10 @@ public class DonationRegistration extends JInternalFrame {
 		JButton btnNovaDoacao = new JButton("Nova Doa\u00E7\u00E3o");
 		btnNovaDoacao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (donor != null) {
+					controller.createNew(donor.getId());					
+				}
+				
 			}
 		});
 		
@@ -67,7 +80,7 @@ public class DonationRegistration extends JInternalFrame {
 				String param = txtCpf.getText();
 				if(param != null && !param.isEmpty())
 				{
-					Donor donor = controller.getDonorByCpf(param);
+					donor = controller.getDonorByCpf(param);
 					txtNome.setText(donor.getName());
 					txtCpf.setText(donor.getCpf());
 					
@@ -174,6 +187,13 @@ public class DonationRegistration extends JInternalFrame {
 				"Id", "Data", "Status"
 			}
 		));
+		tableDonations.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	        	int id = Integer.parseInt(tableDonations.getValueAt(tableDonations.getSelectedRow(), 0).toString());
+	        	List<DonationStatus> statuses = controller.getStatuses(id);
+	        	tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(id)));
+	        }
+	    });
 		scrollPane.setViewportView(tableDonations);
 		
 
@@ -185,6 +205,7 @@ public class DonationRegistration extends JInternalFrame {
 				"Data/Hora", "Status"
 			}
 		));
+		
 		scrollPane_1.setViewportView(tableStatuses);
 		
 		
