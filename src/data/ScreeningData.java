@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Screening;
 
 public class ScreeningData implements CrudItf<Screening> {
@@ -20,7 +21,7 @@ public class ScreeningData implements CrudItf<Screening> {
 			
 			String query = "SELECT * FROM screening";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -44,7 +45,7 @@ public class ScreeningData implements CrudItf<Screening> {
 			
 			String query = "SELECT * FROM screening WHERE id_screening=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -67,7 +68,7 @@ public class ScreeningData implements CrudItf<Screening> {
 		try {
 			String query = "UPDATE screening set id_donation=?, WHERE id_screening=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setInt(1, obj.getIdDonation());
@@ -88,7 +89,7 @@ public class ScreeningData implements CrudItf<Screening> {
 		try {
 			String query = "INSERT INTO screening VALUES(?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getIdDonation());
@@ -108,7 +109,7 @@ public class ScreeningData implements CrudItf<Screening> {
 		try {
 			String query = "DELETE screening WHERE id_screening=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, Integer.toString(obj.getId()));

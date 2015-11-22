@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Address;
 
 public class AddressData implements CrudItf<Address> {
@@ -21,7 +22,7 @@ public class AddressData implements CrudItf<Address> {
 		try {
 			String query = "SELECT * FROM Address";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -53,7 +54,7 @@ public class AddressData implements CrudItf<Address> {
 		try {
 			String query = "SELECT * FROM Address WHERE id_address = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -89,7 +90,7 @@ public class AddressData implements CrudItf<Address> {
 			
 			
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			ResultSet rs = stmt.executeQuery();
@@ -125,7 +126,7 @@ public class AddressData implements CrudItf<Address> {
 		try {
 			String query = "INSERT INTO Address VALUES(?,?,?,?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, obj.getStreet());
@@ -151,7 +152,7 @@ public class AddressData implements CrudItf<Address> {
 		try {
 			String query = "DELETE Address WHERE id_address=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, String.valueOf(obj.getId()));
@@ -169,7 +170,7 @@ public class AddressData implements CrudItf<Address> {
 		try{
 			String query = "UPDATE Address set address_street=?, address_number=?, address_country=?, address_zip=?, address_state=?  address_city=? WHERE id_address=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getStreet());

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Donor;
 
 public class DonorData implements CrudItf<Donor> {
@@ -26,7 +27,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "SELECT * FROM Donor";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -58,7 +59,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "SELECT TOP 1 *	FROM donor WHERE id_donor <=id_donor ORDER BY id_donor DESC";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			//stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -90,7 +91,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "SELECT * FROM Donor WHERE id_donor=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -120,7 +121,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "SELECT * FROM Donor WHERE donor_cpf = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, cpf);
 			ResultSet rs = stmt.executeQuery();
@@ -151,7 +152,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "SELECT * FROM Donor WHERE donor_name like '%' + ? + '%'";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, filter);
 			ResultSet rs = stmt.executeQuery();
@@ -195,7 +196,7 @@ public class DonorData implements CrudItf<Donor> {
 			obj.setAddresses(addressData.save(obj.getAddresses()));	
 			String query = "INSERT INTO Donor VALUES(?,?,?,?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			
@@ -223,7 +224,7 @@ public class DonorData implements CrudItf<Donor> {
 		try {
 			String query = "DELETE Donor WHERE id_donor=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getId());
@@ -241,7 +242,7 @@ public class DonorData implements CrudItf<Donor> {
 		try{
 			String query = "UPDATE DONOR set donor_name=?,donor_cpf=?,donor_gender=?,donor_email=?,donor_blood_type=? WHERE id_donor=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getName());

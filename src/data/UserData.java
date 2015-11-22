@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.User;
 
 public class UserData implements CrudItf<User> {
@@ -21,7 +22,7 @@ public class UserData implements CrudItf<User> {
 		try {
 			String query = "SELECT * FROM [User]";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -54,7 +55,7 @@ public class UserData implements CrudItf<User> {
 		try {
 			String query = "SELECT * FROM [User] WHERE id_user=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -84,7 +85,7 @@ public class UserData implements CrudItf<User> {
 		try {
 			String query = "SELECT * FROM [User] WHERE user_name like '%' + ? + '%'";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setString(1, filter);
 			ResultSet rs = stmt.executeQuery();
@@ -119,7 +120,7 @@ public class UserData implements CrudItf<User> {
 					+ "id_screning"
 					+ "WHERE id_user=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getName());
@@ -149,7 +150,7 @@ public class UserData implements CrudItf<User> {
 		try {
 			String query = "INSERT INTO [User] VALUES(?,?,?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, obj.getName());
@@ -176,7 +177,7 @@ public class UserData implements CrudItf<User> {
 		try {
 			String query = "DELETE [User] WHERE id_user=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getId());
