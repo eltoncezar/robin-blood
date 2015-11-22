@@ -5,11 +5,6 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import models.Donation;
-import models.DonationStatus;
-import models.Donor;
-import models.Screening;
-import models.Status;
 import data.ConnectException;
 import data.DonationData;
 import data.DonationStatusData;
@@ -17,6 +12,11 @@ import data.DonorData;
 import data.ScreeningData;
 import data.StatusData;
 import data.UserData;
+import models.Donation;
+import models.DonationStatus;
+import models.Donor;
+import models.Screening;
+import models.Status;
 
 public class DonationController {
 	private DonationData donationData;

@@ -1,13 +1,14 @@
 package data;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import models.Donor;
 
 public class DonorData implements CrudItf<Donor> {
@@ -117,7 +118,7 @@ public class DonorData implements CrudItf<Donor> {
 		Donor donor = new Donor();
 
 		try {
-			String query = "SELECT * FROM Donor WHERE donor_cpf like '%' + ? + '%'";
+			String query = "SELECT * FROM Donor WHERE donor_cpf = ?";
 
 			Connection con = DriverManager.getConnection(connection);
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -138,6 +139,7 @@ public class DonorData implements CrudItf<Donor> {
 			con.close();
 		} catch (SQLException e) {
 			throw new ConnectException(e.getMessage());
+			
 		}
 
 		return donor;

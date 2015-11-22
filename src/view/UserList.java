@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -18,9 +20,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import business.UserRegistrationController;
 import data.ConnectException;
 import models.User;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class UserList extends JInternalFrame {
 	/**
@@ -72,10 +71,7 @@ public class UserList extends JInternalFrame {
 					}
 					else{
 						table.setModel(controller.getTableModel(controller.getByFilter(txtParBusca.getText())));
-					}
-						
-					
-					
+					}			
 				}
 				
 			}
@@ -113,13 +109,37 @@ public class UserList extends JInternalFrame {
 				createUserRegistration(new User());
 			}
 		});
+		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int rowIndex = table.getSelectedRow();
+				if (rowIndex > -1) {
+					User selectedItem = users.get(rowIndex);
+					try {
+						controller.delete(selectedItem);
+					} catch (ConnectException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(getContentPane(), "Selecione um item!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+				
+			
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(278, Short.MAX_VALUE)
+					.addContainerGap(185, Short.MAX_VALUE)
+					.addComponent(btnExcluir)
+					.addGap(18)
 					.addComponent(btnNovo)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(18)
 					.addComponent(btnEditar)
 					.addGap(32))
 				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
@@ -144,11 +164,12 @@ public class UserList extends JInternalFrame {
 						.addComponent(btnBuscar))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnEditar)
-						.addComponent(btnNovo))
-					.addContainerGap(19, Short.MAX_VALUE))
+						.addComponent(btnNovo)
+						.addComponent(btnExcluir))
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
 
 		scrollPane.setViewportView(table);
@@ -184,5 +205,4 @@ public class UserList extends JInternalFrame {
 		userResFrame.setLocation(lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2);
 		userResFrame.moveToFront();
 	}
-	
 }

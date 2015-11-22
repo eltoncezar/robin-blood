@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import models.Address;
-import models.Donor;
 import data.AddressData;
 import data.ConnectException;
 import data.DonorData;
+import models.Address;
+import models.Donor;
 
  public class DonorController {
 	private DonorData donorData;

@@ -1,43 +1,43 @@
 package view;
 
-import javax.swing.JInternalFrame;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-import java.awt.Color;
-
-import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import models.DonationStatus;
-import models.Donor;
 import business.DonationController;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
+import business.Utils;
+import models.Donor;
 
 public class DonationRegistration extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
-	private JTextField txtCpf;
+	private JFormattedTextField txtCpf;
 	private JTable tableDonations;
 	private JTable tableStatuses;
+	private Utils utils;
 	private Donor donor = null;
 	
 	public DonationRegistration() {
 		DonationController controller = new DonationController();
-		
+		utils = new Utils();
 		
 		setTitle("Cadastro Doa\u00E7\u00E3o");
 		setClosable(true);
@@ -54,6 +54,7 @@ public class DonationRegistration extends JInternalFrame {
 		JLabel lblNome = new JLabel("Nome");
 		
 		txtNome = new JTextField();
+		txtNome.setEditable(false);
 		txtNome.setColumns(10);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -61,7 +62,8 @@ public class DonationRegistration extends JInternalFrame {
 		
 		JLabel lblCpf = new JLabel("CPF");
 		
-		txtCpf = new JTextField();
+		txtCpf = new JFormattedTextField(utils.Mascara("###.###.###-##"));
+		
 		txtCpf.setColumns(10);
 		
 		JButton btnNovaDoacao = new JButton("Nova Doa\u00E7\u00E3o");
@@ -76,16 +78,50 @@ public class DonationRegistration extends JInternalFrame {
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
+			private String param;
+
 			public void actionPerformed(ActionEvent e) {
-				String param = txtCpf.getText();
+				param = txtCpf.getText();
+				
+				param = param.replace("-", " ");
+				param = param.replace(".", " ");
+				param = param.replace(" ", "");
+				
+				if(param == null && param.isEmpty()){
+					JOptionPane.showMessageDialog(getContentPane(), "Campo CPF não preenchido", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+				}else{
+					donor = controller.getDonorByCpf(param);
+					if(donor.getCpf() == null){
+						JOptionPane.showMessageDialog(getContentPane(), "CPF invalido!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+					}else{
+						txtNome.setText(donor.getName());
+						txtCpf.setText(donor.getCpf());
+						
+						tableDonations.setModel(controller.getDonationsTableModel(controller.getLastDonations(donor.getId())));
+						tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(donor.getId())));	
+						
+					}
+				}
+				
+				
+				
 				if(param != null && !param.isEmpty())
 				{
 					donor = controller.getDonorByCpf(param);
-					txtNome.setText(donor.getName());
-					txtCpf.setText(donor.getCpf());
+					if(donor.getCpf() == null){
+						JOptionPane.showMessageDialog(getContentPane(), "CPF invalido!", "Robin Blood", JOptionPane.WARNING_MESSAGE);
+											
+					}else{
+						txtNome.setText(donor.getName());
+						txtCpf.setText(donor.getCpf());
+						
+						tableDonations.setModel(controller.getDonationsTableModel(controller.getLastDonations(donor.getId())));
+						tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(donor.getId())));	
+					}
 					
-					tableDonations.setModel(controller.getDonationsTableModel(controller.getLastDonations(donor.getId())));
-					tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(donor.getId())));
+					
+				}else{
+					JOptionPane.showMessageDialog(getContentPane(), "Campo CPF não preenchido", "Robin Blood", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
@@ -190,7 +226,6 @@ public class DonationRegistration extends JInternalFrame {
 		tableDonations.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	int id = Integer.parseInt(tableDonations.getValueAt(tableDonations.getSelectedRow(), 0).toString());
-	        	List<DonationStatus> statuses = controller.getStatuses(id);
 	        	tableStatuses.setModel(controller.getStatusesTableModel(controller.getStatuses(id)));
 	        }
 	    });
