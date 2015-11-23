@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Address;
 import models.Hospital;
 import models.Phone;
@@ -26,7 +27,7 @@ public class HospitalData implements CrudItf<Hospital> {
 		try {
 			String query = "SELECT *  FROM hospital";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -55,7 +56,7 @@ public class HospitalData implements CrudItf<Hospital> {
 		try {
 			String query = "SELECT * FROM Hospital WHERE id_hosp = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -86,7 +87,7 @@ public class HospitalData implements CrudItf<Hospital> {
 			
 			String query = "INSERT INTO Hospital VALUES(?,?,?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, obj.getName());
@@ -109,7 +110,7 @@ public class HospitalData implements CrudItf<Hospital> {
 		try {
 			String query = "DELETE Hospital WHERE id_hosp=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getId());
@@ -127,7 +128,7 @@ public class HospitalData implements CrudItf<Hospital> {
 		try {
 			String query = "UPDATE Hospital SET hosp_name=?, hosp_document=? WHERE id_hosp=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, obj.getName());

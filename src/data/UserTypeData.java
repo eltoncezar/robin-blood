@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.UserType;
 
 public class UserTypeData implements CrudItf<UserType> {
@@ -19,7 +20,7 @@ public class UserTypeData implements CrudItf<UserType> {
 		try {
 			String query = "SELECT * FROM user_type";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {

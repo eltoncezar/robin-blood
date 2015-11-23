@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import business.Session;
 import models.PrimaryTest;
 
 
@@ -26,7 +27,7 @@ public class PrimaryTestData implements CrudItf<PrimaryTest> {
 		try {
 			String query = "INSERT INTO primary_test VALUES(?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, obj.getName());
@@ -53,7 +54,7 @@ public class PrimaryTestData implements CrudItf<PrimaryTest> {
 		try{
 			String query = "UPDATE primary_test SET test_name=?, result_test=?, id_user=?, WHERE id_test=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getName());

@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Donation;
 
 
@@ -26,7 +27,7 @@ public class DonationData implements CrudItf<Donation> {
 		try {
 			String query = "SELECT * FROM donation";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -56,7 +57,7 @@ public class DonationData implements CrudItf<Donation> {
 		try {
 			String query = "SELECT * FROM donation WHERE id_donor = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, donorId);
 			ResultSet rs = stmt.executeQuery();
@@ -88,7 +89,7 @@ public class DonationData implements CrudItf<Donation> {
 			
 			String query = "SELECT * FROM donation WHERE id_donation=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -116,7 +117,7 @@ public class DonationData implements CrudItf<Donation> {
 		try {
 			String query = "UPDATE donation set id_donor=?,donation_date=?, id_status=?,id_user=?  WHERE id_donation=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setInt(1, obj.getDonor().getId());
@@ -143,7 +144,7 @@ public class DonationData implements CrudItf<Donation> {
 			
 			String query = "INSERT INTO donation VALUES(?,?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, obj.getDonor().getId());
@@ -172,7 +173,7 @@ public class DonationData implements CrudItf<Donation> {
 		try {
 			String query = "DELETE donation WHERE id_donation=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, Integer.toString(obj.getId()));

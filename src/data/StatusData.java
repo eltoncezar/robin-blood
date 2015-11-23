@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Status;
 
 public class StatusData implements CrudItf<Status> {
@@ -20,7 +21,7 @@ public class StatusData implements CrudItf<Status> {
 		try {
 			String query = "SELECT * FROM status";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -47,7 +48,7 @@ public class StatusData implements CrudItf<Status> {
 		try {
 			String query = "SELECT s.* FROM donation_status dp INNER JOIN status s ON s.id_status = dp.id_status WHERE id_donation = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, donationId);
 			ResultSet rs = stmt.executeQuery();
@@ -76,7 +77,7 @@ public class StatusData implements CrudItf<Status> {
 		try {
 			String query = "SELECT * FROM status WHERE id_status = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();

@@ -8,6 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="Libs/jgoodies-looks-2.5.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libs/miglayout15-swing.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libs/sqljdbc4.jar"/>
-	<classpathentry exported="true" kind="lib" path="D:/robin-blood/Libs/jfreechart-1.0.14/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="Libs/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
