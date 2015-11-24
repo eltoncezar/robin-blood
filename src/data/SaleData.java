@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import business.Utils;
 import models.Sale;
 
@@ -23,7 +24,7 @@ public class SaleData implements CrudItf<Sale> {
 		try {
 			String query = "SELECT * FROM Sale";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -48,7 +49,7 @@ public class SaleData implements CrudItf<Sale> {
 		try {
 			String query = "SELECT * FROM Sale WHERE id_sale=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -73,7 +74,7 @@ public class SaleData implements CrudItf<Sale> {
 		try{
 			String query = "UPDATE Sale set id_buyer=?,sale_date=? WHERE id_sale=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, Integer.toString(obj.getBuyer()));
@@ -96,7 +97,7 @@ public class SaleData implements CrudItf<Sale> {
 		try {
 			String query = "INSERT INTO Sale VALUES(?,?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, Integer.toString(obj.getId()));
@@ -118,7 +119,7 @@ public class SaleData implements CrudItf<Sale> {
 		try {
 			String query = "DELETE Sale WHERE id_sale=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, Integer.toString(obj.getId()));

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.Phone;
 
 public class PhoneData implements CrudItf<Phone> {
@@ -21,7 +22,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try {
 			String query = "SELECT * FROM Phone";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -49,7 +50,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try {
 			String query = "SELECT * FROM Phone WHERE id_phone = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -75,7 +76,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try {
 			String query = "SELECT TOP 1 *	FROM phone WHERE id_phone <=id_phone ORDER BY id_phone DESC";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			//stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -105,7 +106,7 @@ public class PhoneData implements CrudItf<Phone> {
 					+ "INNER JOIN Phone p ON p.id_phone = dp.id_phone "
 					+ "WHERE dp.id_donor = ?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, donorId);
 			ResultSet rs = stmt.executeQuery();
@@ -132,7 +133,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try {
 			String query = "INSERT INTO Phone VALUES(?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, phon.getNumber());
@@ -157,7 +158,7 @@ public class PhoneData implements CrudItf<Phone> {
 			try {
 				String query = "INSERT INTO Phone VALUES(?)";
 
-				Connection con = DriverManager.getConnection(connection);
+				Connection con = DriverManager.getConnection(Session.getConnectionString());
 				PreparedStatement stmt = con.prepareStatement(query);
 
 				stmt.setString(1,  phone.getNumber());
@@ -184,7 +185,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try {
 			String query = "DELETE Phone WHERE id_phone=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getId());
@@ -202,7 +203,7 @@ public class PhoneData implements CrudItf<Phone> {
 		try{
 			String query = "UPDATE phone set phone_number=?, WHERE id_phone=?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setString(1, obj.getNumber());

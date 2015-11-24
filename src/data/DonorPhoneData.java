@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.Session;
 import models.DonorPhone;
 
 public class DonorPhoneData implements CrudItf<DonorPhone> {
@@ -22,7 +23,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 		try {
 			String query = "SELECT * FROM donor_phone";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -47,7 +48,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 		try {
 			String query = "SELECT * FROM donor_phone WHERE id_donor=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -70,7 +71,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 		try{
 			String query = "UPDATE donor_phone set id_phone = ?  WHERE id_donor = ?";
 			
-			Connection con = DriverManager.getConnection(connection); 
+			Connection con = DriverManager.getConnection(Session.getConnectionString()); 
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			stmt.setInt(1, obj.getPhone().getId());
@@ -95,7 +96,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 		try {
 			String query = "INSERT INTO donor_phone VALUES(?,?)";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 			
 			
@@ -118,7 +119,7 @@ public class DonorPhoneData implements CrudItf<DonorPhone> {
 		try {
 			String query = "DELETE donor_phone WHERE id_phone=?";
 
-			Connection con = DriverManager.getConnection(connection);
+			Connection con = DriverManager.getConnection(Session.getConnectionString());
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setInt(1, obj.getPhone().getId());
